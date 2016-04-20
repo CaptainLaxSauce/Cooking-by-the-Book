@@ -15,6 +15,11 @@
 		04B49E521CC7063500312485 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B49E501CC7063500312485 /* LaunchScreen.storyboard */; };
 		04B49E5D1CC7063500312485 /* Cooking_by_the_BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E5C1CC7063500312485 /* Cooking_by_the_BookTests.m */; };
 		04B49E681CC7063500312485 /* Cooking_by_the_BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E671CC7063500312485 /* Cooking_by_the_BookUITests.m */; };
+		04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */; };
+		04B49E7A1CC70C1300312485 /* CookbookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E791CC70C1300312485 /* CookbookViewController.m */; };
+		04B49E7D1CC70E6200312485 /* AchievementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E7C1CC70E6200312485 /* AchievementsViewController.m */; };
+		04B49E811CC70EFE00312485 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E801CC70EFE00312485 /* FriendsViewController.m */; };
+		04B49E841CC70F1F00312485 /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E831CC70F1F00312485 /* NotificationsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,16 @@
 		04B49E631CC7063500312485 /* Cooking by the BookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Cooking by the BookUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B49E671CC7063500312485 /* Cooking_by_the_BookUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cooking_by_the_BookUITests.m; sourceTree = "<group>"; };
 		04B49E691CC7063500312485 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04B49E751CC70A5A00312485 /* TabBarControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarControllerDelegate.h; sourceTree = "<group>"; };
+		04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarControllerDelegate.m; sourceTree = "<group>"; };
+		04B49E781CC70C1300312485 /* CookbookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CookbookViewController.h; sourceTree = "<group>"; };
+		04B49E791CC70C1300312485 /* CookbookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CookbookViewController.m; sourceTree = "<group>"; };
+		04B49E7B1CC70E6200312485 /* AchievementsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementsViewController.h; sourceTree = "<group>"; };
+		04B49E7C1CC70E6200312485 /* AchievementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsViewController.m; sourceTree = "<group>"; };
+		04B49E7F1CC70EFE00312485 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		04B49E801CC70EFE00312485 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		04B49E821CC70F1F00312485 /* NotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsViewController.h; sourceTree = "<group>"; };
+		04B49E831CC70F1F00312485 /* NotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,9 +118,10 @@
 			children = (
 				04B49E451CC7063500312485 /* AppDelegate.h */,
 				04B49E461CC7063500312485 /* AppDelegate.m */,
-				04B49E481CC7063500312485 /* ViewController.h */,
-				04B49E491CC7063500312485 /* ViewController.m */,
+				04B49E7E1CC70E6D00312485 /* ViewControllers */,
 				04B49E4B1CC7063500312485 /* Main.storyboard */,
+				04B49E751CC70A5A00312485 /* TabBarControllerDelegate.h */,
+				04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */,
 				04B49E4E1CC7063500312485 /* Assets.xcassets */,
 				04B49E501CC7063500312485 /* LaunchScreen.storyboard */,
 				04B49E531CC7063500312485 /* Info.plist */,
@@ -138,6 +154,23 @@
 				04B49E691CC7063500312485 /* Info.plist */,
 			);
 			path = "Cooking by the BookUITests";
+			sourceTree = "<group>";
+		};
+		04B49E7E1CC70E6D00312485 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				04B49E481CC7063500312485 /* ViewController.h */,
+				04B49E491CC7063500312485 /* ViewController.m */,
+				04B49E7B1CC70E6200312485 /* AchievementsViewController.h */,
+				04B49E7C1CC70E6200312485 /* AchievementsViewController.m */,
+				04B49E781CC70C1300312485 /* CookbookViewController.h */,
+				04B49E791CC70C1300312485 /* CookbookViewController.m */,
+				04B49E7F1CC70EFE00312485 /* FriendsViewController.h */,
+				04B49E801CC70EFE00312485 /* FriendsViewController.m */,
+				04B49E821CC70F1F00312485 /* NotificationsViewController.h */,
+				04B49E831CC70F1F00312485 /* NotificationsViewController.m */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,8 +303,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */,
+				04B49E841CC70F1F00312485 /* NotificationsViewController.m in Sources */,
 				04B49E4A1CC7063500312485 /* ViewController.m in Sources */,
+				04B49E811CC70EFE00312485 /* FriendsViewController.m in Sources */,
+				04B49E7A1CC70C1300312485 /* CookbookViewController.m in Sources */,
 				04B49E471CC7063500312485 /* AppDelegate.m in Sources */,
+				04B49E7D1CC70E6200312485 /* AchievementsViewController.m in Sources */,
 				04B49E441CC7063500312485 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
