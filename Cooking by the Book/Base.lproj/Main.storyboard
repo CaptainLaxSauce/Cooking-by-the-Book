@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Q35-td-2dk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FB4-Sl-uam">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -8,7 +8,7 @@
         <!--News Feed-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="NewsFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -27,7 +27,7 @@
         <!--Cookbook-->
         <scene sceneID="UvO-YM-7z3">
             <objects>
-                <viewController id="ngm-jp-D3u" customClass="CookbookViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CookbookViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ngm-jp-D3u" customClass="CookbookViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aCO-e5-1dP"/>
                         <viewControllerLayoutGuide type="bottom" id="6nZ-bx-g43"/>
@@ -38,34 +38,39 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Cookbook" id="yeQ-Kf-zWF"/>
+                    <connections>
+                        <segue destination="jOD-1T-wVh" kind="show" identifier="CreateRecipeViewController" id="Q87-aV-coq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="isr-5i-IEW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1062" y="367"/>
         </scene>
-        <!--Friends-->
-        <scene sceneID="ka7-il-j1X">
+        <!--Create Recipe View Controller-->
+        <scene sceneID="JrN-dV-Jgm">
             <objects>
-                <viewController id="chh-XT-hgs" customClass="FriendsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateRecipeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jOD-1T-wVh" customClass="CreateRecipeViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="BVt-Eg-pn1"/>
-                        <viewControllerLayoutGuide type="bottom" id="OeB-Xj-hzq"/>
+                        <viewControllerLayoutGuide type="top" id="L4b-nV-Eii"/>
+                        <viewControllerLayoutGuide type="bottom" id="ezJ-im-1Rk"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SBV-DO-yXn">
+                    <view key="view" contentMode="scaleToFill" id="tbK-U0-ELa">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Friends" id="PkV-T4-tYS"/>
+                    <connections>
+                        <segue destination="ngm-jp-D3u" kind="showDetail" identifier="CookbookViewController" action="showViewController:sender:" id="uCu-6w-nP3"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tHR-2P-cQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FPK-8j-3r7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042" y="1121"/>
+            <point key="canvasLocation" x="1726" y="361"/>
         </scene>
-        <!--Achievements-->
+        <!--My Profile-->
         <scene sceneID="lNG-O6-Xff">
             <objects>
-                <viewController id="Ay1-cU-yJN" customClass="AchievementsViewController" sceneMemberID="viewController">
+                <viewController id="Ay1-cU-yJN" customClass="MyProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pmz-VU-Mxo"/>
                         <viewControllerLayoutGuide type="bottom" id="qJD-91-HbU"/>
@@ -75,16 +80,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Achievements" id="af6-Wq-YkQ"/>
+                    <tabBarItem key="tabBarItem" title="My Profile" id="af6-Wq-YkQ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IgZ-bG-gT2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="370" y="1815"/>
+            <point key="canvasLocation" x="326" y="1711"/>
         </scene>
-        <!--Notifications-->
+        <!--Meal Plan-->
         <scene sceneID="AtB-DT-k9H">
             <objects>
-                <viewController id="ms9-sb-Dd9" customClass="NotificationsViewController" sceneMemberID="viewController">
+                <viewController id="ms9-sb-Dd9" customClass="MealPlanViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="G8U-9s-FSf"/>
                         <viewControllerLayoutGuide type="bottom" id="yRw-ex-zh9"/>
@@ -94,16 +99,58 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Notifications" id="aPq-Y9-lCq"/>
+                    <tabBarItem key="tabBarItem" title="Meal Plan" id="aPq-Y9-lCq"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Thu-n0-uli" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1074" y="1915"/>
         </scene>
+        <!--SignUp-->
+        <scene sceneID="YkA-G9-zHe">
+            <objects>
+                <viewController storyboardIdentifier="SignupViewController" title="SignUp" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2Sp-go-vkM" customClass="SignupViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vC5-Id-kYk"/>
+                        <viewControllerLayoutGuide type="bottom" id="EFz-Uv-cf4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7XO-UC-kGy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <connections>
+                        <segue destination="FB4-Sl-uam" kind="show" identifier="LoginViewController" id="wZb-8q-vVf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zbW-K9-WoI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-536" y="-363"/>
+        </scene>
+        <!--Login-->
+        <scene sceneID="Zhn-bN-i2p">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" title="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FB4-Sl-uam" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6V8-rY-1tJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="GpQ-78-RQ0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tbY-xv-tWm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="2Sp-go-vkM" kind="show" identifier="SignupViewController" id="wj4-9C-9wG"/>
+                        <segue destination="Q35-td-2dk" kind="show" identifier="TabBarViewController" id="mIL-o6-oeB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sTW-qM-QFk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-630" y="387"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="BXF-BF-yRm">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Q35-td-2dk" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Q35-td-2dk" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JEm-bF-3kx">
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,16 +159,18 @@
                     <connections>
                         <outlet property="delegate" destination="Vu9-rV-ZHz" id="sbo-F4-mDd"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="Q84-0E-yfP"/>
+                        <segue destination="Ay1-cU-yJN" kind="relationship" relationship="viewControllers" id="SLV-N2-clI"/>
                         <segue destination="ngm-jp-D3u" kind="relationship" relationship="viewControllers" id="yAp-zD-VJw"/>
-                        <segue destination="Ay1-cU-yJN" kind="relationship" relationship="viewControllers" id="QjR-mR-tWj"/>
-                        <segue destination="chh-XT-hgs" kind="relationship" relationship="viewControllers" id="QDB-cj-9dE"/>
-                        <segue destination="ms9-sb-Dd9" kind="relationship" relationship="viewControllers" id="VCv-lh-5Dk"/>
+                        <segue destination="ms9-sb-Dd9" kind="relationship" relationship="viewControllers" id="5TR-Ye-suG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5tQ-wi-tad" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="Vu9-rV-ZHz" customClass="TabBarControllerDelegate"/>
             </objects>
-            <point key="canvasLocation" x="82" y="402"/>
+            <point key="canvasLocation" x="74" y="448"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="uCu-6w-nP3"/>
+    </inferredMetricsTieBreakers>
 </document>
