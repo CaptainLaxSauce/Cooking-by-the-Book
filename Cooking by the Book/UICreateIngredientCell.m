@@ -14,27 +14,31 @@ int objectBreak = 8;
 int cornerRadius = 3;
 
 -(id)init{
-    return [self initWithFrame:CGRectMake(0, 0, 100, 20)];
+    return [self initWithFrame:CGRectMake(0, 0, 100, 20) withDelBtn:FALSE];
 }
 
--(id)initWithFrame:(CGRect)frame{
+-(id)initWithFrame:(CGRect)frame withDelBtn:(BOOL)delBtn{
     self = [super initWithFrame:frame];
     
     if (self){
-        [self loadInterface];
+        [self loadInterface:(BOOL)delBtn];
         self.layer.cornerRadius = cornerRadius;
         self.clipsToBounds = YES;
     }
     return self;
 }
 
+-(id)delTouch{
+    [self removeFromSuperview];
+    return self;
+}
 
--(void)loadInterface{
+-(void)loadInterface:(BOOL)delBtn{
     int totalWidth = self.frame.size.width;
     int totalHeight = self.frame.size.height;
     int quantityWidth = (totalWidth-objectBreak*2)/8;
     int unitWidth = quantityWidth*2;
-    int titleWidth = totalWidth-unitWidth-quantityWidth;
+    int titleWidth = totalWidth-unitWidth-quantityWidth*2;
     
     //load text fields
     UITextField *quantityTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, quantityWidth, totalHeight)];
@@ -60,6 +64,20 @@ int cornerRadius = 3;
     [self addSubview:titleTextField_];
     self.titleTextField = titleTextField_;
     
+    //load delete button
+    if (delBtn == TRUE){
+        
+        
+        UIButton *delButton_ = [[UIButton alloc]initWithFrame:CGRectMake(totalWidth - quantityWidth, 0, quantityWidth, totalHeight)];
+        [delButton_ addTarget:self action:@selector(delTouch) forControlEvents:UIControlEventTouchUpInside];
+        [delButton_ setTitle:@"X" forState:UIControlStateNormal];
+        delButton_.backgroundColor = [UIColor redColor];
+        [self addSubview:delButton_];
+        self.delButton = delButton_;
+    }
+    else{
+        self.titleTextField.frame = CGRectMake(quantityWidth+unitWidth, 0, titleWidth+quantityWidth, totalHeight);
+    }
 }
 
 @end

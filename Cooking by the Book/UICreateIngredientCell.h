@@ -13,9 +13,11 @@
 @property UITextField *quantityTextField;
 @property UITextField *unitTextField;
 @property UITextField *titleTextField;
-
+@property UIButton *delButton;
+@property int index;
 
 -(id)init;
--(id)initWithFrame:(CGRect)frame;
--(void)loadInterface;
+-(id)initWithFrame:(CGRect)frame withDelBtn:(BOOL)delBtn;
+-(id)delTouch;
+-(void)loadInterface:(BOOL)delBtn;
 @end

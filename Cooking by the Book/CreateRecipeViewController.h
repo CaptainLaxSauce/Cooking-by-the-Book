@@ -19,15 +19,21 @@
 
 @property UIButton *addIngredientButton;
 @property UIView *ingredientLine;
-@property int ingredientsHeight;
 
 @property NSMutableArray *ingredientAry;
 @property NSMutableArray *stepAry;
 @property NSMutableArray *tagAry;
 
--(void)addIngredientTouch:(id)sender;
+@property (nonatomic,strong) NSMutableArray *moveAry;
+@property int ingredientIdx;
+
+-(void)addIngredientTouch;
+-(void)delIngredientTouch:(id)sender;
+
 -(void)submitRecipeTouch:(id)sender;
 -(void)backTouch:(id)sender;
 -(void)stepperValueChange:(id)sender;
+-(void)shiftObjectsUp:(NSInteger)index;
+-(void)shiftObjectsDown:(int)index;
 -(void)loadInterface;
 @end
