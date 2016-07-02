@@ -14,11 +14,18 @@
 @property UIButton *submitRecipeButton;
 @property UIButton *backButton;
 
+@property UITextField *titleTextField;
+@property UITextField *descTextField;
+
+@property UITextField *prepTimeField;
+@property UITextField *cookTimeField;
+@property UILabel *totTimeLabel;
+
 @property UIStepper *portionStepper;
 @property UILabel *portionNumLabel;
 
 @property UIButton *addIngredientButton;
-@property UIView *ingredientLine;
+@property UIButton *addStepButton;
 
 @property NSMutableArray *ingredientAry;
 @property NSMutableArray *stepAry;
@@ -27,13 +34,18 @@
 @property (nonatomic,strong) NSMutableArray *moveAry;
 @property int ingredientIdx;
 
+-(void)timeFieldChanged;
+
 -(void)addIngredientTouch;
 -(void)delIngredientTouch:(id)sender;
+
+-(void)addStepTouch;
+-(void)delStepTouch:(id)sender;
 
 -(void)submitRecipeTouch:(id)sender;
 -(void)backTouch:(id)sender;
 -(void)stepperValueChange:(id)sender;
 -(void)shiftObjectsUp:(NSInteger)index;
--(void)shiftObjectsDown:(int)index;
+-(void)shiftObjectsDown:(NSInteger)index;
 -(void)loadInterface;
 @end

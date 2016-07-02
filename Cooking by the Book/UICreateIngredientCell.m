@@ -21,7 +21,7 @@ int cornerRadius = 3;
     self = [super initWithFrame:frame];
     
     if (self){
-        [self loadInterface:(BOOL)delBtn];
+        [self loadInterface:delBtn];
         self.layer.cornerRadius = cornerRadius;
         self.clipsToBounds = YES;
     }
@@ -42,23 +42,23 @@ int cornerRadius = 3;
     
     //load text fields
     UITextField *quantityTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, quantityWidth, totalHeight)];
-    quantityTextField_.backgroundColor = [UIColor whiteColor];
     quantityTextField_.placeholder = @"#";
+    quantityTextField_.backgroundColor = [UIColor whiteColor];
     [quantityTextField_ setKeyboardType:UIKeyboardTypeNumberPad];
     [self addSubview:quantityTextField_];
     self.quantityTextField = quantityTextField_;
     
     UITextField *unitTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(quantityWidth, 0, unitWidth, totalHeight)];
-    unitTextField_.backgroundColor = [UIColor whiteColor];
     unitTextField_.placeholder = @"Unit";
+    unitTextField_.backgroundColor = [UIColor whiteColor];
     unitTextField_.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [unitTextField_ setKeyboardType:UIKeyboardTypeDefault];
     [self addSubview:unitTextField_];
     self.quantityTextField = unitTextField_;
     
     UITextField *titleTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(quantityWidth+unitWidth, 0, titleWidth, totalHeight)];
-    titleTextField_.backgroundColor = [UIColor whiteColor];
     titleTextField_.placeholder = @"Ingredient";
+    titleTextField_.backgroundColor = [UIColor whiteColor];
     titleTextField_.autocapitalizationType = UITextAutocapitalizationTypeWords;
     [titleTextField_ setKeyboardType:UIKeyboardTypeDefault];
     [self addSubview:titleTextField_];
