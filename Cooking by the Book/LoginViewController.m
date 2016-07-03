@@ -33,7 +33,8 @@ static int cornerRadius = 3;
 - (void) loginTouch:(id)sender{
     
     NSString *post = [NSString stringWithFormat:@"email=%@&password=%@",self.emailTextField.text,self.passwordTextField.text];
-    NSMutableURLRequest *request = [Helper setupPost:post withURLEnd:@"login"];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"login"];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
         

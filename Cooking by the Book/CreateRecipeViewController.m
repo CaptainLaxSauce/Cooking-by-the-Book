@@ -10,6 +10,8 @@
 #import "UIColor+CustomColors.h"
 #import "UICreateIngredientCell.h"
 #import "UICreateStepCell.h"
+#import "Helper.h"
+#import "DataClass.h"
 
 @implementation CreateRecipeViewController
 
@@ -30,11 +32,98 @@ int ingredientHeight;
 }
 
 -(void)timeFieldChanged{
-    int totTime = [self.prepTimeField.text intValue] + [self.cookTimeField.text intValue];
-    self.totTimeLabel.text = [NSString stringWithFormat:@"Total: %d minutes",totTime];
+    self.totTime = [self.prepTimeField.text intValue] + [self.cookTimeField.text intValue];
+    self.totTimeLabel.text = [NSString stringWithFormat:@"Total: %d minutes",self.totTime];
 }
 
 -(void)submitRecipeTouch:(id)sender{
+    //create dictionary of objects to send
+    
+    NSLog(@"ingredientAry = %@",self.ingredientAry);
+    NSLog(@"stepAry = %@",self.stepAry);
+    
+  
+    
+    
+    NSMutableArray *ingredientAryJson = [[NSMutableArray alloc]init];
+    for (int i = 1; i<=self.ingredientAry.count; i++){
+        NSMutableDictionary *ingredientDictJson = [[NSMutableDictionary alloc]init];
+        UICreateIngredientCell *tempIngredient = [self.ingredientAry objectAtIndex:i-1];
+        [ingredientDictJson setObject:tempIngredient.titleTextField.text forKey:@"ingredientID"]; //Need to change this to do discrete lookup
+        [ingredientDictJson setObject:tempIngredient.unitTextField.text forKey:@"ingredientUnitID"];
+        [ingredientDictJson setObject:tempIngredient.quantityTextField.text forKey:@"ingredientUnitQuantity"];
+        [ingredientAryJson addObject:ingredientDictJson];
+    }
+    
+    
+    NSMutableArray *stepAryJson = [[NSMutableArray alloc]init];
+    for (int i = 1; i<=self.stepAry.count; i++){
+        NSMutableDictionary *stepDictJson = [[NSMutableDictionary alloc]init];
+        UICreateStepCell *tempStep = [self.stepAry objectAtIndex:i-1];
+        [stepDictJson setObject:tempStep.textField.text forKey:@"stepDescription"];
+        [stepAryJson addObject:stepDictJson];
+        }
+    
+    NSMutableArray *tagAry = [[NSMutableArray alloc]init]; //there's probably a more elegant way to do this
+    if (self.quickTag.tagged == TRUE){
+        [tagAry addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"tagID", nil]];
+    }
+    if (self.simpleTag.tagged == TRUE){
+        [tagAry addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"tagID", nil]];
+    }
+    if (self.vegetarianTag.tagged == TRUE){
+        [tagAry addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"2",@"tagID", nil]];
+    }
+    if (self.veganTag.tagged == TRUE){
+        [tagAry addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"3",@"tagID", nil]];
+    }
+    
+    NSMutableDictionary* recipeDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       self.titleTextField.text,@"recipeTitle",
+                                       self.descTextField.text,@"recipeDescription",
+                                       self.portionNumLabel.text,@"recipePortionQuantity",
+                                       self.prepTimeField.text,@"recipePrepTime",
+                                       self.cookTimeField.text,@"recipeCookTime",
+                                       [NSString stringWithFormat:@"%d",self.totTime],@"recipeTotalTime",
+                                       ingredientAryJson,@"recipeIngredients",
+                                       stepAryJson,@"recipeSteps",
+                                       tagAry,@"recipeTags",
+                                       nil];
+    
+
+    DataClass *obj = [DataClass getInstance];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:recipeDict options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    jsonStr = [NSString stringWithFormat:@"user=%@&recipe=%@",obj.userId,jsonStr];
+    NSLog(@"jsonStr = %@",jsonStr);
+    NSData *postData = [jsonStr dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"createRecipe"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+        
+        NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        NSLog(@"ret = %@",ret_);
+        NSLog(@"response = %@",response);
+        if ([ret_ intValue] > 0) {
+            NSLog(@"Successful recipe post, id = %@",ret_);
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                //change UI to show sending
+            });
+            
+        }
+        
+        else{
+            NSLog(@"Recipe post failed");
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                //change UI to show fail
+            });
+        }
+    }];
+    
+    [dataTask resume];
+
+    
    [self performSegueWithIdentifier:@"CookbookViewController" sender:sender];
 }
 
@@ -62,6 +151,7 @@ int ingredientHeight;
     NSInteger index = [self.moveAry indexOfObject:tempButton.superview];
     [self.moveAry removeObjectAtIndex:index];
     [self shiftObjectsUp:index];
+    [self.ingredientAry removeObject:tempButton.superview];
     self.ingredientIdx = self.ingredientIdx-1;
 }
 
@@ -70,10 +160,6 @@ int ingredientHeight;
     [step.delButton addTarget:self action:@selector(delStepTouch:) forControlEvents:UIControlEventTouchUpInside];
     
     NSInteger moveIndex = self.ingredientIdx+self.stepAry.count+4;
-    NSLog(@"stepAry count = %ld",(long)self.stepAry.count);
-    NSLog(@"moveIndex = %ld",(long)moveIndex);
-    NSLog(@"move ary cnt = %ld",(long)self.moveAry.count);
-    
     [self.moveAry insertObject:step atIndex:moveIndex];
     [self shiftObjectsDown:moveIndex];
     [self.recipeScrollView addSubview:step];
@@ -93,8 +179,6 @@ int ingredientHeight;
         UICreateStepCell *tempStepCell = [self.stepAry objectAtIndex:i];
         [tempStepCell updateNum:i+1];
     }
-    
-    
 }
 
 -(void)shiftObjectsUp:(NSInteger)index{
@@ -103,6 +187,7 @@ int ingredientHeight;
         UIView *currView = [self.moveAry objectAtIndex:i];
         currView.frame = CGRectMake(currView.frame.origin.x, currView.frame.origin.y - textHeight - objectBreak, currView.frame.size.width, currView.frame.size.height);
     }
+    [self.recipeScrollView setContentSize:CGSizeMake(screenWidth,self.recipeScrollView.contentSize.height - textHeight - objectBreak)];
 }
 
 -(void)shiftObjectsDown:(NSInteger)index{
@@ -113,9 +198,8 @@ int ingredientHeight;
         //shift down in moveAry
         [self.moveAry insertObject:[self.moveAry objectAtIndex:i] atIndex:i+1];
         [self.moveAry removeObjectAtIndex:i];
-        NSLog(@"down loop i = %ld",(long)i);
     }
-    NSLog(@"Move ary count after down= %lu",(unsigned long)self.moveAry.count);
+    [self.recipeScrollView setContentSize:CGSizeMake(screenWidth,self.recipeScrollView.contentSize.height + textHeight + objectBreak)];
 }
 
 
@@ -128,6 +212,7 @@ int ingredientHeight;
     int stepperWidth = 94;
     int scrollHeight = screenHeight-statusBarHeight-textHeight*2-objectBreak*4;
     int labelWidth = (screenWidth-objectBreak*2)/10;
+    int tagWidth = (screenWidth-objectBreak*3)/2;
     
     titleHeight = objectBreak*3+textHeight*2;
     timeHeight = objectBreak*2+textHeight;
@@ -144,7 +229,7 @@ int ingredientHeight;
     //add scroll view
     UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+objectBreak*2+textHeight, screenWidth, scrollHeight)];
     recipeScrollView_.backgroundColor = [UIColor customGrayColor];
-    recipeScrollView_.contentSize = CGSizeMake(screenWidth, screenHeight*2);
+    recipeScrollView_.contentSize = CGSizeMake(screenWidth, titleHeight+timeHeight+portionsHeight+ingredientHeight*2);
     [self.view addSubview:recipeScrollView_];
     self.recipeScrollView = recipeScrollView_;
     
@@ -166,15 +251,15 @@ int ingredientHeight;
     self.descTextField = descTextField_;
     
     UIView *titleLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, titleHeight, objectWidth, 1)];
-    titleLine_.backgroundColor = [UIColor darkGrayColor];
+    titleLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:titleLine_];
     
     //add times
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, titleHeight+objectBreak, labelWidth*2, textHeight)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, titleHeight+objectBreak, labelWidth*1.6, textHeight)];
     timeLabel.text = @"Time";
     [self.recipeScrollView addSubview:timeLabel];
     
-    UIView *timeView = [[UIView alloc]initWithFrame:CGRectMake(objectBreak+labelWidth*2, titleHeight+objectBreak, labelWidth*4, textHeight)];
+    UIView *timeView = [[UIView alloc]initWithFrame:CGRectMake(objectBreak+labelWidth*1.6, titleHeight+objectBreak, labelWidth*4, textHeight)];
     timeView.backgroundColor = [UIColor whiteColor];
     timeView.layer.cornerRadius = cornerRadius;
     timeView.clipsToBounds = YES;
@@ -200,7 +285,7 @@ int ingredientHeight;
     self.totTimeLabel = totTimeLabel_;
     
     UIView *timeLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, titleHeight+objectBreak*2+textHeight, objectWidth, 1)];
-    timeLine_.backgroundColor = [UIColor darkGrayColor];
+    timeLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:timeLine_];
     
     //add portions
@@ -221,7 +306,7 @@ int ingredientHeight;
     [self.recipeScrollView addSubview:portionLabel_];
     
     UIView *portionLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight, objectWidth, 1)];
-    portionLine_.backgroundColor = [UIColor darkGrayColor];
+    portionLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:portionLine_];
     
     //add ingredients
@@ -245,7 +330,7 @@ int ingredientHeight;
     [moveAry_ addObject:addIngredientButton_];
     
     UIView *ingredientLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight, objectWidth, 1)];
-    ingredientLine_.backgroundColor = [UIColor darkGrayColor];
+    ingredientLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:ingredientLine_];
     [moveAry_ addObject:ingredientLine_];
     self.ingredientIdx=0;
@@ -272,12 +357,35 @@ int ingredientHeight;
     [moveAry_ addObject:addStepButton_];
     
     UIView *stepLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight+objectBreak*4+textHeight*3, objectWidth, 1)];
-    stepLine_.backgroundColor = [UIColor darkGrayColor];
+    stepLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:stepLine_];
     [moveAry_ addObject:stepLine_];
     
     //add tags
+    UILabel *tagLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak, objectWidth, textHeight)];
+    tagLabel_.text = @"Tags";
+    [self.recipeScrollView addSubview:tagLabel_];
+    [moveAry_ addObject:tagLabel_];
     
+    UIToggleTagButton *quickTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*2+textHeight, tagWidth, textHeight) withTagType:0 withTagged:FALSE];
+    [self.recipeScrollView addSubview:quickTag_];
+    [moveAry_ addObject:quickTag_];
+    self.quickTag = quickTag_;
+    
+    UIToggleTagButton *simpleTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(objectBreak*2+tagWidth, portionsHeight+ingredientHeight*2+objectBreak*2+textHeight, tagWidth, textHeight) withTagType:1 withTagged:FALSE];
+    [self.recipeScrollView addSubview:simpleTag_];
+    [moveAry_ addObject:simpleTag_];
+    self.simpleTag = simpleTag_;
+    
+    UIToggleTagButton *vegetarianTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*3+textHeight*2, tagWidth, textHeight) withTagType:2 withTagged:FALSE];
+    [self.recipeScrollView addSubview:vegetarianTag_];
+    [moveAry_ addObject:vegetarianTag_];
+    self.vegetarianTag = vegetarianTag_;
+    
+    UIToggleTagButton *veganTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(objectBreak*2+tagWidth, portionsHeight+ingredientHeight*2+objectBreak*3+textHeight*2, tagWidth, textHeight) withTagType:3 withTagged:FALSE];
+    [self.recipeScrollView addSubview:veganTag_];
+    [moveAry_ addObject:veganTag_];
+    self.veganTag = veganTag_;
     
     //assign arrays to properties
     self.ingredientAry = ingredientAry_;

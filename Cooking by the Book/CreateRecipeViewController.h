@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIToggleTagButton.h"
 
 @interface CreateRecipeViewController : UIViewController
 
@@ -20,12 +21,18 @@
 @property UITextField *prepTimeField;
 @property UITextField *cookTimeField;
 @property UILabel *totTimeLabel;
+@property int totTime;
 
 @property UIStepper *portionStepper;
 @property UILabel *portionNumLabel;
 
 @property UIButton *addIngredientButton;
 @property UIButton *addStepButton;
+
+@property UIToggleTagButton *quickTag;
+@property UIToggleTagButton *simpleTag;
+@property UIToggleTagButton *vegetarianTag;
+@property UIToggleTagButton *veganTag;
 
 @property NSMutableArray *ingredientAry;
 @property NSMutableArray *stepAry;

@@ -13,5 +13,11 @@
 +(UIColor*)primaryColor;
 +(UIColor*)secondaryColor;
 +(UIColor*)customGrayColor;
++(UIColor*)lineColor;
++(UIColor*)tagQuickColor;
++(UIColor*)tagSimpleColor;
++(UIColor*)tagVegetarianColor;
++(UIColor*)tagVeganColor;
+
 
 @end

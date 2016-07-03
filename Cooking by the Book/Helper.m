@@ -10,8 +10,7 @@
 
 @implementation Helper
 
-+(NSMutableURLRequest *)setupPost:(NSString *)post withURLEnd:(NSString *)urlEnd{
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
++(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd{
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)postData.length];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]init];
     [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://75.135.74.26:8080/%@.php",urlEnd]]];

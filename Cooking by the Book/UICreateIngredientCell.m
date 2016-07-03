@@ -54,7 +54,7 @@ int cornerRadius = 3;
     unitTextField_.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [unitTextField_ setKeyboardType:UIKeyboardTypeDefault];
     [self addSubview:unitTextField_];
-    self.quantityTextField = unitTextField_;
+    self.unitTextField = unitTextField_;
     
     UITextField *titleTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(quantityWidth+unitWidth, 0, titleWidth, totalHeight)];
     titleTextField_.placeholder = @"Ingredient";

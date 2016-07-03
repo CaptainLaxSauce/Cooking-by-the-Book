@@ -33,7 +33,8 @@ static int cornerRadius = 3;
     NSLog(@"%@",self.nameTextField.text);
     
     NSString *post = [NSString stringWithFormat:@"name=%@&email=%@&password=%@",self.nameTextField.text,self.emailTextField.text,self.passwordTextField2.text];
-    NSMutableURLRequest *request = [Helper setupPost:post withURLEnd:@"signup"];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"signup"];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
         NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
