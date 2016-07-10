@@ -38,6 +38,8 @@ static int cornerRadius = 3;
     //declare constants
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
+    NSLog(@"screenWidth = %d",screenWidth);
+    
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     int objWidth = screenWidth - objectBreak*2;
     int textHeight = screenHeight/20;
@@ -49,9 +51,14 @@ static int cornerRadius = 3;
     //add scroll view
     UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, textHeight+objectBreak*2+statusBarHeight, screenWidth, scrollHeight)];
     recipeScrollView_.backgroundColor = [UIColor customGrayColor];
+    recipeScrollView_.contentSize = CGSizeMake(screenWidth, screenHeight*2);
     self.recipeScrollView = recipeScrollView_;
     [self.view addSubview:recipeScrollView_];
     
+    //add CookbookRecipeCells
+    NSArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
+    UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak, screenWidth, screenHeight/6) withImage:[UIImage imageNamed:@"recipeimage.png"] withTitle:@"My Title" withDesc:@"This is my pretty long description that I'm hoping will wrap to another line" withTags:tagAry];
+    [self.recipeScrollView addSubview:cookCell];
     
     //add button
     UIButton *createRecipeButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak , screenHeight-tabHeight-objectBreak-buttonHeight, objWidth, buttonHeight)];

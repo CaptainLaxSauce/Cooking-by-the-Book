@@ -28,6 +28,10 @@
 		04B49E5D1CC7063500312485 /* Cooking_by_the_BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E5C1CC7063500312485 /* Cooking_by_the_BookTests.m */; };
 		04B49E681CC7063500312485 /* Cooking_by_the_BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E671CC7063500312485 /* Cooking_by_the_BookUITests.m */; };
 		04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */; };
+		04E00D6B1D31BFE30016FED8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E00D6A1D31BFE30016FED8 /* CoreData.framework */; };
+		04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */; };
+		04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E67AE51D32D4AA000371E5 /* UITagBox.m */; };
+		04E67AEC1D32E0A2000371E5 /* recipeimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E67AEB1D32E0A2000371E5 /* recipeimage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +96,11 @@
 		04B49E691CC7063500312485 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04B49E751CC70A5A00312485 /* TabBarControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarControllerDelegate.h; sourceTree = "<group>"; };
 		04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarControllerDelegate.m; sourceTree = "<group>"; };
+		04E00D6A1D31BFE30016FED8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		04E00D6D1D31C1020016FED8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		04E67AE41D32D4AA000371E5 /* UITagBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITagBox.h; sourceTree = "<group>"; };
+		04E67AE51D32D4AA000371E5 /* UITagBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITagBox.m; sourceTree = "<group>"; };
+		04E67AEB1D32E0A2000371E5 /* recipeimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recipeimage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E00D6B1D31BFE30016FED8 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +145,7 @@
 		04B49E361CC7063500312485 = {
 			isa = PBXGroup;
 			children = (
+				04E00D6A1D31BFE30016FED8 /* CoreData.framework */,
 				04B49E411CC7063500312485 /* Cooking by the Book */,
 				04B49E5B1CC7063500312485 /* Cooking by the BookTests */,
 				04B49E661CC7063500312485 /* Cooking by the BookUITests */,
@@ -160,6 +171,8 @@
 				04B49E461CC7063500312485 /* AppDelegate.m */,
 				045A81F91D20767800A90D8E /* UICookbookRecipeCell.h */,
 				045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */,
+				04E67AE41D32D4AA000371E5 /* UITagBox.h */,
+				04E67AE51D32D4AA000371E5 /* UITagBox.m */,
 				045A81FC1D20767E00A90D8E /* CreateRecipe */,
 				04B49E7E1CC70E6D00312485 /* ViewControllers */,
 				04B49E4B1CC7063500312485 /* Main.storyboard */,
@@ -176,6 +189,8 @@
 		04B49E421CC7063500312485 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				04E67AEB1D32E0A2000371E5 /* recipeimage.png */,
+				04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */,
 				045A81EC1D2069A700A90D8E /* DataClass.h */,
 				045A81ED1D2069A700A90D8E /* DataClass.m */,
 				045A81E91D2060A200A90D8E /* Helper.h */,
@@ -292,6 +307,7 @@
 				TargetAttributes = {
 					04B49E3E1CC7063500312485 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = R48E5GJ873;
 					};
 					04B49E571CC7063500312485 = {
 						CreatedOnToolsVersion = 7.3;
@@ -329,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04B49E521CC7063500312485 /* LaunchScreen.storyboard in Resources */,
+				04E67AEC1D32E0A2000371E5 /* recipeimage.png in Resources */,
 				04B49E4F1CC7063500312485 /* Assets.xcassets in Resources */,
 				04B49E4D1CC7063500312485 /* Main.storyboard in Resources */,
 			);
@@ -359,6 +376,7 @@
 				04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */,
 				045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */,
 				047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */,
+				04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */,
 				045A81F11D2072AC00A90D8E /* MyProfileViewController.m in Sources */,
 				04833E731D208B1C00631AA4 /* CreateRecipeViewController.m in Sources */,
 				048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */,
@@ -368,6 +386,7 @@
 				045A81EB1D2060A200A90D8E /* Helper.m in Sources */,
 				045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */,
 				047E193F1D2751030011349C /* UICreateStepCell.m in Sources */,
+				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
 				045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */,
 				04833E761D20A9D600631AA4 /* UICreateIngredientCell.m in Sources */,
 				04B49E441CC7063500312485 /* main.m in Sources */,
@@ -529,10 +548,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Cooking by the Book/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.EthanJack.Cooking-by-the-Book";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -540,10 +562,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Cooking by the Book/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.EthanJack.Cooking-by-the-Book";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -633,6 +658,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				04E00D6D1D31C1020016FED8 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 04E00D6D1D31C1020016FED8 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 04B49E371CC7063500312485 /* Project object */;
 }

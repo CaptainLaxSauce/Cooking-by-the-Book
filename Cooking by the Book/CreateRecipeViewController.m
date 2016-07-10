@@ -42,9 +42,6 @@ int ingredientHeight;
     NSLog(@"ingredientAry = %@",self.ingredientAry);
     NSLog(@"stepAry = %@",self.stepAry);
     
-  
-    
-    
     NSMutableArray *ingredientAryJson = [[NSMutableArray alloc]init];
     for (int i = 1; i<=self.ingredientAry.count; i++){
         NSMutableDictionary *ingredientDictJson = [[NSMutableDictionary alloc]init];
@@ -122,9 +119,19 @@ int ingredientHeight;
     }];
     
     [dataTask resume];
-
+    
     
    [self performSegueWithIdentifier:@"CookbookViewController" sender:sender];
+}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    NSManagedObjectContext *context = nil;
+    id delegate = [[UIApplication sharedApplication] delegate];
+    if ([delegate performSelector:@selector(managedObjectContext)]) {
+        context = [delegate managedObjectContext];
+    }
+    return context;
 }
 
 -(void)backTouch:(id)sender{

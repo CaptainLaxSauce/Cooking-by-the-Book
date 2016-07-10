@@ -10,6 +10,14 @@
 
 @interface CookbookViewController : UIViewController
 
+typedef enum TagType : int{
+    quick = 0,
+    simple = 1,
+    vegetarian = 2,
+    vegan = 3
+    
+} TagType;
+
 @property UIScrollView *recipeScrollView;
 @property UIButton *createRecipeButton;
 

@@ -10,11 +10,12 @@
 
 @interface UICookbookRecipeCell : UIView
 
-@property CGRect *frame;
 @property UIImage *image;
+@property UIImageView *imageView;
 @property NSString *title;
 @property NSString *desc;
 @property NSArray *tagAry;
+
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;

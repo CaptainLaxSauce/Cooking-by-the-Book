@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "UIToggleTagButton.h"
+#import "AppDelegate.h"
+#import <CoreData/CoreData.h>
 
-@interface CreateRecipeViewController : UIViewController
+@interface CreateRecipeViewController : UIViewController 
+
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @property UIScrollView *recipeScrollView;
 @property UIButton *submitRecipeButton;

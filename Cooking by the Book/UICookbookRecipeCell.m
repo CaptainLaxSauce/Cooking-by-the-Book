@@ -7,27 +7,59 @@
 //
 
 #import "UICookbookRecipeCell.h"
+#import "UITagBox.h"
 
 @implementation UICookbookRecipeCell
 
+
+
 -(id)init{
-    return [self initWithFrame:CGRectMake(0, 0, 100, 20)];
+    return [self initWithFrame:CGRectMake(0, 0, 200, 20)];
 }
 
--(id)initWithFrame:(CGRect)frame_{
-    return [self initWithFrame:frame_ withImage:nil withTitle:@"Title" withDesc:@"Description" withTags:nil];
+-(id)initWithFrame:(CGRect)frame{
+    return [self initWithFrame:frame withImage:nil withTitle:@"Title" withDesc:@"Description" withTags:nil];
 }
 
--(id)initWithFrame:(CGRect)frame_ withImage:(UIImage *)image_ withTitle:(NSString *)title_ withDesc:(NSString *)desc_ withTags:(NSArray *)tagAry_{
-    self = [super initWithFrame:frame_];
+-(id)initWithFrame:(CGRect)frame withImage:(UIImage *)image_ withTitle:(NSString *)title_ withDesc:(NSString *)desc_ withTags:(NSArray *)tagAry_{
+    self = [super initWithFrame:frame];
+    
     if (self) {
-        self.frame = &(frame_);
-        self.image = image_;
-        self.title = title_;
-        self.desc = desc_;
-        self.tagAry = tagAry_;
-        self.backgroundColor = [UIColor redColor];
+        int objectBreak = 8;
+        int totalWidth = frame.size.width;
+        int totalHeight = frame.size.height;
+        int imageHeight = totalHeight - objectBreak*2;
+        int titleHeight = (totalHeight-objectBreak*3)/3;
+        int tagWidth = totalHeight;
+        
+        _image = image_;
+        _title = title_;
+        _desc = desc_;
+        _tagAry = tagAry_;
+        self.backgroundColor = [UIColor whiteColor];
+        
+     
+        _imageView = [[UIImageView alloc]initWithImage:_image];
+        [_imageView setFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
+        [self addSubview:_imageView];
+        
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, objectBreak, totalWidth - imageHeight - tagWidth, titleHeight)];
+        UIFontDescriptor * fontD = [titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
+        titleLabel.font = [UIFont fontWithDescriptor:fontD size:0];
+        titleLabel.text = _title;
+        [self addSubview:titleLabel];
+        
+        UILabel *descLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, titleHeight+objectBreak*2, totalWidth - imageHeight - tagWidth - objectBreak*2, totalHeight - titleHeight - objectBreak*3)];
+        descLabel.text = _desc;
+        descLabel.numberOfLines = 3;
+        descLabel.adjustsFontSizeToFitWidth = YES;
+        [self addSubview:descLabel];
+        
+        UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(totalWidth - tagWidth, 0, tagWidth, totalHeight) withTags:tagAry_];
+        [self addSubview:tagBox];
+     
     }
+
     return self;
 }
 
