@@ -30,6 +30,7 @@
 		04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */; };
 		04E00D6B1D31BFE30016FED8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E00D6A1D31BFE30016FED8 /* CoreData.framework */; };
 		04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */; };
+		04E5ED351D3DBA18004E9474 /* CookbookRecipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5ED341D3DBA18004E9474 /* CookbookRecipe.m */; };
 		04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E67AE51D32D4AA000371E5 /* UITagBox.m */; };
 		04E67AEC1D32E0A2000371E5 /* recipeimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E67AEB1D32E0A2000371E5 /* recipeimage.png */; };
 /* End PBXBuildFile section */
@@ -98,6 +99,8 @@
 		04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarControllerDelegate.m; sourceTree = "<group>"; };
 		04E00D6A1D31BFE30016FED8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		04E00D6D1D31C1020016FED8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		04E5ED331D3DBA18004E9474 /* CookbookRecipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CookbookRecipe.h; sourceTree = "<group>"; };
+		04E5ED341D3DBA18004E9474 /* CookbookRecipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CookbookRecipe.m; sourceTree = "<group>"; };
 		04E67AE41D32D4AA000371E5 /* UITagBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITagBox.h; sourceTree = "<group>"; };
 		04E67AE51D32D4AA000371E5 /* UITagBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITagBox.m; sourceTree = "<group>"; };
 		04E67AEB1D32E0A2000371E5 /* recipeimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recipeimage.png; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				045A81EA1D2060A200A90D8E /* Helper.m */,
 				045931571D1902F5003D1C47 /* UIColor+CustomColors.h */,
 				045931581D1902F5003D1C47 /* UIColor+CustomColors.m */,
+				04E5ED331D3DBA18004E9474 /* CookbookRecipe.h */,
+				04E5ED341D3DBA18004E9474 /* CookbookRecipe.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -386,6 +391,7 @@
 				045A81EB1D2060A200A90D8E /* Helper.m in Sources */,
 				045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */,
 				047E193F1D2751030011349C /* UICreateStepCell.m in Sources */,
+				04E5ED351D3DBA18004E9474 /* CookbookRecipe.m in Sources */,
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
 				045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */,
 				04833E761D20A9D600631AA4 /* UICreateIngredientCell.m in Sources */,
