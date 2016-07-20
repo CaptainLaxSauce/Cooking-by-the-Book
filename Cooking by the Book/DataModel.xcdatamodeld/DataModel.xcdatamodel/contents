@@ -4,22 +4,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Recipe" syncable="YES">
-        <attribute name="ingredientAry" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="recipeCreateUser" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recipeDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recipeID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recipeImage" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="recipePortions" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="recipeTimeCook" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="recipeTimePrep" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="recipeTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="stepAry" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="tagAry" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="totTime" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-    </entity>
     <elements>
         <element name="Ingredient" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="Recipe" positionX="-54" positionY="9" width="128" height="225"/>
     </elements>
 </model>

@@ -38,13 +38,29 @@ static int cornerRadius = 3;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
         
-        NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",ret_);
-        if ([ret_ intValue] > 0) {
+        NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",ret);
+        if ([ret intValue] > 0) {
             
             DataClass *obj = [DataClass getInstance];
-            obj.userId = ret_;
+            obj.userId = ret;
             NSLog(@"Success! userID = %@",obj.userId);
+            
+            NSString *post2 = [NSString stringWithFormat:@"userID=%@",ret];
+            NSData *postData2 = [post2 dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+            NSMutableURLRequest *request2 = [Helper setupPost:postData2 withURLEnd:@"getCookbook"];
+            NSURLSession *session2 = [NSURLSession sharedSession];
+            NSURLSessionDataTask *dataTask2 = [session2 dataTaskWithRequest:request2 completionHandler:^(NSData *postData2, NSURLResponse *response2, NSError *error2) {
+                NSString *ret2 = [[NSString alloc] initWithData:postData2 encoding:NSUTF8StringEncoding];
+                NSLog(@"ret2 = %@",ret2);
+                NSDictionary *cookbookDict = [NSJSONSerialization JSONObjectWithData:postData2 options:kNilOptions error:&error2];
+                NSLog(@"cookbookDict count = %lu",(unsigned long)cookbookDict.count);
+                NSArray *cookbookAry = [cookbookDict objectForKey:@"recipeInfo"];
+                NSLog(@"cookbookAry count = %lu",(unsigned long)cookbookAry.count);
+                obj.cookbookAry = cookbookAry;
+                
+            }];
+            [dataTask2 resume];
             dispatch_async(dispatch_get_main_queue(), ^(void){
                [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
             });
@@ -136,7 +152,7 @@ static int cornerRadius = 3;
     
     //create buttons
     UIButton *signupButton_ = [[UIButton alloc]init];
-    signupButton_.frame = CGRectMake(objectBreak, screenHeight/2, buttonWidth, screenHeight/20);
+    signupButton_.frame = CGRectMake(objectBreak, screenHeight/2, buttonWidth, screenHeight/10);
     [signupButton_ addTarget:self action:@selector(signupTouch:) forControlEvents:UIControlEventTouchUpInside];
     [signupButton_ setTitle:@"Sign Up" forState:UIControlStateNormal];
     signupButton_.backgroundColor = [UIColor secondaryColor];
@@ -146,7 +162,7 @@ static int cornerRadius = 3;
     self.signupButton = signupButton_;
     
     UIButton *loginButton_ = [[UIButton alloc]init];
-    loginButton_.frame = CGRectMake(buttonWidth+objectBreak*2, screenHeight/2, buttonWidth, screenHeight/20);
+    loginButton_.frame = CGRectMake(buttonWidth+objectBreak*2, screenHeight/2, buttonWidth, screenHeight/10);
     [loginButton_ addTarget:self action:@selector(loginTouch:) forControlEvents:UIControlEventTouchUpInside];
     [loginButton_ setTitle:@"Login" forState:UIControlStateNormal];
     loginButton_.backgroundColor = [UIColor secondaryColor];

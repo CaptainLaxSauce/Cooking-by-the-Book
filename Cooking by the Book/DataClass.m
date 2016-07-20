@@ -9,7 +9,7 @@
 #import "DataClass.h"
 
 @implementation DataClass
-@synthesize userId;
+//@synthesize userId;
 
 static DataClass *instance = nil;
 

@@ -37,21 +37,6 @@
         self.stepAry = stepAry_;
         self.image = image_;
         
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        NSManagedObjectContext* context = appDelegate.managedObjectContext;
-        NSManagedObject *newRecipe = [NSEntityDescription insertNewObjectForEntityForName:@"Recipe" inManagedObjectContext:context];
-        [newRecipe setValue:title_ forKey:@"title"];
-        [newRecipe setValue:recipeID_ forKey:@"id"];
-        [newRecipe setValue:desc_ forKey:@"desc"];
-        [newRecipe setValue:[NSKeyedArchiver archivedDataWithRootObject:tagAry_] forKey:@"tagAry"];
-        [newRecipe setValue:prepTime_ forKey:@"prepTime"];
-        [newRecipe setValue:cookTime_ forKey:@"cookTime"];
-        [newRecipe setValue:totTime_ forKey:@"totTime"];
-        [newRecipe setValue:portionNum_ forKey:@"portionNum"];
-        [newRecipe setValue:[NSKeyedArchiver archivedDataWithRootObject:ingredientAry_] forKey:@"ingredientAry"];
-        [newRecipe setValue:[NSKeyedArchiver archivedDataWithRootObject:stepAry_] forKey:@"stepAry"];
-        [newRecipe setValue:UIImagePNGRepresentation(image_) forKey:@"image"];
-        
     }
     
     return self;

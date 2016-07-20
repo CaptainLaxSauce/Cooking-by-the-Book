@@ -33,23 +33,24 @@
     
         
     NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-    
-    //Ethan needs to remove this on the server side
-    ret = [ret stringByReplacingOccurrencesOfString:@"<pre>initializeList=" withString:@""];
-    ret = [ret stringByReplacingOccurrencesOfString:@"</pre>" withString:@""];
-        
-    NSData *retData = [ret dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    
     NSLog(@"initialize = %@",ret);
+        
+    //Ethan needs to remove this on the server side
+    //ret = [ret stringByReplacingOccurrencesOfString:@"<pre>initializeList=" withString:@""];
+    //ret = [ret stringByReplacingOccurrencesOfString:@"</pre>" withString:@""];
+        
+    //NSData *retData = [ret dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    
        
         
-    NSDictionary *initDict = [NSJSONSerialization JSONObjectWithData:retData options:kNilOptions error:&error];
+    NSDictionary *initDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
     NSArray *ingredientAry = [initDict objectForKey:@"ingredientInfo"];
     NSLog(@"initAry count = %lu",(unsigned long)ingredientAry.count);
         
     //retrieve core ingredient array
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Ingredients"];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Ingredient"];
     NSMutableArray *coreIngredientAry = [[managedObjectContext executeFetchRequest:fetchRequest error:nil]mutableCopy];
 /*
     for (int i=0;i<ingredientAry.count;i++){

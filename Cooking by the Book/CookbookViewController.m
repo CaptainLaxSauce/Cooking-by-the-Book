@@ -10,6 +10,7 @@
 #import "UIColor+CustomColors.h"
 #import "UICookbookRecipeCell.h"
 #import "TabBarControllerDelegate.h"
+#import "DataClass.h"
 
 @interface CookbookViewController()
 
@@ -56,9 +57,30 @@ static int cornerRadius = 3;
     [self.view addSubview:recipeScrollView_];
     
     //add CookbookRecipeCells
-    NSArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
-    UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak, screenWidth, screenHeight/6) withImage:[UIImage imageNamed:@"recipeimage.png"] withTitle:@"My Title" withDesc:@"This is my pretty long description that I'm hoping will wrap to another line" withTags:tagAry];
-    [self.recipeScrollView addSubview:cookCell];
+    DataClass *obj = [DataClass getInstance];
+    NSLog(@"coobookAry count in cookbookVC = %lu",(unsigned long)obj.cookbookAry.count);
+    //NSArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
+    for (int i=0;i<obj.cookbookAry.count;i++){
+        NSDictionary *recipeDict = [obj.cookbookAry objectAtIndex:i];
+        NSArray *tagAry = [recipeDict objectForKey:@"tagInfo"];
+        NSMutableArray *tagNumAry = [[NSMutableArray alloc]init];
+        NSLog(@"tagAry count = %lu",(unsigned long)tagAry.count);
+        
+        for (int ii=0;ii<tagAry.count;ii++){
+            NSDictionary *tagDict = [tagAry objectAtIndex:ii];
+            [tagNumAry addObject:[tagDict objectForKey:@"tagID"]];
+            NSLog(@"tagID = %@",[tagDict objectForKey:@"tagID"]);
+            NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count);
+         
+        }
+        
+        //NSMutableArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
+        UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + screenHeight/6*i + objectBreak*i, screenWidth, screenHeight/6) withImage:[UIImage imageNamed:@"recipeimage.png"] withTitle:[recipeDict objectForKey:@"recipeTitle"] withDesc:[recipeDict objectForKey:@"recipeDescription"] withTags:tagNumAry];
+        [self.recipeScrollView addSubview:cookCell];
+        
+    }
+    
+
     
     //add button
     UIButton *createRecipeButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak , screenHeight-tabHeight-objectBreak-buttonHeight, objWidth, buttonHeight)];

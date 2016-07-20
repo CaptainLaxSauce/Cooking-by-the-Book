@@ -6,6 +6,7 @@
 //  Copyright © 2016 EthanJack. All rights reserved.
 //
 
+#import "TabBarControllerDelegate.h"
 #import "CreateRecipeViewController.h"
 #import "UIColor+CustomColors.h"
 #import "UICreateIngredientCell.h"
@@ -89,6 +90,7 @@ int ingredientHeight;
     
 
     DataClass *obj = [DataClass getInstance];
+    NSLog(@"userID in create recipe = %@",obj.userId);
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:recipeDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -121,7 +123,7 @@ int ingredientHeight;
     [dataTask resume];
     
     
-   [self performSegueWithIdentifier:@"CookbookViewController" sender:sender];
+    [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
 }
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -134,8 +136,13 @@ int ingredientHeight;
     return context;
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+
 -(void)backTouch:(id)sender{
-   [self performSegueWithIdentifier:@"CookbookViewController" sender:sender];
+    self.tabBarController.selectedIndex = 2;
+   [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
 }
 
 -(void)stepperValueChange:(id)sender{
@@ -237,6 +244,7 @@ int ingredientHeight;
     UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+objectBreak*2+textHeight, screenWidth, scrollHeight)];
     recipeScrollView_.backgroundColor = [UIColor customGrayColor];
     recipeScrollView_.contentSize = CGSizeMake(screenWidth, titleHeight+timeHeight+portionsHeight+ingredientHeight*2);
+    recipeScrollView_.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     [self.view addSubview:recipeScrollView_];
     self.recipeScrollView = recipeScrollView_;
     

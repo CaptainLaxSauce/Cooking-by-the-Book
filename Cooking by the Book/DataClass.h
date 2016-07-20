@@ -10,10 +10,12 @@
 
 @interface DataClass : NSObject{
 
-NSString *userId;
+//NSString *userId;
 
 }
 
-@property(nonatomic,retain)NSString *userId;
+@property(nonatomic,retain) NSArray *cookbookAry;
+@property(nonatomic,retain) NSString *userId;
+
 +(DataClass*)getInstance;
 @end
