@@ -13,14 +13,15 @@
 
 @implementation CookbookRecipe
 
-@synthesize title = _title;
-
-
 -(id)init{
-    return [self initWithTitle:nil withID:nil withDesc:nil withTagAry:nil withPrepTime:0 withCookTime:0 withTotTime:0 withPortionNum:0 withIngredientAry:nil withStepAry:nil withImage:nil];
+    return [self initBasicWithTitle:nil withID:nil withDesc:nil withImage:nil withTagAry:nil];
 }
 
--(id)initWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withTagAry:(NSArray *)tagAry_ withPrepTime:(NSNumber*)prepTime_ withCookTime:(NSNumber*)cookTime_ withTotTime:(NSNumber*)totTime_ withPortionNum:(NSNumber*)portionNum_ withIngredientAry:(NSArray *)ingredientAry_ withStepAry:(NSArray *)stepAry_ withImage:(UIImage *)image_{
+-(id)initBasicWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withImage:(UIImage *)image_ withTagAry:(NSArray *)tagAry_{
+    return [self initDetailedWithTitle:title_ withID:recipeID_ withDesc:desc_ withImage:image_ withTagAry:tagAry_ withPrepTime:nil withCookTime:nil withTotTime:nil withPortionNum:nil withIngredientAry:nil withStepAry:nil];
+}
+
+-(id)initDetailedWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withImage:(UIImage *)image_ withTagAry:(NSArray *)tagAry_ withPrepTime:(NSNumber*)prepTime_ withCookTime:(NSNumber*)cookTime_ withTotTime:(NSNumber*)totTime_ withPortionNum:(NSNumber*)portionNum_ withIngredientAry:(NSArray *)ingredientAry_ withStepAry:(NSArray *)stepAry_{
     
     self = [super init];
     
@@ -28,6 +29,7 @@
         self.title = title_;
         self.recipeID = recipeID_;
         self.desc = desc_;
+        self.image = image_;
         self.tagAry = tagAry_;
         self.prepTime = prepTime_;
         self.cookTime = cookTime_;
@@ -35,7 +37,6 @@
         self.portionNum = portionNum_;
         self.ingredientAry = ingredientAry_;
         self.stepAry = stepAry_;
-        self.image = image_;
         
     }
     

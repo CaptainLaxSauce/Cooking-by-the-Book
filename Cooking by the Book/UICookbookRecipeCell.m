@@ -21,6 +21,10 @@
     return [self initWithFrame:frame withImage:nil withTitle:@"Title" withDesc:@"Description" withTags:nil];
 }
 
+-(id)initWithFrame:(CGRect)frame withCookbookRecipe:(CookbookRecipe*)cookbookRecipe_{
+    return [self initWithFrame:frame withImage:cookbookRecipe_.image withTitle:cookbookRecipe_.title withDesc:cookbookRecipe_.desc withTags:cookbookRecipe_.tagAry];
+}
+
 -(id)initWithFrame:(CGRect)frame withImage:(UIImage *)image_ withTitle:(NSString *)title_ withDesc:(NSString *)desc_ withTags:(NSArray *)tagAry_{
     self = [super initWithFrame:frame];
     
@@ -38,15 +42,18 @@
         _tagAry = tagAry_;
         self.backgroundColor = [UIColor whiteColor];
         
-     
-        _imageView = [[UIImageView alloc]initWithImage:_image];
-        [_imageView setFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
-        [self addSubview:_imageView];
-        
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, objectBreak, totalWidth - imageHeight - tagWidth, titleHeight)];
+        /* add this back in when images are working
+        if (_image != nil){
+            _imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:_image]];
+            [_imageView setFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
+            [self addSubview:_imageView];
+        }
+*/
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, objectBreak, totalWidth - imageHeight - tagWidth - objectBreak, titleHeight)];
         UIFontDescriptor * fontD = [titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
         titleLabel.font = [UIFont fontWithDescriptor:fontD size:0];
         titleLabel.text = _title;
+        titleLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:titleLabel];
         
         UILabel *descLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, titleHeight+objectBreak*2, totalWidth - imageHeight - tagWidth - objectBreak*2, totalHeight - titleHeight - objectBreak*3)];

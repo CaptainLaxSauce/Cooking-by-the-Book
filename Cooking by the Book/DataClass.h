@@ -14,8 +14,11 @@
 
 }
 
-@property(nonatomic,retain) NSArray *cookbookAry;
+@property(nonatomic,retain) NSMutableArray *cookbookAry;
 @property(nonatomic,retain) NSString *userId;
 
 +(DataClass*)getInstance;
+-(void)initCookbookAry:(NSArray *)jsonCookbookAry_;
+-(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key;
+
 @end

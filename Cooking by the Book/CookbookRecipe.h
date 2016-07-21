@@ -24,5 +24,6 @@
 @property UIImage *image;
 
 -(id)init;
--(id)initWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withTagAry:(NSArray *)tagAry_ withPrepTime:(NSNumber *)prepTime_ withCookTime:(NSNumber *)cookTime_ withTotTime:(NSNumber *)totTime_ withPortionNum:(NSNumber *)portionNum_ withIngredientAry:(NSArray *)ingredientAry_ withStepAry:(NSArray *)stepAry_ withImage:(UIImage *)image_;
+-(id)initBasicWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withImage:(UIImage *)image_ withTagAry:(NSArray *)tagAry_;
+-(id)initDetailedWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withImage:(UIImage *)image_ withTagAry:(NSArray *)tagAry_ withPrepTime:(NSNumber *)prepTime_ withCookTime:(NSNumber *)cookTime_ withTotTime:(NSNumber *)totTime_ withPortionNum:(NSNumber *)portionNum_ withIngredientAry:(NSArray *)ingredientAry_ withStepAry:(NSArray *)stepAry_;
 @end

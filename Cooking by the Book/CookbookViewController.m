@@ -59,29 +59,23 @@ static int cornerRadius = 3;
     //add CookbookRecipeCells
     DataClass *obj = [DataClass getInstance];
     NSLog(@"coobookAry count in cookbookVC = %lu",(unsigned long)obj.cookbookAry.count);
-    //NSArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
-    for (int i=0;i<obj.cookbookAry.count;i++){
-        NSDictionary *recipeDict = [obj.cookbookAry objectAtIndex:i];
-        NSArray *tagAry = [recipeDict objectForKey:@"tagInfo"];
-        NSMutableArray *tagNumAry = [[NSMutableArray alloc]init];
-        NSLog(@"tagAry count = %lu",(unsigned long)tagAry.count);
+    
+    for (int i = 0;i<obj.cookbookAry.count;i++){
         
-        for (int ii=0;ii<tagAry.count;ii++){
-            NSDictionary *tagDict = [tagAry objectAtIndex:ii];
-            [tagNumAry addObject:[tagDict objectForKey:@"tagID"]];
-            NSLog(@"tagID = %@",[tagDict objectForKey:@"tagID"]);
-            NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count);
-         
-        }
+        CookbookRecipe *tempRecipe = [[CookbookRecipe alloc]init];
+        tempRecipe = [obj.cookbookAry objectAtIndex:i];
         
-        //NSMutableArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
-        UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + screenHeight/6*i + objectBreak*i, screenWidth, screenHeight/6) withImage:[UIImage imageNamed:@"recipeimage.png"] withTitle:[recipeDict objectForKey:@"recipeTitle"] withDesc:[recipeDict objectForKey:@"recipeDescription"] withTags:tagNumAry];
+        NSLog(@"2 temp recipe properties = %@ %@ %@ %@",tempRecipe.title, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
+        UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + screenHeight/6*i + objectBreak*i, screenWidth, screenHeight/6) withCookbookRecipe:tempRecipe];
         [self.recipeScrollView addSubview:cookCell];
-        
     }
     
-
+    //NSArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
     
+    //NSMutableArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
+   /* loop to add recipe cells
+
+    */
     //add button
     UIButton *createRecipeButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak , screenHeight-tabHeight-objectBreak-buttonHeight, objWidth, buttonHeight)];
     [createRecipeButton_ addTarget:self action:@selector(createRecipeTouch:) forControlEvents:UIControlEventTouchUpInside];

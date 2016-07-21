@@ -51,13 +51,14 @@ static int cornerRadius = 3;
             NSMutableURLRequest *request2 = [Helper setupPost:postData2 withURLEnd:@"getCookbook"];
             NSURLSession *session2 = [NSURLSession sharedSession];
             NSURLSessionDataTask *dataTask2 = [session2 dataTaskWithRequest:request2 completionHandler:^(NSData *postData2, NSURLResponse *response2, NSError *error2) {
+                
                 NSString *ret2 = [[NSString alloc] initWithData:postData2 encoding:NSUTF8StringEncoding];
                 NSLog(@"ret2 = %@",ret2);
-                NSDictionary *cookbookDict = [NSJSONSerialization JSONObjectWithData:postData2 options:kNilOptions error:&error2];
-                NSLog(@"cookbookDict count = %lu",(unsigned long)cookbookDict.count);
-                NSArray *cookbookAry = [cookbookDict objectForKey:@"recipeInfo"];
-                NSLog(@"cookbookAry count = %lu",(unsigned long)cookbookAry.count);
-                obj.cookbookAry = cookbookAry;
+                NSDictionary *jsonCookbookDict = [NSJSONSerialization JSONObjectWithData:postData2 options:kNilOptions error:&error2];
+                NSLog(@"cookbookDict count = %lu",(unsigned long)jsonCookbookDict.count);
+                NSArray *jsonCookbookAry = [jsonCookbookDict objectForKey:@"recipeInfo"];
+                NSLog(@"cookbookAry count = %lu",(unsigned long)jsonCookbookAry.count);
+                [obj initCookbookAry:jsonCookbookAry];
                 
             }];
             [dataTask2 resume];

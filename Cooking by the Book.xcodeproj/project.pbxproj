@@ -32,7 +32,7 @@
 		04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */; };
 		04E5ED351D3DBA18004E9474 /* CookbookRecipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5ED341D3DBA18004E9474 /* CookbookRecipe.m */; };
 		04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E67AE51D32D4AA000371E5 /* UITagBox.m */; };
-		04E67AEC1D32E0A2000371E5 /* recipeimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E67AEB1D32E0A2000371E5 /* recipeimage.png */; };
+		04E67AEC1D32E0A2000371E5 /* recipeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E67AEB1D32E0A2000371E5 /* recipeImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,7 +103,7 @@
 		04E5ED341D3DBA18004E9474 /* CookbookRecipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CookbookRecipe.m; sourceTree = "<group>"; };
 		04E67AE41D32D4AA000371E5 /* UITagBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITagBox.h; sourceTree = "<group>"; };
 		04E67AE51D32D4AA000371E5 /* UITagBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITagBox.m; sourceTree = "<group>"; };
-		04E67AEB1D32E0A2000371E5 /* recipeimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recipeimage.png; sourceTree = "<group>"; };
+		04E67AEB1D32E0A2000371E5 /* recipeImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recipeImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,7 +192,7 @@
 		04B49E421CC7063500312485 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				04E67AEB1D32E0A2000371E5 /* recipeimage.png */,
+				04E67AEB1D32E0A2000371E5 /* recipeImage.png */,
 				04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */,
 				045A81EC1D2069A700A90D8E /* DataClass.h */,
 				045A81ED1D2069A700A90D8E /* DataClass.m */,
@@ -350,7 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04B49E521CC7063500312485 /* LaunchScreen.storyboard in Resources */,
-				04E67AEC1D32E0A2000371E5 /* recipeimage.png in Resources */,
+				04E67AEC1D32E0A2000371E5 /* recipeImage.png in Resources */,
 				04B49E4F1CC7063500312485 /* Assets.xcassets in Resources */,
 				04B49E4D1CC7063500312485 /* Main.storyboard in Resources */,
 			);

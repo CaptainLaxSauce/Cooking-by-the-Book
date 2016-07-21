@@ -32,7 +32,7 @@
         UIColor *tagColor;
         NSString *tagStr;
         
-        for (int i = 0; i < tagAry_.count; i++){
+        for (int i = 0; i < _tagAry.count; i++){
             /*
             int xstart;
             int ystart;
