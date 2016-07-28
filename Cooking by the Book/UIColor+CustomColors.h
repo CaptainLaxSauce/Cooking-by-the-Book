@@ -10,6 +10,8 @@
 
 @interface UIColor (CustomColors)
 
++(UIColor*)lightColorVersion:(UIColor*)color;
+
 +(UIColor*)primaryColor;
 +(UIColor*)secondaryColor;
 +(UIColor*)customGrayColor;

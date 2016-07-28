@@ -24,7 +24,7 @@
     
     if (self){
         _tagAry = tagAry_;
-        int objectBreak = 8;
+        int objectBreak = 3;
         int totalWidth = frame_.size.width;
         int totalHeight = frame_.size.height;
         int tagHeight = (totalHeight - objectBreak*5)/4;
@@ -84,6 +84,7 @@
             tagLabel.layer.cornerRadius = 3;
             tagLabel.text = tagStr;
             [tagLabel setTextColor:tagColor];
+            tagLabel.backgroundColor = [UIColor lightColorVersion:tagColor];
             tagLabel.textAlignment = NSTextAlignmentCenter;
             tagLabel.adjustsFontSizeToFitWidth = YES;
             [[tagLabel layer] setBorderWidth:2.0f];

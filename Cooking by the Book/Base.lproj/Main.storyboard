@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="654" y="-340"/>
         </scene>
-        <!--Cookbook-->
+        <!--Cookbook View Controller-->
         <scene sceneID="UvO-YM-7z3">
             <objects>
                 <viewController storyboardIdentifier="CookbookViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ngm-jp-D3u" customClass="CookbookViewController" sceneMemberID="viewController">
@@ -37,14 +37,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Cookbook" id="yeQ-Kf-zWF"/>
+                    <navigationItem key="navigationItem" id="DCw-7f-zWl"/>
                     <connections>
                         <segue destination="jOD-1T-wVh" kind="show" identifier="CreateRecipeViewController" id="Q87-aV-coq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="isr-5i-IEW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1062" y="367"/>
+            <point key="canvasLocation" x="1874" y="367"/>
         </scene>
         <!--Create Recipe View Controller-->
         <scene sceneID="JrN-dV-Jgm">
@@ -65,7 +65,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPK-8j-3r7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1797" y="360"/>
+            <point key="canvasLocation" x="2609" y="360"/>
         </scene>
         <!--My Profile-->
         <scene sceneID="lNG-O6-Xff">
@@ -160,7 +160,7 @@
                         <outlet property="delegate" destination="Vu9-rV-ZHz" id="sbo-F4-mDd"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="Q84-0E-yfP"/>
                         <segue destination="Ay1-cU-yJN" kind="relationship" relationship="viewControllers" id="SLV-N2-clI"/>
-                        <segue destination="ngm-jp-D3u" kind="relationship" relationship="viewControllers" id="yAp-zD-VJw"/>
+                        <segue destination="DzJ-O5-Dtt" kind="relationship" relationship="viewControllers" id="yAp-zD-VJw"/>
                         <segue destination="ms9-sb-Dd9" kind="relationship" relationship="viewControllers" id="5TR-Ye-suG"/>
                     </connections>
                 </tabBarController>
@@ -168,6 +168,25 @@
                 <customObject id="Vu9-rV-ZHz" customClass="TabBarControllerDelegate"/>
             </objects>
             <point key="canvasLocation" x="74" y="448"/>
+        </scene>
+        <!--Cookbook-->
+        <scene sceneID="xiw-pS-d1R">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DzJ-O5-Dtt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Cookbook" id="yeQ-Kf-zWF"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kKH-wA-9Q1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ngm-jp-D3u" kind="relationship" relationship="rootViewController" id="6DX-BK-f67"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="94J-vJ-Y4w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1062" y="367"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

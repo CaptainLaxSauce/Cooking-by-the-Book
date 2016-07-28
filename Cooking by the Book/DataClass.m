@@ -7,7 +7,7 @@
 //
 
 #import "DataClass.h"
-#import "CookbookRecipe.h"
+
 
 @implementation DataClass
 //@synthesize userId;
@@ -52,6 +52,11 @@ static DataClass *instance = nil;
     }
     
     self.cookbookAry = [self alphebetizeAry:self.cookbookAry withKey:@"title"];
+}
+
+-(void)addRecipe:(CookbookRecipe *)recipe{
+    [self.cookbookAry addObject:recipe];
+    [self alphebetizeAry:self.cookbookAry withKey:@"title"];
 }
 
 -(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key{

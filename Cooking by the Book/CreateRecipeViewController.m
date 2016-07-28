@@ -13,6 +13,7 @@
 #import "UICreateStepCell.h"
 #import "Helper.h"
 #import "DataClass.h"
+#import "CookbookRecipe.h"
 
 @implementation CreateRecipeViewController
 
@@ -90,6 +91,8 @@ int ingredientHeight;
     
 
     DataClass *obj = [DataClass getInstance];
+    
+    
     NSLog(@"userID in create recipe = %@",obj.userId);
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:recipeDict options:NSJSONWritingPrettyPrinted error:&error];
@@ -108,6 +111,8 @@ int ingredientHeight;
             NSLog(@"Successful recipe post, id = %@",ret_);
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 //change UI to show sending
+                CookbookRecipe *newRecipe = [[CookbookRecipe alloc]initDetailedWithTitle:self.titleTextField.text withID:ret_ withDesc:self.descTextField.text withImage:nil withTagAry:tagAry withPrepTime:(NSNumber*)self.prepTimeField.text withCookTime:(NSNumber*)self.cookTimeField.text withTotTime:[NSNumber numberWithInt:self.totTime] withPortionNum:(NSNumber*)self.portionNumLabel.text withIngredientAry:ingredientAryJson withStepAry:stepAryJson];
+                [obj addRecipe:newRecipe];
             });
             
         }
@@ -123,7 +128,7 @@ int ingredientHeight;
     [dataTask resume];
     
     
-    [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -223,8 +228,10 @@ int ingredientHeight;
     objectWidth = screenWidth - objectBreak*2;
     textHeight = screenHeight/20;
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    int navBarHeight = self.navigationController.navigationBar.frame.size.height;
     int stepperWidth = 94;
-    int scrollHeight = screenHeight-statusBarHeight-textHeight*2-objectBreak*4;
+    int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
+    int scrollHeight = screenHeight-statusBarHeight-navBarHeight-textHeight-objectBreak*2-tabBarHeight;
     int labelWidth = (screenWidth-objectBreak*2)/10;
     int tagWidth = (screenWidth-objectBreak*3)/2;
     
@@ -234,6 +241,7 @@ int ingredientHeight;
     ingredientHeight = textHeight*3+objectBreak*4;
     
     self.view.backgroundColor = [UIColor primaryColor];
+    self.navigationItem.title = @"Create Recipe";
     
     //add non-viewable objects
     NSMutableArray *moveAry_ = [[NSMutableArray alloc]init];
@@ -241,10 +249,11 @@ int ingredientHeight;
     NSMutableArray *stepAry_ = [[NSMutableArray alloc]init];
     
     //add scroll view
-    UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+objectBreak*2+textHeight, screenWidth, scrollHeight)];
+    UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+navBarHeight, screenWidth, scrollHeight)];
     recipeScrollView_.backgroundColor = [UIColor customGrayColor];
     recipeScrollView_.contentSize = CGSizeMake(screenWidth, titleHeight+timeHeight+portionsHeight+ingredientHeight*2);
     recipeScrollView_.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:recipeScrollView_];
     self.recipeScrollView = recipeScrollView_;
     
@@ -409,7 +418,7 @@ int ingredientHeight;
     NSLog(@"end of loadInterface stepAry cnt = %lu",(unsigned long)self.stepAry.count);
     
     //add buttons
-    UIButton *submitRecipeButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak , screenHeight-objectBreak-textHeight, objectWidth, textHeight)];
+    UIButton *submitRecipeButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak , screenHeight-objectBreak-textHeight-tabBarHeight, objectWidth, textHeight)];
     [submitRecipeButton_ addTarget:self action:@selector(submitRecipeTouch:) forControlEvents:UIControlEventTouchUpInside];
     [submitRecipeButton_ setTitle:@"Submit Recipe" forState:UIControlStateNormal];
     //[createRecipeButton_ setBackgroundImage:[UIImage imageNamed:@"app_logo.png"] forState: UIControlStateHighlighted];
@@ -419,15 +428,6 @@ int ingredientHeight;
     submitRecipeButton_.clipsToBounds = YES;
     [self.view addSubview:submitRecipeButton_];
     self.submitRecipeButton = submitRecipeButton_;
-    
-    UIButton *backButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak, objectBreak+statusBarHeight, textHeight, textHeight)];
-    [backButton_ addTarget:self action:@selector(backTouch:) forControlEvents:UIControlEventTouchUpInside];
-    [backButton_ setTitle:@"Back" forState:UIControlStateNormal];
-    backButton_.backgroundColor = [UIColor secondaryColor];
-    backButton_.layer.cornerRadius = cornerRadius;
-    backButton_.clipsToBounds = YES;
-    [self.view addSubview:backButton_];
-    self.backButton = backButton_;
     
 }
 

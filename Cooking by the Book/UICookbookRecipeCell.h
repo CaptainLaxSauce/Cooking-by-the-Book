@@ -11,16 +11,12 @@
 
 @interface UICookbookRecipeCell : UIView
 
-@property UIImage *image;
 @property UIImageView *imageView;
-@property NSString *title;
-@property NSString *desc;
-@property NSArray *tagAry;
-
+@property CookbookRecipe *recipe;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;
 -(id)initWithFrame:(CGRect)frame withCookbookRecipe:(CookbookRecipe*)cookbookRecipe_;
--(id)initWithFrame:(CGRect)frame withImage:(UIImage*)image_ withTitle:(NSString*)title_ withDesc:(NSString *)desc_ withTags:(NSArray *)tagAry_;
+-(void)touchCell;
 
 @end

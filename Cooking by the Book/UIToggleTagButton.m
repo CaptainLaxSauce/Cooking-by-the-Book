@@ -56,28 +56,35 @@
 
 -(void)updateColor{
     UIColor *buttonColor;
+    UIColor *backgroundColor;
     
     if (self.tagged == FALSE){
         buttonColor = [UIColor darkGrayColor];
+        backgroundColor = [UIColor clearColor];
     }
     else{
         switch(self.tagType){
             case quick:
                 buttonColor = [UIColor tagQuickColor];
+                backgroundColor = [UIColor lightColorVersion:[UIColor tagQuickColor]];
                 break;
             case simple:
                 buttonColor = [UIColor tagSimpleColor];
+                backgroundColor = [UIColor lightColorVersion:[UIColor tagSimpleColor]];
                 break;
             case vegetarian:
                 buttonColor = [UIColor tagVegetarianColor];
+                backgroundColor = [UIColor lightColorVersion:[UIColor tagVegetarianColor]];
                 break;
             case vegan:
                 buttonColor = [UIColor tagVeganColor];
+                backgroundColor = [UIColor lightColorVersion:[UIColor tagVeganColor]];
                 break;
             default:
                 break;
         }
     }
+    self.backgroundColor = backgroundColor;
     [self setTitleColor:buttonColor forState:UIControlStateNormal];
     [[self layer] setBorderColor:buttonColor.CGColor];
 }

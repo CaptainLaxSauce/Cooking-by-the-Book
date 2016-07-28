@@ -29,11 +29,46 @@ static int cornerRadius = 3;
     
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [self refreshRecipes];
+}
+
+-(void)refreshRecipes{
+    int screenHeight = self.view.frame.size.height;
+    int screenWidth = self.view.frame.size.width;
+    NSLog(@"screenWidth = %d",screenWidth);
+    
+    int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    int navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    int buttonHeight = screenHeight/20;
+    int tabHeight = self.tabBarController.tabBar.frame.size.height;
+    int scrollHeight = screenHeight-buttonHeight-tabHeight-objectBreak*2-navBarHeight-statusBarHeight;
+    int recipeCellHeight = (scrollHeight - objectBreak*6)/5;
+    
+    DataClass *obj = [DataClass getInstance];
+    NSInteger recipeCnt = obj.cookbookAry.count;
+    NSLog(@"coobookAry count in cookbookVC = %lu",(unsigned long)recipeCnt);
+    
+    for (int i = 0;i<recipeCnt;i++){
+        NSLog(@"%d",i);
+        CookbookRecipe *tempRecipe = [[CookbookRecipe alloc]init];
+        tempRecipe = [obj.cookbookAry objectAtIndex:i];
+        
+        NSLog(@"2 temp recipe properties = %@ %@ %@ %@",tempRecipe.title, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
+        UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + i*(recipeCellHeight + objectBreak), screenWidth, recipeCellHeight) withCookbookRecipe:tempRecipe];
+        [self.recipeScrollView addSubview:cookCell];
+    }
+    
+    if (recipeCnt > 5){
+        self.recipeScrollView.contentSize = CGSizeMake(self.view.frame.size.width, scrollHeight + (recipeCnt - 5)*(recipeCellHeight + objectBreak));
+    }
+ 
+}
+
 -(void)createRecipeTouch:(id)sender{
     [self performSegueWithIdentifier:@"CreateRecipeViewController" sender:sender];
     
 }
-
 
 -(void)loadInterface{
     //declare constants
@@ -42,34 +77,25 @@ static int cornerRadius = 3;
     NSLog(@"screenWidth = %d",screenWidth);
     
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    int navBarHeight = self.navigationController.navigationBar.frame.size.height;
     int objWidth = screenWidth - objectBreak*2;
-    int textHeight = screenHeight/20;
     int buttonHeight = screenHeight/20;
     int tabHeight = self.tabBarController.tabBar.frame.size.height;
-    int scrollHeight = screenHeight-buttonHeight-tabHeight-objectBreak*4-textHeight-statusBarHeight;
+    int scrollHeight = screenHeight-buttonHeight-tabHeight-objectBreak*2-navBarHeight-statusBarHeight;
     self.view.backgroundColor = [UIColor primaryColor];
+    self.navigationItem.title = @"Cookbook";
     
     //add scroll view
-    UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, textHeight+objectBreak*2+statusBarHeight, screenWidth, scrollHeight)];
+    UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight)];
     recipeScrollView_.backgroundColor = [UIColor customGrayColor];
-    recipeScrollView_.contentSize = CGSizeMake(screenWidth, screenHeight*2);
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
     self.recipeScrollView = recipeScrollView_;
     [self.view addSubview:recipeScrollView_];
-    
+
     //add CookbookRecipeCells
-    DataClass *obj = [DataClass getInstance];
-    NSLog(@"coobookAry count in cookbookVC = %lu",(unsigned long)obj.cookbookAry.count);
-    
-    for (int i = 0;i<obj.cookbookAry.count;i++){
-        
-        CookbookRecipe *tempRecipe = [[CookbookRecipe alloc]init];
-        tempRecipe = [obj.cookbookAry objectAtIndex:i];
-        
-        NSLog(@"2 temp recipe properties = %@ %@ %@ %@",tempRecipe.title, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
-        UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + screenHeight/6*i + objectBreak*i, screenWidth, screenHeight/6) withCookbookRecipe:tempRecipe];
-        [self.recipeScrollView addSubview:cookCell];
-    }
-    
+    [self refreshRecipes];
+
     //NSArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
     
     //NSMutableArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];

@@ -10,6 +10,17 @@
 
 @implementation UIColor (CustomColors)
 
++(UIColor*)lightColorVersion:(UIColor*)color{
+    CGFloat r, g, b, a;
+    if ([color getRed:&r green:&g blue:&b alpha:&a])
+        return [UIColor colorWithRed:MIN(r + 0.75, 1.0)
+                               green:MIN(g + 0.75, 1.0)
+                                blue:MIN(b + 0.75, 1.0)
+                               alpha:a];
+    return nil;
+    
+}
+
 +(UIColor*)primaryColor{
     return [UIColor colorWithRed:65.0f/255.0f green:105.0f/255.0f blue:200.0f/255.0f alpha:1.0f];
 }
@@ -39,7 +50,8 @@
 }
 
 +(UIColor*)tagVeganColor{
-    return [UIColor colorWithRed:15.0f/255.0f green:215.0f/255.0f blue:0.0f/255.0f alpha:1.0f];
+    return [UIColor colorWithRed:92.0f/255.0f green:47.0f/255.0f blue:161.0f/255.0f alpha:1.0f];
 }
+
 
 @end

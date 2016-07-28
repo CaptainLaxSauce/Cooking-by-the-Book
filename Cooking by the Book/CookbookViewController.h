@@ -23,5 +23,6 @@ typedef enum TagType : int{
 
 -(void)createRecipeTouch:(id)sender;
 -(void)loadInterface;
+-(void)refreshRecipes;
 
 @end
