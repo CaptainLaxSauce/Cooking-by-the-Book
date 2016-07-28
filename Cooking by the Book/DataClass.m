@@ -56,7 +56,7 @@ static DataClass *instance = nil;
 
 -(void)addRecipe:(CookbookRecipe *)recipe{
     [self.cookbookAry addObject:recipe];
-    [self alphebetizeAry:self.cookbookAry withKey:@"title"];
+    self.cookbookAry = [self alphebetizeAry:self.cookbookAry withKey:@"title"];
 }
 
 -(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key{
