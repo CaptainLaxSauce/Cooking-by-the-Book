@@ -18,6 +18,13 @@
 
 static int objectBreak = 8;
 static int cornerRadius = 3;
+int screenHeight;
+int screenWidth;
+int statusBarHeight;
+int navBarHeight;
+int buttonHeight;
+int tabHeight;
+int scrollHeight;
 
 @implementation CookbookViewController
 
@@ -34,15 +41,7 @@ static int cornerRadius = 3;
 }
 
 -(void)refreshRecipes{
-    int screenHeight = self.view.frame.size.height;
-    int screenWidth = self.view.frame.size.width;
-    NSLog(@"screenWidth = %d",screenWidth);
-    
-    int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    int navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    int buttonHeight = screenHeight/20;
-    int tabHeight = self.tabBarController.tabBar.frame.size.height;
-    int scrollHeight = screenHeight-buttonHeight-tabHeight-objectBreak*2-navBarHeight-statusBarHeight;
+
     int recipeCellHeight = (scrollHeight - objectBreak*6)/5;
     
     DataClass *obj = [DataClass getInstance];
@@ -72,16 +71,15 @@ static int cornerRadius = 3;
 
 -(void)loadInterface{
     //declare constants
-    int screenHeight = self.view.frame.size.height;
-    int screenWidth = self.view.frame.size.width;
-    NSLog(@"screenWidth = %d",screenWidth);
-    
-    int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    int navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    screenHeight = self.view.frame.size.height;
+    screenWidth = self.view.frame.size.width;
+    statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    navBarHeight = self.navigationController.navigationBar.frame.size.height;
     int objWidth = screenWidth - objectBreak*2;
-    int buttonHeight = screenHeight/20;
-    int tabHeight = self.tabBarController.tabBar.frame.size.height;
-    int scrollHeight = screenHeight-buttonHeight-tabHeight-objectBreak*2-navBarHeight-statusBarHeight;
+    buttonHeight = screenHeight/20;
+    tabHeight = self.tabBarController.tabBar.frame.size.height;
+    scrollHeight = screenHeight-buttonHeight-tabHeight-objectBreak*2-navBarHeight-statusBarHeight;
+    
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Cookbook";
     
