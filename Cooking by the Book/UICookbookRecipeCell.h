@@ -17,6 +17,5 @@
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;
 -(id)initWithFrame:(CGRect)frame withCookbookRecipe:(CookbookRecipe*)cookbookRecipe_;
--(void)touchCell;
 
 @end

@@ -15,6 +15,7 @@
 		045A81F81D2072FD00A90D8E /* NewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */; };
 		045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */; };
 		045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A82011D207FB300A90D8E /* CookbookViewController.m */; };
+		046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */; };
 		047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047813681D1A4F2F00D9F569 /* SignupViewController.m */; };
 		047E193F1D2751030011349C /* UICreateStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047E193E1D2751030011349C /* UICreateStepCell.m */; };
 		048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 048096661D2857D500E80F1A /* UIToggleTagButton.m */; };
@@ -71,6 +72,8 @@
 		045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICookbookRecipeCell.m; sourceTree = "<group>"; };
 		045A82001D207FB300A90D8E /* CookbookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CookbookViewController.h; sourceTree = "<group>"; };
 		045A82011D207FB300A90D8E /* CookbookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CookbookViewController.m; sourceTree = "<group>"; };
+		046D1C721D5C2325008B1092 /* DetailedRecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedRecipeViewController.h; sourceTree = "<group>"; };
+		046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedRecipeViewController.m; sourceTree = "<group>"; };
 		047813671D1A4F2F00D9F569 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		047813681D1A4F2F00D9F569 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		047E193D1D2751020011349C /* UICreateStepCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICreateStepCell.h; sourceTree = "<group>"; };
@@ -241,6 +244,8 @@
 				045A82011D207FB300A90D8E /* CookbookViewController.m */,
 				04833E711D208B1C00631AA4 /* CreateRecipeViewController.h */,
 				04833E721D208B1C00631AA4 /* CreateRecipeViewController.m */,
+				046D1C721D5C2325008B1092 /* DetailedRecipeViewController.h */,
+				046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				047E193F1D2751030011349C /* UICreateStepCell.m in Sources */,
 				04E5ED351D3DBA18004E9474 /* CookbookRecipe.m in Sources */,
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
+				046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */,
 				045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */,
 				04833E761D20A9D600631AA4 /* UICreateIngredientCell.m in Sources */,
 				04B49E441CC7063500312485 /* main.m in Sources */,

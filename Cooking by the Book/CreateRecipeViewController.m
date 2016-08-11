@@ -19,8 +19,6 @@
 
 static int objectBreak = 8;
 static int cornerRadius = 3;
-int screenHeight;
-int screenWidth;
 int objectWidth;
 int textHeight;
 int titleHeight;
@@ -206,7 +204,7 @@ int ingredientHeight;
         UIView *currView = [self.moveAry objectAtIndex:i];
         currView.frame = CGRectMake(currView.frame.origin.x, currView.frame.origin.y - textHeight - objectBreak, currView.frame.size.width, currView.frame.size.height);
     }
-    [self.recipeScrollView setContentSize:CGSizeMake(screenWidth,self.recipeScrollView.contentSize.height - textHeight - objectBreak)];
+    [self.recipeScrollView setContentSize:CGSizeMake(self.view.frame.size.width,self.recipeScrollView.contentSize.height - textHeight - objectBreak)];
 }
 
 -(void)shiftObjectsDown:(NSInteger)index{
@@ -218,13 +216,13 @@ int ingredientHeight;
         [self.moveAry insertObject:[self.moveAry objectAtIndex:i] atIndex:i+1];
         [self.moveAry removeObjectAtIndex:i];
     }
-    [self.recipeScrollView setContentSize:CGSizeMake(screenWidth,self.recipeScrollView.contentSize.height + textHeight + objectBreak)];
+    [self.recipeScrollView setContentSize:CGSizeMake(self.view.frame.size.width,self.recipeScrollView.contentSize.height + textHeight + objectBreak)];
 }
 
 
 -(void)loadInterface {
-    screenHeight = self.view.frame.size.height;
-    screenWidth = self.view.frame.size.width;
+    int screenHeight = self.view.frame.size.height;
+    int screenWidth = self.view.frame.size.width;
     objectWidth = screenWidth - objectBreak*2;
     textHeight = screenHeight/20;
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;

@@ -24,5 +24,6 @@ typedef enum TagType : int{
 -(void)createRecipeTouch:(id)sender;
 -(void)loadInterface;
 -(void)refreshRecipes;
+-(void)touchCell:(UITapGestureRecognizer*)sender;
 
 @end

@@ -59,8 +59,7 @@
         UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(totalWidth - tagWidth, 0, tagWidth, totalHeight) withTags:cookbookRecipe_.tagAry];
         [self addSubview:tagBox];
         
-        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchCell)];
-        [self addGestureRecognizer:tapRecognizer];
+
         
     }
     
@@ -68,9 +67,7 @@
 
 }
 
--(void)touchCell{
-    NSLog(@"Cell Touch");
-}
+
 
 
 @end

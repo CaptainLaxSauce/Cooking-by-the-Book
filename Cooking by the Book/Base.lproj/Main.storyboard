@@ -40,11 +40,30 @@
                     <navigationItem key="navigationItem" id="DCw-7f-zWl"/>
                     <connections>
                         <segue destination="jOD-1T-wVh" kind="show" identifier="CreateRecipeViewController" id="Q87-aV-coq"/>
+                        <segue destination="Oue-Ma-08F" kind="show" identifier="DetailedRecipeViewController" id="p1K-on-3ui"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="isr-5i-IEW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1874" y="367"/>
+            <point key="canvasLocation" x="1808" y="435"/>
+        </scene>
+        <!--Detailed Recipe View Controller-->
+        <scene sceneID="3jP-Uo-Ogr">
+            <objects>
+                <viewController id="Oue-Ma-08F" customClass="DetailedRecipeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="849-sm-Vgo"/>
+                        <viewControllerLayoutGuide type="bottom" id="0yV-eD-Ran"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bFA-5Z-qcc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zR0-jq-UT5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2608" y="-320"/>
         </scene>
         <!--Create Recipe View Controller-->
         <scene sceneID="JrN-dV-Jgm">
@@ -59,13 +78,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <segue destination="Q35-td-2dk" kind="show" identifier="TabBarViewController" id="xgt-2q-ezt"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPK-8j-3r7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2609" y="360"/>
+            <point key="canvasLocation" x="2643" y="470"/>
         </scene>
         <!--My Profile-->
         <scene sceneID="lNG-O6-Xff">
@@ -186,10 +202,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="94J-vJ-Y4w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1062" y="367"/>
+            <point key="canvasLocation" x="998" y="448"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="xgt-2q-ezt"/>
-    </inferredMetricsTieBreakers>
 </document>

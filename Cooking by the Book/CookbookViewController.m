@@ -11,6 +11,7 @@
 #import "UICookbookRecipeCell.h"
 #import "TabBarControllerDelegate.h"
 #import "DataClass.h"
+#import "DetailedRecipeViewController.h"
 
 @interface CookbookViewController()
 
@@ -55,6 +56,8 @@ int scrollHeight;
         
         NSLog(@"2 temp recipe properties = %@ %@ %@ %@",tempRecipe.title, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
         UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + i*(recipeCellHeight + objectBreak), screenWidth, recipeCellHeight) withCookbookRecipe:tempRecipe];
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchCell:)];
+        [cookCell addGestureRecognizer:tapRecognizer];
         [self.recipeScrollView addSubview:cookCell];
     }
     
@@ -62,6 +65,28 @@ int scrollHeight;
         self.recipeScrollView.contentSize = CGSizeMake(self.view.frame.size.width, scrollHeight + (recipeCnt - 5)*(recipeCellHeight + objectBreak));
     }
  
+}
+
+/*
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:self{
+    if([segue.identifier isEqualToString:@"DetailedRecipeViewController"]){
+        //UICookbookRecipeCell *cookCell = sender.view;
+        UINavigationController *navController = [segue destinationViewController];
+        DetailedRecipeViewController *controller = (DetailedRecipeViewController *)([navController viewControllers][0]);
+        controller.recipeID = @"12345";
+        NSLog(@"Cookbook recipe ID = %@",controller.recipeID);
+        
+    }
+}
+*/
+ 
+-(void)touchCell:(UITapGestureRecognizer *)sender{
+    DataClass *obj = [DataClass getInstance];
+    UICookbookRecipeCell *cookCell = (UICookbookRecipeCell*)sender.view;
+    NSLog(@"Cookbook recipe ID = %@",cookCell.recipe.recipeID);
+    obj.currDetailedRecipeId = cookCell.recipe.recipeID;
+    [self performSegueWithIdentifier:@"DetailedRecipeViewController" sender:sender];
+    NSLog(@"Cell Touch");
 }
 
 -(void)createRecipeTouch:(id)sender{
@@ -104,6 +129,7 @@ int scrollHeight;
     UIButton *createRecipeButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak , screenHeight-tabHeight-objectBreak-buttonHeight, objWidth, buttonHeight)];
     [createRecipeButton_ addTarget:self action:@selector(createRecipeTouch:) forControlEvents:UIControlEventTouchUpInside];
     [createRecipeButton_ setTitle:@"Create Recipe" forState:UIControlStateNormal];
+    [createRecipeButton_ setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     //[createRecipeButton_ setBackgroundImage:[UIImage imageNamed:@"app_logo.png"] forState: UIControlStateHighlighted];
     //[createRecipeButton_ setBackgroundImage:[UIImage imageNamed:@"app_logo.png"] forState: UIControlStateSelected];
     createRecipeButton_.backgroundColor = [UIColor secondaryColor];

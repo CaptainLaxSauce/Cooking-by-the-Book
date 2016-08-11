@@ -17,6 +17,7 @@
 
 @property(nonatomic,retain) NSMutableArray *cookbookAry;
 @property(nonatomic,retain) NSString *userId;
+@property(nonatomic,retain) NSString *currDetailedRecipeId;
 
 +(DataClass*)getInstance;
 -(void)initCookbookAry:(NSArray *)jsonCookbookAry_;
