@@ -222,12 +222,33 @@ int imageViewHeight;
 
 -(void)imageTouch:(id)sender{
     NSLog(@"Image Touch");
-    [self performSegueWithIdentifier:@"ImagePickerViewController" sender:sender];
-    /*
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
-    imagePickerController.delegate = self;
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    */
+    
+    //[self performSegueWithIdentifier:@"ImagePickerViewController" sender:sender];
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+-(void)cameraTouch:(id)sender{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    self.imageView.image = chosenImage;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
 
@@ -248,7 +269,7 @@ int imageViewHeight;
     timeHeight = objectBreak*2+textHeight;
     portionsHeight = objectBreak*2+textHeight+titleHeight+timeHeight;
     ingredientHeight = textHeight*3+objectBreak*4;
-    imageViewHeight = screenWidth-objectBreak*2;
+    imageViewHeight = screenWidth+textHeight;
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Create Recipe";
@@ -421,14 +442,36 @@ int imageViewHeight;
     [moveAry_ addObject:veganTag_];
     self.veganTag = veganTag_;
     
-    //add image picker
-    UIImageView *imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*4+textHeight*3, screenWidth - objectBreak*2, screenWidth - objectBreak*2)];
-    [imageSelectView setImage:[UIImage imageWithCGImage:[[UIImage imageNamed:@"addimage.png"] CGImage] scale:50/800 orientation:UIImageOrientationUp]];
-    imageSelectView.userInteractionEnabled = YES;
+    //add imageSelectView
+    UIView *imageLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*4+textHeight*3,screenWidth - objectBreak*2, 1)];
+    imageLine_.backgroundColor = [UIColor lineColor];
+    [self.recipeScrollView addSubview:imageLine_];
+    [moveAry_ addObject:imageLine_];
     
+    UILabel *imageLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*5+textHeight*3,objectWidth, textHeight)];
+    imageLabel_.text = @"Image";
+    [self.recipeScrollView addSubview:imageLabel_];
+    [moveAry_ addObject:imageLabel_];
+    
+    UIImageView *imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*6+textHeight*4, screenWidth - objectBreak*2, screenWidth - objectBreak*2)];
+    [imageSelectView setImage:[UIImage imageNamed:@"addimage.png"]];
+    imageSelectView.contentMode = UIViewContentModeCenter;
+    imageSelectView.userInteractionEnabled = YES;
+    [[imageSelectView layer] setBorderWidth:2.0];
+    [[imageSelectView layer] setBorderColor:[UIColor blackColor].CGColor];
     UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTouch:)];
     [imageSelectView addGestureRecognizer:imageTap];
     [self.recipeScrollView addSubview:imageSelectView];
+    
+    UIImageView *cameraImageView = [[UIImageView alloc]initWithFrame:CGRectMake(imageSelectView.frame.size.width - imageSelectView.frame.size.width/8 - 5, 0, imageSelectView.frame.size.width/8, imageSelectView.frame.size.width/8)];
+    [cameraImageView setImage:[UIImage imageNamed:@"cameraicon.png"]];
+    cameraImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *cameraTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cameraTouch:)];
+    [cameraImageView addGestureRecognizer:cameraTap];
+    [imageSelectView addSubview:cameraImageView];
+    
+    self.imageView = imageSelectView;
+    [moveAry_ addObject:imageSelectView];
     
     //assign arrays to properties
     self.ingredientAry = ingredientAry_;

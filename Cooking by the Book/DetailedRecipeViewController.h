@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CookbookRecipe.h"
 
 @interface DetailedRecipeViewController : UIViewController
 
 @property (nonatomic,strong) NSString* recipeID;
+@property (nonatomic,strong) CookbookRecipe* recipe;
+
 
 @end

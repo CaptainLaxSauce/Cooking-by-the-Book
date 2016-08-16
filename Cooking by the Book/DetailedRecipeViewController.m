@@ -18,7 +18,11 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     DataClass *obj = [DataClass getInstance];
-    //self.navigationItem.title = @"%@",obj.cookbookAry.;
+    NSArray *recipeAry = [[NSArray alloc]initWithArray:obj.cookbookAry];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recipeID MATCHES %@", obj.currDetailedRecipeId];
+    NSArray *filteredAry = [recipeAry filteredArrayUsingPredicate:predicate];
+    self.recipe = [filteredAry objectAtIndex:0];
+    self.navigationItem.title = [NSString stringWithFormat:@"%@",self.recipe.title];
     NSString *post = [NSString stringWithFormat:@"id=%@",obj.currDetailedRecipeId];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getRecipe"];
@@ -27,7 +31,6 @@
         NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"ret = %@",ret_);
 
-    
         }];
     [dataTask resume];
     NSLog(@"Detailed Recipe ID = %@",obj.currDetailedRecipeId);

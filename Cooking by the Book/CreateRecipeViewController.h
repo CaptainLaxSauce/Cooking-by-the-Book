@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 
-@interface CreateRecipeViewController : UIViewController 
+@interface CreateRecipeViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
@@ -41,6 +41,7 @@
 @property NSMutableArray *ingredientAry;
 @property NSMutableArray *stepAry;
 @property NSMutableArray *tagAry;
+@property UIImageView *imageView;
 
 @property (nonatomic,strong) NSMutableArray *moveAry;
 @property int ingredientIdx;
@@ -56,6 +57,7 @@
 -(void)submitRecipeTouch:(id)sender;
 -(void)backTouch:(id)sender;
 -(void)imageTouch:(id)sender;
+-(void)cameraTouch:(id)sender;
 -(void)stepperValueChange:(id)sender;
 -(void)shiftObjectsUp:(NSInteger)index;
 -(void)shiftObjectsDown:(NSInteger)index;
