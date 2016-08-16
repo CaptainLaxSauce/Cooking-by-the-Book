@@ -55,6 +55,7 @@
 
 -(void)submitRecipeTouch:(id)sender;
 -(void)backTouch:(id)sender;
+-(void)imageTouch:(id)sender;
 -(void)stepperValueChange:(id)sender;
 -(void)shiftObjectsUp:(NSInteger)index;
 -(void)shiftObjectsDown:(NSInteger)index;

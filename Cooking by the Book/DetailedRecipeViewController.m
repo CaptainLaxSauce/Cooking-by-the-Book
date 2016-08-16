@@ -18,7 +18,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     DataClass *obj = [DataClass getInstance];
-    
+    //self.navigationItem.title = @"%@",obj.cookbookAry.;
     NSString *post = [NSString stringWithFormat:@"id=%@",obj.currDetailedRecipeId];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getRecipe"];
@@ -30,8 +30,9 @@
     
         }];
     [dataTask resume];
-        
     NSLog(@"Detailed Recipe ID = %@",obj.currDetailedRecipeId);
+    
+
 }
 
 - (void)viewDidLoad {

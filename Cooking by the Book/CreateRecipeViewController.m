@@ -25,6 +25,7 @@ int titleHeight;
 int timeHeight;
 int portionsHeight;
 int ingredientHeight;
+int imageViewHeight;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -219,6 +220,16 @@ int ingredientHeight;
     [self.recipeScrollView setContentSize:CGSizeMake(self.view.frame.size.width,self.recipeScrollView.contentSize.height + textHeight + objectBreak)];
 }
 
+-(void)imageTouch:(id)sender{
+    NSLog(@"Image Touch");
+    [self performSegueWithIdentifier:@"ImagePickerViewController" sender:sender];
+    /*
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc]init];
+    imagePickerController.delegate = self;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    */
+    
+}
 
 -(void)loadInterface {
     int screenHeight = self.view.frame.size.height;
@@ -237,6 +248,7 @@ int ingredientHeight;
     timeHeight = objectBreak*2+textHeight;
     portionsHeight = objectBreak*2+textHeight+titleHeight+timeHeight;
     ingredientHeight = textHeight*3+objectBreak*4;
+    imageViewHeight = screenWidth-objectBreak*2;
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Create Recipe";
@@ -249,7 +261,7 @@ int ingredientHeight;
     //add scroll view
     UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+navBarHeight, screenWidth, scrollHeight)];
     recipeScrollView_.backgroundColor = [UIColor customGrayColor];
-    recipeScrollView_.contentSize = CGSizeMake(screenWidth, titleHeight+timeHeight+portionsHeight+ingredientHeight*2);
+    recipeScrollView_.contentSize = CGSizeMake(screenWidth, titleHeight+timeHeight+portionsHeight+ingredientHeight*2+imageViewHeight);
     recipeScrollView_.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:recipeScrollView_];
@@ -409,6 +421,15 @@ int ingredientHeight;
     [moveAry_ addObject:veganTag_];
     self.veganTag = veganTag_;
     
+    //add image picker
+    UIImageView *imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*4+textHeight*3, screenWidth - objectBreak*2, screenWidth - objectBreak*2)];
+    [imageSelectView setImage:[UIImage imageWithCGImage:[[UIImage imageNamed:@"addimage.png"] CGImage] scale:50/800 orientation:UIImageOrientationUp]];
+    imageSelectView.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTouch:)];
+    [imageSelectView addGestureRecognizer:imageTap];
+    [self.recipeScrollView addSubview:imageSelectView];
+    
     //assign arrays to properties
     self.ingredientAry = ingredientAry_;
     self.stepAry = stepAry_;
@@ -426,7 +447,7 @@ int ingredientHeight;
     submitRecipeButton_.clipsToBounds = YES;
     [self.view addSubview:submitRecipeButton_];
     self.submitRecipeButton = submitRecipeButton_;
-    
+
 }
 
 @end
