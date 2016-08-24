@@ -23,7 +23,7 @@
     NSArray *filteredAry = [recipeAry filteredArrayUsingPredicate:predicate];
     self.recipe = [filteredAry objectAtIndex:0];
     self.navigationItem.title = [NSString stringWithFormat:@"%@",self.recipe.title];
-    NSString *post = [NSString stringWithFormat:@"id=%@",obj.currDetailedRecipeId];
+    NSString *post = [NSString stringWithFormat:@"recipeID=%@",obj.currDetailedRecipeId];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getRecipe"];
     NSURLSession *session = [NSURLSession sharedSession];

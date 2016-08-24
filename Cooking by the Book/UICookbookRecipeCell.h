@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CookbookRecipe.h"
+#import "Recipe.h"
 
 @interface UICookbookRecipeCell : UIView
 
 @property UIImageView *imageView;
-@property CookbookRecipe *recipe;
+@property Recipe *recipe;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;
--(id)initWithFrame:(CGRect)frame withCookbookRecipe:(CookbookRecipe*)cookbookRecipe_;
+-(id)initWithFrame:(CGRect)frame withRecipe:(Recipe*)Recipe_;
 
 @end

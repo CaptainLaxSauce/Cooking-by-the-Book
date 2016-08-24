@@ -18,10 +18,10 @@
 }
 
 -(id)initWithFrame:(CGRect)frame{
-    return [self initWithFrame:frame withCookbookRecipe:nil];
+    return [self initWithFrame:frame withRecipe:nil];
 }
 
--(id)initWithFrame:(CGRect)frame withCookbookRecipe:(CookbookRecipe*)cookbookRecipe_{
+-(id)initWithFrame:(CGRect)frame withRecipe:(Recipe*)Recipe_{
   
     self = [super initWithFrame:frame];
     
@@ -33,7 +33,7 @@
         int titleHeight = (totalHeight-objectBreak*3)/3;
         int tagWidth = totalHeight;
         
-        self.recipe = cookbookRecipe_;
+        self.recipe = Recipe_;
         self.backgroundColor = [UIColor whiteColor];
         
         /* add this back in when images are working
@@ -43,20 +43,20 @@
          [self addSubview:_imageView];
          }
          */
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, objectBreak, totalWidth - imageHeight - tagWidth - objectBreak, titleHeight)];
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, objectBreak, totalWidth - imageHeight - tagWidth - objectBreak*2, titleHeight)];
         UIFontDescriptor * fontD = [titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
         titleLabel.font = [UIFont fontWithDescriptor:fontD size:0];
-        titleLabel.text = cookbookRecipe_.title;
+        titleLabel.text = Recipe_.title;
         titleLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:titleLabel];
         
         UILabel *descLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, titleHeight+objectBreak*2, totalWidth - imageHeight - tagWidth - objectBreak*2, totalHeight - titleHeight - objectBreak*3)];
-        descLabel.text = cookbookRecipe_.desc;
+        descLabel.text = Recipe_.desc;
         descLabel.numberOfLines = 3;
         descLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:descLabel];
         
-        UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(totalWidth - tagWidth, 0, tagWidth, totalHeight) withTags:cookbookRecipe_.tagAry];
+        UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(totalWidth - tagWidth, 0, tagWidth, totalHeight) withTags:Recipe_.tagAry];
         [self addSubview:tagBox];
         
 

@@ -78,31 +78,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <segue destination="piN-BN-aD1" kind="show" identifier="ImagePickerViewController" id="bcJ-7K-B3D"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPK-8j-3r7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2643" y="470"/>
-        </scene>
-        <!--Image Picker View Controller-->
-        <scene sceneID="PZp-bU-j14">
-            <objects>
-                <viewController id="piN-BN-aD1" customClass="ImagePickerViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mzD-Rz-BMB"/>
-                        <viewControllerLayoutGuide type="bottom" id="CWq-Hq-dHK"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Don-rM-q9c">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ifI-SH-dfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3550" y="470"/>
         </scene>
         <!--My Profile-->
         <scene sceneID="lNG-O6-Xff">

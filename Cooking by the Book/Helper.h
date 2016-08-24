@@ -13,5 +13,4 @@
 
 +(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd;
 
-
 @end

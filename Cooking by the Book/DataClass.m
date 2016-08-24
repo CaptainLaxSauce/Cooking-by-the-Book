@@ -41,12 +41,12 @@ static DataClass *instance = nil;
             NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count);
         }
         
-        CookbookRecipe *tempRecipe = [[CookbookRecipe alloc] initBasicWithTitle:[recipeDict objectForKey:@"recipeTitle"]
+        Recipe *tempRecipe = [[Recipe alloc] initBasicWithTitle:[recipeDict objectForKey:@"recipeTitle"]
                                                                          withID:[recipeDict objectForKey:@"recipeID"]
                                                                        withDesc:[recipeDict objectForKey:@"recipeDescription"]
-                                                                      withImage:[recipeDict objectForKey:@"recipeImage"]
+                                                                  withImageName:[recipeDict objectForKey:@"recipeImage"]
                                                                      withTagAry:tagNumAry];
-        NSLog(@"temp recipe properties = %@ %@ %@ %@",tempRecipe.title, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
+        NSLog(@"temp recipe properties = %@ %@ %@ %@ %@",tempRecipe.title, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry, tempRecipe.imageName);
         [self.cookbookAry addObject:tempRecipe];
         NSLog(@"Cookbook ary count after initialization = %lu",(unsigned long)self.cookbookAry.count);
     }
@@ -54,7 +54,7 @@ static DataClass *instance = nil;
     self.cookbookAry = [self alphebetizeAry:self.cookbookAry withKey:@"title"];
 }
 
--(void)addRecipe:(CookbookRecipe *)recipe{
+-(void)addRecipe:(Recipe *)recipe{
     [self.cookbookAry addObject:recipe];
     self.cookbookAry = [self alphebetizeAry:self.cookbookAry withKey:@"title"];
 }

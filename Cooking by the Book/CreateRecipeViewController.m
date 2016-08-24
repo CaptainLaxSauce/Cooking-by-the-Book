@@ -13,7 +13,7 @@
 #import "UICreateStepCell.h"
 #import "Helper.h"
 #import "DataClass.h"
-#import "CookbookRecipe.h"
+#import "Recipe.h"
 
 @implementation CreateRecipeViewController
 
@@ -38,8 +38,26 @@ int imageViewHeight;
 }
 
 -(void)submitRecipeTouch:(id)sender{
+    /*
+    //submitting label
+    UILabel *submittingLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2 - 50, self.view.frame.size.height/2 - 50, 100, 100)];
+    submittingLabel.text = @"Submitting";
+    submittingLabel.backgroundColor = [UIColor darkGrayColor];
+    submittingLabel.textColor = [UIColor whiteColor];
+    submittingLabel.textAlignment = NSTextAlignmentCenter;
+    submittingLabel.layer.cornerRadius = cornerRadius;
+    [self.view addSubview:submittingLabel];
+    */
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview: activityView];
+    activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
+    [activityView startAnimating];
+    self.view.userInteractionEnabled = FALSE;
+    self.navigationController.view.userInteractionEnabled = FALSE;
+    self.tabBarController.view.userInteractionEnabled = FALSE;
+
+     
     //create dictionary of objects to send
-    
     NSLog(@"ingredientAry = %@",self.ingredientAry);
     NSLog(@"stepAry = %@",self.stepAry);
     
@@ -53,7 +71,6 @@ int imageViewHeight;
         [ingredientAryJson addObject:ingredientDictJson];
     }
     
-    
     NSMutableArray *stepAryJson = [[NSMutableArray alloc]init];
     for (int i = 1; i<=self.stepAry.count; i++){
         NSMutableDictionary *stepDictJson = [[NSMutableDictionary alloc]init];
@@ -62,18 +79,23 @@ int imageViewHeight;
         [stepAryJson addObject:stepDictJson];
         }
     
-    NSMutableArray *tagAry = [[NSMutableArray alloc]init]; //there's probably a more elegant way to do this
+    NSMutableArray *tagAryJson = [[NSMutableArray alloc]init]; //there's probably a more elegant way to do this
+    NSMutableArray *tagAry = [[NSMutableArray alloc]init];
     if (self.quickTag.tagged == TRUE){
-        [tagAry addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"tagID", nil]];
+        [tagAryJson addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"tagID", nil]];
+        [tagAry addObject:[NSNumber numberWithInteger:0]];
     }
     if (self.simpleTag.tagged == TRUE){
-        [tagAry addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"tagID", nil]];
+        [tagAryJson addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"tagID", nil]];
+        [tagAry addObject:[NSNumber numberWithInteger:1]];
     }
     if (self.vegetarianTag.tagged == TRUE){
-        [tagAry addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"2",@"tagID", nil]];
+        [tagAryJson addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"2",@"tagID", nil]];
+        [tagAry addObject:[NSNumber numberWithInteger:2]];
     }
     if (self.veganTag.tagged == TRUE){
-        [tagAry addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"3",@"tagID", nil]];
+        [tagAryJson addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"3",@"tagID", nil]];
+        [tagAry addObject:[NSNumber numberWithInteger:3]];
     }
     
     NSMutableDictionary* recipeDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -85,41 +107,76 @@ int imageViewHeight;
                                        [NSString stringWithFormat:@"%d",self.totTime],@"recipeTotalTime",
                                        ingredientAryJson,@"recipeIngredients",
                                        stepAryJson,@"recipeSteps",
-                                       tagAry,@"recipeTags",
+                                       tagAryJson,@"recipeTags",
                                        nil];
     
-
     DataClass *obj = [DataClass getInstance];
-    
     
     NSLog(@"userID in create recipe = %@",obj.userId);
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:recipeDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    jsonStr = [NSString stringWithFormat:@"user=%@&recipe=%@",obj.userId,jsonStr];
+    jsonStr = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,jsonStr];
     NSLog(@"jsonStr = %@",jsonStr);
     NSData *postData = [jsonStr dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"createRecipe"];
     NSURLSession *session = [NSURLSession sharedSession];
+
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [activityView stopAnimating];
+            self.view.userInteractionEnabled = TRUE;
+            self.navigationController.view.userInteractionEnabled = TRUE;
+            self.tabBarController.view.userInteractionEnabled = TRUE;
+        });
         
         NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"ret = %@",ret_);
         NSLog(@"response = %@",response);
         if ([ret_ intValue] > 0) {
             NSLog(@"Successful recipe post, id = %@",ret_);
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                //change UI to show sending
-                CookbookRecipe *newRecipe = [[CookbookRecipe alloc]initDetailedWithTitle:self.titleTextField.text withID:ret_ withDesc:self.descTextField.text withImage:nil withTagAry:tagAry withPrepTime:(NSNumber*)self.prepTimeField.text withCookTime:(NSNumber*)self.cookTimeField.text withTotTime:[NSNumber numberWithInt:self.totTime] withPortionNum:(NSNumber*)self.portionNumLabel.text withIngredientAry:ingredientAryJson withStepAry:stepAryJson];
-                [obj addRecipe:newRecipe];
-            });
+            //fix this to send images
+            Recipe *newRecipe = [[Recipe alloc]initDetailedWithTitle:self.titleTextField.text withID:ret_ withDesc:self.descTextField.text withImageName:nil withTagAry:tagAry withPrepTime:(NSNumber*)self.prepTimeField.text withCookTime:(NSNumber*)self.cookTimeField.text withTotTime:[NSNumber numberWithInt:self.totTime] withPortionNum:(NSNumber*)self.portionNumLabel.text withIngredientAry:ingredientAryJson withStepAry:stepAryJson withImage:nil];
+            [obj addRecipe:newRecipe];
             
-        }
-        
+            NSString *post2 = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,ret_];
+            NSData *postData2 = [post2 dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+            NSMutableURLRequest *request2 = [Helper setupPost:postData2 withURLEnd:@"addCookbookRecipe"];
+            NSURLSession *session2 = [NSURLSession sharedSession];
+            NSURLSessionDataTask *dataTask2 = [session2 dataTaskWithRequest:request2 completionHandler:^(NSData *postData2, NSURLResponse *response2, NSError *error2) {
+                
+                NSString *ret2 = [[NSString alloc] initWithData:postData2 encoding:NSUTF8StringEncoding];
+                NSLog(@"ret2 (recipe successfully added to cookbook) = %@",ret2);
+                
+                
+            }];
+            [dataTask2 resume];
+
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+            
+           [[self navigationController] popViewControllerAnimated:YES];
+                });
+            }
         else{
             NSLog(@"Recipe post failed");
+                //Include discrete error reasons
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                //change UI to show fail
+                UIAlertController *alert = [UIAlertController
+                                            alertControllerWithTitle:@"Recipe Submission Failed"
+                                            message:[NSString stringWithFormat:@"%@\r%@",@"The recipe could not be submitted.",@"Please try again."]
+                                            preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *ok = [UIAlertAction
+                                     actionWithTitle:@"OK"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction *action)
+                                     {
+                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                         
+                                     }];
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
             });
         }
     }];
@@ -127,7 +184,7 @@ int imageViewHeight;
     [dataTask resume];
     
     
-    [[self navigationController] popViewControllerAnimated:YES];
+    
 }
 
 - (NSManagedObjectContext *)managedObjectContext

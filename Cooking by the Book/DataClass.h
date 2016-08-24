@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CookbookRecipe.h"
+#import "Recipe.h"
 
 @interface DataClass : NSObject{
 
@@ -21,7 +21,7 @@
 
 +(DataClass*)getInstance;
 -(void)initCookbookAry:(NSArray *)jsonCookbookAry_;
--(void)addRecipe:(CookbookRecipe *)recipe;
+-(void)addRecipe:(Recipe *)recipe;
 -(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key;
 
 @end

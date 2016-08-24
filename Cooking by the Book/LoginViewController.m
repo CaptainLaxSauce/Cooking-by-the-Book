@@ -31,6 +31,13 @@ static int cornerRadius = 3;
 }
 
 - (void) loginTouch:(id)sender{
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview: activityView];
+    activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
+    [activityView startAnimating];
+    self.view.userInteractionEnabled = FALSE;
+    self.navigationController.view.userInteractionEnabled = FALSE;
+    self.tabBarController.view.userInteractionEnabled = FALSE;
     
     NSString *post = [NSString stringWithFormat:@"email=%@&password=%@",self.emailTextField.text,self.passwordTextField.text];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -63,6 +70,10 @@ static int cornerRadius = 3;
             }];
             [dataTask2 resume];
             dispatch_async(dispatch_get_main_queue(), ^(void){
+                [activityView stopAnimating];
+                self.view.userInteractionEnabled = TRUE;
+                self.navigationController.view.userInteractionEnabled = TRUE;
+                self.tabBarController.view.userInteractionEnabled = TRUE;
                [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
             });
             
