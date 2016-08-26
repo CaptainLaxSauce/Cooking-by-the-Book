@@ -72,18 +72,21 @@ int scrollHeight;
     for (int i=0;i<recipeCnt;i++){
         Recipe *tempRecipe = [[Recipe alloc]init];
         tempRecipe = [obj.cookbookAry objectAtIndex:i];
-        NSString *post = [NSString stringWithFormat:@"imageName=%@",tempRecipe.image];
+        NSLog(@"image name = %@",tempRecipe.imageName);
+        NSString *post = [NSString stringWithFormat:@"imageName=%@",tempRecipe.imageName];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getImage"];
         NSURLSession *session = [NSURLSession sharedSession];
         NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+            tempRecipe.image = [UIImage imageWithData:postData];
             //need to determine what kind of encoding images use
             NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-            NSLog(@"ret = %@",ret_);
+            NSLog(@"ret for int %d = %@",i , ret_);
             
         }];
         [dataTask resume];
-
+        int ii = 1;
+        wait(&ii);
         
     }
     

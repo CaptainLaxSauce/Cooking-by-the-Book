@@ -36,13 +36,16 @@
         self.recipe = Recipe_;
         self.backgroundColor = [UIColor whiteColor];
         
-        /* add this back in when images are working
-         if (_image != nil){
-         _imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:_image]];
-         [_imageView setFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
-         [self addSubview:_imageView];
+        _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
+         if (Recipe_.image != nil){
+             _imageView.image = Recipe_.image;
+                  }
+         else {
+             _imageView.image = [UIImage imageNamed:@"recipedefault.png"];
          }
-         */
+        [self addSubview:_imageView];
+        
+        
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, objectBreak, totalWidth - imageHeight - tagWidth - objectBreak*2, titleHeight)];
         UIFontDescriptor * fontD = [titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
         titleLabel.font = [UIFont fontWithDescriptor:fontD size:0];
@@ -58,9 +61,7 @@
         
         UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(totalWidth - tagWidth, 0, tagWidth, totalHeight) withTags:Recipe_.tagAry];
         [self addSubview:tagBox];
-        
 
-        
     }
     
     return self;

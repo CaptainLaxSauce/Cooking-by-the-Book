@@ -41,7 +41,7 @@
 @property NSMutableArray *ingredientAry;
 @property NSMutableArray *stepAry;
 @property NSMutableArray *tagAry;
-@property UIImageView *imageView;
+@property UIImageView *recipeImageView;
 
 @property (nonatomic,strong) NSMutableArray *moveAry;
 @property int ingredientIdx;

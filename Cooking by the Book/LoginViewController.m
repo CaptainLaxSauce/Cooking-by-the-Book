@@ -47,6 +47,15 @@ static int cornerRadius = 3;
         
         NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"%@",ret);
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [activityView stopAnimating];
+            self.view.userInteractionEnabled = TRUE;
+            self.navigationController.view.userInteractionEnabled = TRUE;
+            self.tabBarController.view.userInteractionEnabled = TRUE;
+            
+        });
+        
         if ([ret intValue] > 0) {
             
             DataClass *obj = [DataClass getInstance];
@@ -70,13 +79,8 @@ static int cornerRadius = 3;
             }];
             [dataTask2 resume];
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                [activityView stopAnimating];
-                self.view.userInteractionEnabled = TRUE;
-                self.navigationController.view.userInteractionEnabled = TRUE;
-                self.tabBarController.view.userInteractionEnabled = TRUE;
-               [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
+            [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
             });
-            
         }
         
         else{
@@ -100,6 +104,9 @@ static int cornerRadius = 3;
                 
             });
         }
+        
+
+        
     }];
     
     [dataTask resume];
