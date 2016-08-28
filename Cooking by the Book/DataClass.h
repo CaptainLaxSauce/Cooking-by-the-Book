@@ -16,6 +16,7 @@
 }
 
 @property(nonatomic,retain) NSMutableArray *cookbookAry;
+@property(nonatomic,retain) NSMutableArray *ingredientAry;
 @property(nonatomic,retain) NSString *userId;
 @property(nonatomic,retain) NSString *currDetailedRecipeId;
 
@@ -25,5 +26,6 @@
 -(void)addImageToRecipe:(Recipe *)recipe withImage:(UIImage *)image;
 -(Recipe *)getRecipe:(NSString *)recipeID;
 -(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key;
+-(void)initIngredientAry;
 
 @end

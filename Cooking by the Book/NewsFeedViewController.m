@@ -10,4 +10,8 @@
 
 @implementation NewsFeedViewController
 
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    
+}
 @end

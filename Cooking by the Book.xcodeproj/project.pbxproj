@@ -33,6 +33,7 @@
 		04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */; };
 		04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5ED341D3DBA18004E9474 /* Recipe.m */; };
 		04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E67AE51D32D4AA000371E5 /* UITagBox.m */; };
+		04EEBA181D73A7AE0036E0EA /* Ingredient.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EEBA171D73A7AE0036E0EA /* Ingredient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,8 @@
 		04E5ED341D3DBA18004E9474 /* Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recipe.m; sourceTree = "<group>"; };
 		04E67AE41D32D4AA000371E5 /* UITagBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITagBox.h; sourceTree = "<group>"; };
 		04E67AE51D32D4AA000371E5 /* UITagBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITagBox.m; sourceTree = "<group>"; };
+		04EEBA161D73A7AE0036E0EA /* Ingredient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ingredient.h; sourceTree = "<group>"; };
+		04EEBA171D73A7AE0036E0EA /* Ingredient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ingredient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +205,8 @@
 				045931581D1902F5003D1C47 /* UIColor+CustomColors.m */,
 				04E5ED331D3DBA18004E9474 /* Recipe.h */,
 				04E5ED341D3DBA18004E9474 /* Recipe.m */,
+				04EEBA161D73A7AE0036E0EA /* Ingredient.h */,
+				04EEBA171D73A7AE0036E0EA /* Ingredient.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -379,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				045A81F81D2072FD00A90D8E /* NewsFeedViewController.m in Sources */,
+				04EEBA181D73A7AE0036E0EA /* Ingredient.m in Sources */,
 				04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */,
 				045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */,
 				047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */,

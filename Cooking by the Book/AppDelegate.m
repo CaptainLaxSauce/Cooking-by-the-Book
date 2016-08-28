@@ -24,7 +24,7 @@
     // Override point for customization after application launch.
     
     
-    //DataClass *obj = [DataClass getInstance];
+
     NSString *post = [NSString stringWithFormat:@"initializeList"];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"initialize"];
@@ -40,45 +40,50 @@
     //ret = [ret stringByReplacingOccurrencesOfString:@"</pre>" withString:@""];
         
     //NSData *retData = [ret dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    
-    
-       
         
-    NSDictionary *initDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
-    NSArray *ingredientAry = [initDict objectForKey:@"ingredientInfo"];
-    NSLog(@"initAry count = %lu",(unsigned long)ingredientAry.count);
-        
-    //retrieve core ingredient array
-    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Ingredient"];
-    NSMutableArray *coreIngredientAry = [[managedObjectContext executeFetchRequest:fetchRequest error:nil]mutableCopy];
-/*
-    for (int i=0;i<ingredientAry.count;i++){
-       NSMutableDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
-       NSString *ingredientID = [ingredientDict objectForKey:@"ingredientID"];
- 
-        
-        if ([coreIngredientDict objectForKey:ingredientID]==nil){
-            NSManagedObject *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"Ingredient" inManagedObjectContext:managedObjectContext];
-            [ingredient setValue:ingredientID forKey:@"id"];
-            NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
-            [ingredient setValue:ingredientName forKey:@"name"];
+        //update core data aray if value returned
+        if (ret != nil){
+            //clear core data for ingredients
+            NSFetchRequest *delRequest = [[NSFetchRequest alloc]initWithEntityName:@"Ingredient"];
+            NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:delRequest];
+            NSError *deleteError = nil;
+            NSPersistentStoreCoordinator *persistentStoreCoordinator = [self persistentStoreCoordinator];
+            NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+            [persistentStoreCoordinator executeRequest:delete withContext:managedObjectContext error:&deleteError];
             
-            NSError *error = nil;
-            // Save the object to persistent store
-            if (![managedObjectContext save:&error]) {
-                NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-            }
-        }
-        //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@",[ingredientDict objectForKey:@"ingredientID"]];
+            //parse JSON data
+            NSDictionary *initDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+            NSArray *ingredientAry = [initDict objectForKey:@"ingredientInfo"];
+            NSLog(@"initAry count = %lu",(unsigned long)ingredientAry.count);
+
+            //load ingredients into core data
+            for (int i=0;i<ingredientAry.count;i++){
+                NSMutableDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
+                NSString *ingredientID = [ingredientDict objectForKey:@"ingredientID"];
+                NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
+                //NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
         
-        NSLog(@"init dict name = %@",[ingredientDict objectForKey:@"ingredientName"]);
-        NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientDict.count);
-        NSLog(@"core data ing 1 = %@",[coreIngredientDict )
- 
-    }
-    
-        */
+                NSManagedObject *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"Ingredient" inManagedObjectContext:managedObjectContext];
+                [ingredient setValue:ingredientID forKey:@"ingredientID"];
+                [ingredient setValue:ingredientName forKey:@"ingredientName"];
+            
+                NSError *error = nil;
+                // Save the object to persistent store
+                if (![managedObjectContext save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                }
+        
+                //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@",[ingredientDict objectForKey:@"ingredientID"]];
+        
+                //NSLog(@"init dict name = %@",[ingredientDict objectForKey:@"ingredientName"]);
+                //NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientArray.count);
+                //NSLog(@"ing id i = %@",[ingredientDict objectForKey:@"ingredientID"]);
+            }
+            
+        }
+        //initialize the data ingredient array whether core data was updated or not
+        DataClass *obj = [DataClass getInstance];
+        [obj initIngredientAry];
         
 
         

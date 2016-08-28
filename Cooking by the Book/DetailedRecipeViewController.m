@@ -190,10 +190,6 @@
                 [recipeImageView setImage:self.recipe.image];
             }
         });
-        
-        
-        
-        
     }];
     [dataTask resume];
     NSLog(@"Detailed Recipe ID = %@",obj.currDetailedRecipeId);

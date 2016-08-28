@@ -7,6 +7,9 @@
 //
 
 #import "DataClass.h"
+#import "AppDelegate.h"
+#import <CoreData/CoreData.h>
+#import "Ingredient.h"
 
 
 @implementation DataClass
@@ -74,6 +77,25 @@ static DataClass *instance = nil;
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:key ascending:YES selector:@selector(caseInsensitiveCompare:)];
     [theArray sortUsingDescriptors:@[sort]];
     return theArray;
+}
+
+-(void)initIngredientAry{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = appDelegate.managedObjectContext;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Ingredient"];
+    NSMutableArray *coreIngAry = [[context executeFetchRequest:fetchRequest error:nil]mutableCopy];
+    NSMutableArray *dataIngAry = [[NSMutableArray alloc]init];
+    
+    NSLog (@"ingredientCount = %lu",(unsigned long)coreIngAry.count);
+    for (int i=0;i<coreIngAry.count;i++){
+        NSManagedObject *coreIngredient = [coreIngAry objectAtIndex:i];
+        Ingredient *tempIng = [[Ingredient alloc]initWithName:[coreIngredient valueForKey:@"ingredientName"] withID:[coreIngredient valueForKey:@"ingredientName"]];
+        [dataIngAry addObject:tempIng];
+        NSLog(@"Data Ingredient ID = %@",[coreIngredient valueForKey:@"ingredientID"]);
+        NSLog(@"Data IngredientName = %@",[coreIngredient valueForKey:@"ingredientName"]);
+    }
+    self.ingredientAry = dataIngAry;
+    NSLog(@"Data IngredientAry count = %lu",(unsigned long)self.ingredientAry.count);
 }
 
 @end
