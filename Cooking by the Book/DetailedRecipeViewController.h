@@ -11,8 +11,9 @@
 
 @interface DetailedRecipeViewController : UIViewController
 
-@property (nonatomic,strong) NSString* recipeID;
-@property (nonatomic,strong) Recipe* recipe;
+@property (nonatomic,strong) NSString *recipeID;
+@property (nonatomic,strong) Recipe *recipe;
+@property (nonatomic,strong) UIScrollView *scrollView;
 
 
 @end

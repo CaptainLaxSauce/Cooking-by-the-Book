@@ -22,6 +22,8 @@
 +(DataClass*)getInstance;
 -(void)initCookbookAry:(NSArray *)jsonCookbookAry_;
 -(void)addRecipe:(Recipe *)recipe;
+-(void)addImageToRecipe:(Recipe *)recipe withImage:(UIImage *)image;
+-(Recipe *)getRecipe:(NSString *)recipeID;
 -(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key;
 
 @end

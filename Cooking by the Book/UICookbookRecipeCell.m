@@ -34,15 +34,18 @@
         int tagWidth = totalHeight;
         
         self.recipe = Recipe_;
+        self.recipeID = Recipe_.recipeID;
+        NSLog(@"recipeID of cookcell = %@",self.recipeID);
         self.backgroundColor = [UIColor whiteColor];
         
-        _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
+        UIImageView *imageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
          if (Recipe_.image != nil){
-             _imageView.image = Recipe_.image;
+             imageView_.image = Recipe_.image;
                   }
          else {
-             _imageView.image = [UIImage imageNamed:@"recipedefault.png"];
+             imageView_.image = [UIImage imageNamed:@"recipedefault.png"];
          }
+        self.imageView = imageView_;
         [self addSubview:_imageView];
         
         

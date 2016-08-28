@@ -59,6 +59,17 @@ static DataClass *instance = nil;
     self.cookbookAry = [self alphebetizeAry:self.cookbookAry withKey:@"title"];
 }
 
+-(Recipe *)getRecipe:(NSString *)recipeID{
+    NSArray *recipeAry = [[NSArray alloc]initWithArray:self.cookbookAry];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recipeID MATCHES %@", recipeID];
+    NSArray *filteredAry = [recipeAry filteredArrayUsingPredicate:predicate];
+    return [filteredAry objectAtIndex:0];
+}
+
+-(void)addImageToRecipe:(Recipe *)recipe withImage:(UIImage *)image_{
+    ((Recipe *) [self.cookbookAry objectAtIndex:[self.cookbookAry indexOfObject:recipe]]).image = image_;
+}
+
 -(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key{
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:key ascending:YES selector:@selector(caseInsensitiveCompare:)];
     [theArray sortUsingDescriptors:@[sort]];

@@ -13,6 +13,7 @@
 
 @property UIImageView *imageView;
 @property Recipe *recipe;
+@property NSString *recipeID; //used so this object can be found using NSPredicate
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;

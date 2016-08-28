@@ -39,28 +39,30 @@ int scrollHeight;
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [self refreshRecipes];
+-(void)viewDidAppear:(BOOL)animated{
+    
+       [self refreshRecipes];
+   
+    
 }
 
 -(void)refreshRecipes{
     NSLog(@"recipes refreshed");
     int recipeCellHeight = (scrollHeight - objectBreak*6)/5;
+    NSMutableArray *cookbookRecipeCellAry = [[NSMutableArray alloc]init];
     
     DataClass *obj = [DataClass getInstance];
     NSInteger recipeCnt = obj.cookbookAry.count;
     NSLog(@"coobookAry count in cookbookVC = %lu",(unsigned long)recipeCnt);
     
-    //load cookCells
-    for (int i = 0;i<recipeCnt;i++){
-        NSLog(@"%d",i);
-        Recipe *tempRecipe = [[Recipe alloc]init];
-        tempRecipe = [obj.cookbookAry objectAtIndex:i];
-        
-        NSLog(@"2 temp recipe properties = %@ %@ %@ %@ %@",tempRecipe.title, tempRecipe.imageName, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
+    for (int i=0;i<recipeCnt;i++){
+        Recipe *tempRecipe = [obj.cookbookAry objectAtIndex:i];
+         NSLog(@"2 temp recipe properties = %@ %@ %@ %@ %@",tempRecipe.title, tempRecipe.imageName, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
         UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + i*(recipeCellHeight + objectBreak), screenWidth, recipeCellHeight) withRecipe:tempRecipe];
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchCell:)];
         [cookCell addGestureRecognizer:tapRecognizer];
+        [cookbookRecipeCellAry addObject:cookCell];
+        NSLog(@"cookbookRecipeCellAry count just after adding = %lu",(unsigned long)cookbookRecipeCellAry.count);
         [self.recipeScrollView addSubview:cookCell];
     }
     
@@ -70,23 +72,39 @@ int scrollHeight;
     
     //load images
     for (int i=0;i<recipeCnt;i++){
-        Recipe *tempRecipe = [[Recipe alloc]init];
-        tempRecipe = [obj.cookbookAry objectAtIndex:i];
-        NSLog(@"image name = %@",tempRecipe.imageName);
-        NSString *post = [NSString stringWithFormat:@"imageName=%@",tempRecipe.imageName];
-        NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-        NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getImage"];
-        NSURLSession *session = [NSURLSession sharedSession];
-        NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
-            tempRecipe.image = [UIImage imageWithData:postData];
-            //need to determine what kind of encoding images use
-            NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-            NSLog(@"ret for int %d = %@",i , ret_);
-            
+        Recipe *tempRecipe = [obj.cookbookAry objectAtIndex:i];
+        if (tempRecipe.image == nil){
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recipeID MATCHES %@", tempRecipe.recipeID];
+            NSArray *filteredAry = [cookbookRecipeCellAry filteredArrayUsingPredicate:predicate];
+            UICookbookRecipeCell *tempCookCell = [filteredAry objectAtIndex:0];
+            NSLog(@"filteredAry count = %lu",(unsigned long)filteredAry.count);
+            NSLog(@"cookbookRecipeCellAry count = %lu",(unsigned long)cookbookRecipeCellAry.count);
+            NSLog(@"tempCookCell recipe ID = %@",tempCookCell.recipeID);
+        
+            NSLog(@"image name = %@",tempRecipe.imageName);
+            NSString *post = [NSString stringWithFormat:@"imageName=%@" ,tempRecipe.imageName];
+            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+            NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getImage"];
+            NSURLSession *session = [NSURLSession sharedSession];
+            //for some reason we are calling this more than once per recipe, need to investigate
+            NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+                tempRecipe.image = [UIImage imageWithData:postData];
+                
+                // ((Recipe *) [obj.cookbookAry objectAtIndex:i]).image = tempRecipe.image;
+                NSLog(@"%d",i);
+
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    if (tempRecipe.image != nil){
+                        [tempCookCell.imageView setImage:tempRecipe.image];
+                       
+
+                   //[obj addImageToRecipe:tempRecipe withImage:tempRecipe.image];
+                    }
+                });
+                
         }];
         [dataTask resume];
-        int ii = 1;
-        wait(&ii);
+        }
         
     }
     
@@ -138,7 +156,6 @@ int scrollHeight;
     UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight)];
     recipeScrollView_.backgroundColor = [UIColor customGrayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-
     self.recipeScrollView = recipeScrollView_;
     [self.view addSubview:recipeScrollView_];
 
@@ -163,8 +180,6 @@ int scrollHeight;
     createRecipeButton_.clipsToBounds = YES;
     [self.view addSubview:createRecipeButton_];
     self.createRecipeButton = createRecipeButton_;
-    
-    
     
     
 }
