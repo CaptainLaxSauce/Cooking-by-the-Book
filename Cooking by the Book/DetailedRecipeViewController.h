@@ -15,5 +15,6 @@
 @property (nonatomic,strong) Recipe *recipe;
 @property (nonatomic,strong) UIScrollView *scrollView;
 
+-(void)cookedButtonTouch:(id)sender;
 
 @end

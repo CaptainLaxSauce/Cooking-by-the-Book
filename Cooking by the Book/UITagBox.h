@@ -23,5 +23,6 @@ typedef enum TagType : int{
 -(id)init;
 -(id)initWithFrame:(CGRect)frame_;
 -(id)initWithFrame:(CGRect)frame_ withTags:(NSArray *)tagAry_;
+-(void)addTags:(NSArray *)tagAry_;
 
 @end

@@ -612,6 +612,7 @@ int imageViewHeight;
     UIButton *submitRecipeButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak , screenHeight-objectBreak-textHeight-tabBarHeight, objectWidth, textHeight)];
     [submitRecipeButton_ addTarget:self action:@selector(submitRecipeTouch:) forControlEvents:UIControlEventTouchUpInside];
     [submitRecipeButton_ setTitle:@"Submit Recipe" forState:UIControlStateNormal];
+    [submitRecipeButton_ setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     //[createRecipeButton_ setBackgroundImage:[UIImage imageNamed:@"app_logo.png"] forState: UIControlStateHighlighted];
     //[createRecipeButton_ setBackgroundImage:[UIImage imageNamed:@"app_logo.png"] forState: UIControlStateSelected];
     submitRecipeButton_.backgroundColor = [UIColor secondaryColor];

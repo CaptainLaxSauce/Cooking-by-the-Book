@@ -10,6 +10,7 @@
 #import "DataClass.h"
 #import "Helper.h"
 #import "UIColor+CustomColors.h"
+#import "UITagBox.h"
 
 @interface DetailedRecipeViewController ()
 
@@ -29,17 +30,70 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)cookedButtonTouch:(id)sender{
+    NSLog(@"COOKEEEDDD!");
+}
+
 -(void)loadInterface{
     int objectBreak=8;
     int cornerRadius=3;
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
     int objectWidth = screenWidth - objectBreak*2;
+    int tagBoxHeight = (objectWidth/2-objectBreak*2)*3/5;
     int textHeight = screenHeight/20;
+    int ingLabelStart = objectBreak*6 + objectWidth/2 + textHeight*3;
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     int navBarHeight = self.navigationController.navigationBar.frame.size.height;
     int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     int scrollHeight = screenHeight-statusBarHeight-navBarHeight-textHeight-objectBreak*2-tabBarHeight;
+    
+    self.view.backgroundColor = [UIColor primaryColor];
+    
+    UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+navBarHeight, screenWidth, screenHeight-statusBarHeight-navBarHeight-tabBarHeight - textHeight - objectBreak*2)];
+    scrollView_.backgroundColor = [UIColor customGrayColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.scrollView = scrollView_;
+    [self.view addSubview:scrollView_];
+    
+    UIImageView *recipeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, (objectWidth-objectBreak)/2, objectWidth/2)];
+    recipeImageView.image = [UIImage imageNamed:@"recipedefault.png"];
+    [self.scrollView addSubview:recipeImageView];
+    
+    UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(objectBreak*2+objectWidth/2, objectBreak, tagBoxHeight, tagBoxHeight)];
+    [self.scrollView addSubview:tagBox];
+
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak*2+objectWidth/2, objectBreak*2 + tagBoxHeight, (objectWidth-objectBreak)/2, tagBoxHeight/3)];
+    [self.scrollView addSubview:timeLabel];
+    
+    UILabel *portionLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak*2+objectWidth/2, objectBreak*3 + tagBoxHeight + textHeight, (objectWidth-objectBreak)/2, tagBoxHeight/3)];
+    [self.scrollView addSubview:portionLabel];
+    
+    UIView *timePortionLine = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*2 + objectWidth/2, objectWidth - objectBreak*2, 1)];
+    timePortionLine.backgroundColor = [UIColor lineColor];
+    [self.scrollView addSubview:timePortionLine];
+    
+    UILabel *descLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*3 + objectWidth/2, objectWidth, textHeight*2)];
+    descLabel.adjustsFontSizeToFitWidth = TRUE;
+    [self.scrollView addSubview:descLabel];
+    
+    UIView *descLine = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*4 + objectWidth/2 + textHeight*2, objectWidth, 1)];
+    descLine.backgroundColor = [UIColor lineColor];
+    [self.scrollView addSubview:descLine];
+
+    
+    UILabel *ingredientsLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*5 + objectWidth/2 + textHeight*2, objectWidth/2, textHeight)];
+    [ingredientsLabel setText:@"Ingredients"];
+    [self.scrollView addSubview:ingredientsLabel];
+    
+    UIButton *cookedButton = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak, screenHeight - tabBarHeight - textHeight - objectBreak, objectWidth, textHeight)];
+    [cookedButton setTitle:@"Recipe Cooked" forState:UIControlStateNormal];
+    [cookedButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    [cookedButton addTarget:self action:@selector(cookedButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
+    cookedButton.backgroundColor = [UIColor secondaryColor];
+    cookedButton.layer.cornerRadius = cornerRadius;
+    cookedButton.clipsToBounds = YES;
+    [self.view addSubview:cookedButton];
     
     DataClass *obj = [DataClass getInstance];
     self.recipe = [obj getRecipe:obj.currDetailedRecipeId];
@@ -52,20 +106,103 @@
         NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"ret = %@",ret_);
         
+        NSDictionary *recipeDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        NSDictionary *recipeInfoDict = [recipeDict objectForKey:@"recipeInfo"];
+        NSArray *ingredientAry = [recipeDict objectForKey:@"ingredientInfo"];
+        NSArray *tagAry = [recipeDict objectForKey:@"tagInfo"];
+        NSArray *stepAry = [recipeDict objectForKey:@"stepInfo"];
+        
+        
+        for (int i=0;i<stepAry.count;i++){
+            //UILabel *stpLabel
+        }
+        
+        NSMutableArray *tagNumAry = [[NSMutableArray alloc]init];
+        for (int ii=0;ii<tagAry.count;ii++){
+            NSDictionary *tagDict = [tagAry objectAtIndex:ii];
+            [tagNumAry addObject:[tagDict objectForKey:@"tagID"]];
+            NSLog(@"tagID = %@",[tagDict objectForKey:@"tagID"]);
+            NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count);
+        }
+
+        
+        //Fill in everything
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            
+            //add Ingredients
+            int ingredientHeight = 0;
+            for (int i=0;i<ingredientAry.count;i++){
+                UILabel *ingLabel = [[UILabel alloc]init];
+                if (i%2 == 0){
+                    [ingLabel setFrame:CGRectMake(objectBreak, ingLabelStart + textHeight*(i/2) + objectBreak*(i/2), (objectWidth-objectBreak)/2, textHeight)];
+                    ingredientHeight = ingredientHeight + textHeight + objectBreak;
+                }
+                else{
+                    [ingLabel setFrame:CGRectMake(objectBreak*2 +objectWidth/2 , ingLabelStart + textHeight*(i-1)/2 + objectBreak*(i-1)/2, (objectWidth-objectBreak)/2, textHeight)];
+                }
+                NSDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
+                NSString *unitName = [ingredientDict objectForKey:@"unitName"];
+                NSString *unitQuantity = [ingredientDict objectForKey:@"unitQuantity"];
+                NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
+                ingLabel.text = [NSString stringWithFormat:@"%@ %@ %@", unitQuantity, unitName, ingredientName];
+                ingLabel.backgroundColor = [UIColor whiteColor];
+                ingLabel.layer.cornerRadius = cornerRadius;
+                ingLabel.clipsToBounds = YES;
+                NSLog(@"ingredient array components %@ %@ %@", unitQuantity, unitName, ingredientName);
+                [self.scrollView addSubview:ingLabel];
+            }
+            
+            UIView *ingLine = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, ingLabelStart + ingredientHeight, objectWidth, 1)];
+            ingLine.backgroundColor = [UIColor lineColor];
+            [self.scrollView addSubview:ingLine];
+            
+            UILabel *stepsLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, ingLabelStart + ingredientHeight + objectBreak, objectWidth, textHeight)];
+            stepsLabel.text = [NSString stringWithFormat:@"Steps"];
+            [self.scrollView addSubview:stepsLabel];
+
+            for(int i=0;i<stepAry.count;i++){
+                UILabel *stepLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, ingLabelStart + ingredientHeight + textHeight + objectBreak*2 + objectBreak*i + textHeight*i, objectWidth, textHeight)];
+                NSDictionary *stepDict = [stepAry objectAtIndex:i];
+                NSString *stepDesc = [stepDict objectForKey:@"stepDescription"];
+                stepLabel.backgroundColor = [UIColor whiteColor];
+                stepLabel.layer.cornerRadius = cornerRadius;
+                stepLabel.clipsToBounds = YES;
+                stepLabel.adjustsFontSizeToFitWidth = TRUE;
+                stepLabel.text = [NSString stringWithFormat:@"%d) %@", i+1, stepDesc];
+                [self.scrollView addSubview:stepLabel];
+            }
+            
+
+            
+            //resize scrollview to fit contents
+            CGRect contentRect = CGRectZero;
+            for (UIView *view in self.scrollView.subviews) {
+                contentRect = CGRectUnion(contentRect, view.frame);
+            }
+            contentRect.size.height = contentRect.size.height + objectBreak;
+            self.scrollView.contentSize = contentRect.size;
+            
+            timeLabel.text = [NSString stringWithFormat:@"Prep: %@  Cook: %@",[recipeInfoDict objectForKey:@"recipeTimePrep"],[recipeInfoDict objectForKey:@"recipeTimeCook"]];
+            portionLabel.text = [NSString stringWithFormat:@"Portions: %@",[recipeInfoDict objectForKey:@"recipePortions"]];
+            descLabel.text = [NSString stringWithFormat:@"%@",[recipeInfoDict objectForKey:@"recipeDescription"]];
+            [tagBox addTags:tagNumAry];
+            if (self.recipe.image != nil){
+                [recipeImageView setImage:self.recipe.image];
+            }
+        });
+        
+        
+        
+        
     }];
     [dataTask resume];
     NSLog(@"Detailed Recipe ID = %@",obj.currDetailedRecipeId);
     
-    UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+navBarHeight, screenWidth, screenHeight-statusBarHeight-navBarHeight-tabBarHeight)];
-    scrollView_.backgroundColor = [UIColor customGrayColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.scrollView = scrollView_;
-    [self.view addSubview:scrollView_];
+
     
-    UIImageView *recipeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, objectWidth, objectWidth)];
-    [recipeImageView setImage:self.recipe.image];
-    recipeImageView.backgroundColor = [UIColor redColor];
-    [self.scrollView addSubview:recipeImageView];
+    
+    
+    
     
                                     
     
