@@ -38,6 +38,14 @@
         NSLog(@"recipeID of cookcell = %@",self.recipeID);
         self.backgroundColor = [UIColor whiteColor];
         
+        UISwipeGestureRecognizer *swipeL = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(showDelBtn:)];
+        swipeL.direction = UISwipeGestureRecognizerDirectionLeft;
+        [self addGestureRecognizer:swipeL];
+        
+        UISwipeGestureRecognizer *swipeR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(hideDelBtn:)];
+        swipeR.direction = UISwipeGestureRecognizerDirectionRight;
+        [self addGestureRecognizer:swipeR];
+        
         UIImageView *imageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
          if (Recipe_.image != nil){
              imageView_.image = Recipe_.image;
@@ -64,13 +72,36 @@
         
         UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(totalWidth - tagWidth, 0, tagWidth, totalHeight) withTags:Recipe_.tagAry];
         [self addSubview:tagBox];
-
+        
+        UIButton *delButton_ = [[UIButton alloc]initWithFrame:CGRectMake(totalWidth- tagWidth, 0, tagWidth, totalHeight)];
+        delButton_.backgroundColor = [UIColor redColor];
+        [delButton_ addTarget:self action:@selector(delTouch:) forControlEvents:UIControlEventTouchUpInside];
+        [delButton_ setTitle:@"X" forState:UIControlStateNormal];
+        self.delButton = delButton_;
+        [self addSubview:delButton_];
+        [delButton_ setHidden:TRUE];
     }
     
     return self;
 
 }
 
+-(void)showDelBtn:(id)sender{
+    if (self.delButton.isHidden == TRUE){
+        [self.delButton setHidden:FALSE];
+    }
+    
+}
+
+-(void)hideDelBtn:(id)sender{
+    if (self.delButton.isHidden == FALSE){
+        [self.delButton setHidden:TRUE];
+    }
+}
+
+-(void)delTouch:(id)sender{
+    NSLog(@"delTouch");
+}
 
 
 

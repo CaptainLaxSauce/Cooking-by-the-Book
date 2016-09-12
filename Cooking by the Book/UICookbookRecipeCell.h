@@ -14,9 +14,12 @@
 @property UIImageView *imageView;
 @property Recipe *recipe;
 @property NSString *recipeID; //used so this object can be found using NSPredicate
+@property UIButton *delButton;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;
 -(id)initWithFrame:(CGRect)frame withRecipe:(Recipe*)Recipe_;
-
+-(void)delTouch:(id)sender;
+-(void)showDelBtn:(id)sender;
+-(void)hideDelBtn:(id)sender;
 @end

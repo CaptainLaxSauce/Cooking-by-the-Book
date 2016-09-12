@@ -35,6 +35,10 @@ int scrollHeight;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //delete this, testing purposes only
+    //DataClass *obj = [DataClass getInstance];
+    //obj.userId = @"36";
+    
     [self loadInterface];
     
 }
