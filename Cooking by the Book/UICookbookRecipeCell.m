@@ -99,8 +99,9 @@
     }
 }
 
--(void)delTouch:(id)sender{
-    NSLog(@"delTouch");
+-(id)delTouch:(id)sender{
+   // [self removeFromSuperview];
+    return self;
 }
 
 

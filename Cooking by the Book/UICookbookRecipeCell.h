@@ -19,7 +19,7 @@
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;
 -(id)initWithFrame:(CGRect)frame withRecipe:(Recipe*)Recipe_;
--(void)delTouch:(id)sender;
+-(id)delTouch:(id)sender;
 -(void)showDelBtn:(id)sender;
 -(void)hideDelBtn:(id)sender;
 @end

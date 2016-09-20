@@ -30,6 +30,9 @@ int tabHeight;
 int scrollHeight;
 
 @implementation CookbookViewController
+{
+    NSMutableArray *cookbookRecipeCellAry;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,21 +42,43 @@ int scrollHeight;
     //DataClass *obj = [DataClass getInstance];
     //obj.userId = @"36";
     
-    [self loadInterface];
+    
     
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
+       [self loadInterface];
        [self refreshRecipes];
    
     
 }
 
+-(void)delRecipeTouch:(id)sender{
+    UIButton *tempBtn = [sender self];
+    UICookbookRecipeCell *tempCell = (UICookbookRecipeCell *) tempBtn.superview;
+    [tempCell removeFromSuperview];
+    NSInteger index = [cookbookRecipeCellAry indexOfObject:tempCell];
+    [self shiftCellsUp:index];
+    NSLog(@"deleted recipe %@",tempCell.recipeID);
+}
+
+-(void)shiftCellsUp:(NSInteger)startInt{
+    UICookbookRecipeCell *tempCell = [[UICookbookRecipeCell alloc]init];
+    int moveSize = 0;
+    for(NSInteger i = startInt;i < cookbookRecipeCellAry.count; i++){
+        tempCell = [cookbookRecipeCellAry objectAtIndex:i];
+        
+        moveSize = tempCell.frame.size.height + objectBreak;
+        
+        [tempCell setFrame:CGRectMake(tempCell.frame.origin.x, tempCell.frame.origin.y - moveSize, tempCell.frame.size.width, tempCell.frame.size.height)];
+    }
+    self.recipeScrollView.contentSize = CGSizeMake(self.recipeScrollView.contentSize.width, self.recipeScrollView.contentSize.height - moveSize);
+}
+
 -(void)refreshRecipes{
     NSLog(@"recipes refreshed");
     int recipeCellHeight = (scrollHeight - objectBreak*6)/5;
-    NSMutableArray *cookbookRecipeCellAry = [[NSMutableArray alloc]init];
+    cookbookRecipeCellAry = [[NSMutableArray alloc]init];
     
     DataClass *obj = [DataClass getInstance];
     NSInteger recipeCnt = obj.cookbookAry.count;
@@ -63,11 +88,13 @@ int scrollHeight;
         Recipe *tempRecipe = [obj.cookbookAry objectAtIndex:i];
          NSLog(@"2 temp recipe properties = %@ %@ %@ %@ %@",tempRecipe.title, tempRecipe.imageName, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
         UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + i*(recipeCellHeight + objectBreak), screenWidth, recipeCellHeight) withRecipe:tempRecipe];
+        [cookCell.delButton addTarget:self action:@selector(delRecipeTouch:) forControlEvents:UIControlEventTouchUpInside];
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchCell:)];
         [cookCell addGestureRecognizer:tapRecognizer];
         [cookbookRecipeCellAry addObject:cookCell];
         NSLog(@"cookbookRecipeCellAry count just after adding = %lu",(unsigned long)cookbookRecipeCellAry.count);
         [self.recipeScrollView addSubview:cookCell];
+        NSLog(@"loopy %d",i);
     }
     
     if (recipeCnt > 5){
@@ -162,9 +189,6 @@ int scrollHeight;
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.recipeScrollView = recipeScrollView_;
     [self.view addSubview:recipeScrollView_];
-
-    //add CookbookRecipeCells
-    [self refreshRecipes];
 
     //NSArray *tagAry = [[NSArray alloc]initWithObjects:[NSNumber numberWithInt:quick],[NSNumber numberWithInt:vegetarian],[NSNumber numberWithInt:vegan], nil];
     

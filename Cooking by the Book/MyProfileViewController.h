@@ -14,4 +14,6 @@
 @property (nonatomic,strong) UIImageView *profileImageView;
 @property (nonatomic, strong) UILabel *titleLabel;
 
+-(void)refreshPosts;
+
 @end

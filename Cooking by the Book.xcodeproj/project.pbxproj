@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04033FE51D90D3E000630EED /* UIPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 04033FE41D90D3E000630EED /* UIPost.m */; };
 		044B398C1CCF135D0051E1CC /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044B398B1CCF135D0051E1CC /* LoginViewController.m */; };
 		045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 045931581D1902F5003D1C47 /* UIColor+CustomColors.m */; };
 		045A81EB1D2060A200A90D8E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81EA1D2060A200A90D8E /* Helper.m */; };
@@ -54,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04033FE31D90D3E000630EED /* UIPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPost.h; sourceTree = "<group>"; };
+		04033FE41D90D3E000630EED /* UIPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPost.m; sourceTree = "<group>"; };
 		044B398A1CCF135D0051E1CC /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		044B398B1CCF135D0051E1CC /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		045931571D1902F5003D1C47 /* UIColor+CustomColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CustomColors.h"; sourceTree = "<group>"; };
@@ -136,9 +139,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		045A81FC1D20767E00A90D8E /* CreateRecipe */ = {
+		045A81FC1D20767E00A90D8E /* Custom UI Elements */ = {
 			isa = PBXGroup;
 			children = (
+				045A81F91D20767800A90D8E /* UICookbookRecipeCell.h */,
+				045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */,
+				04E67AE41D32D4AA000371E5 /* UITagBox.h */,
+				04E67AE51D32D4AA000371E5 /* UITagBox.m */,
+				04033FE31D90D3E000630EED /* UIPost.h */,
+				04033FE41D90D3E000630EED /* UIPost.m */,
 				04833E741D20A9D600631AA4 /* UICreateIngredientCell.h */,
 				04833E751D20A9D600631AA4 /* UICreateIngredientCell.m */,
 				047E193D1D2751020011349C /* UICreateStepCell.h */,
@@ -146,7 +155,7 @@
 				048096651D2857D500E80F1A /* UIToggleTagButton.h */,
 				048096661D2857D500E80F1A /* UIToggleTagButton.m */,
 			);
-			name = CreateRecipe;
+			name = "Custom UI Elements";
 			sourceTree = "<group>";
 		};
 		04B49E361CC7063500312485 = {
@@ -176,11 +185,7 @@
 				04B49E431CC7063500312485 /* main.m */,
 				04B49E451CC7063500312485 /* AppDelegate.h */,
 				04B49E461CC7063500312485 /* AppDelegate.m */,
-				045A81F91D20767800A90D8E /* UICookbookRecipeCell.h */,
-				045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */,
-				04E67AE41D32D4AA000371E5 /* UITagBox.h */,
-				04E67AE51D32D4AA000371E5 /* UITagBox.m */,
-				045A81FC1D20767E00A90D8E /* CreateRecipe */,
+				045A81FC1D20767E00A90D8E /* Custom UI Elements */,
 				04B49E7E1CC70E6D00312485 /* ViewControllers */,
 				04B49E4B1CC7063500312485 /* Main.storyboard */,
 				04B49E751CC70A5A00312485 /* TabBarControllerDelegate.h */,
@@ -390,6 +395,7 @@
 				047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */,
 				04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */,
 				045A81F11D2072AC00A90D8E /* MyProfileViewController.m in Sources */,
+				04033FE51D90D3E000630EED /* UIPost.m in Sources */,
 				04833E731D208B1C00631AA4 /* CreateRecipeViewController.m in Sources */,
 				048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */,
 				044B398C1CCF135D0051E1CC /* LoginViewController.m in Sources */,

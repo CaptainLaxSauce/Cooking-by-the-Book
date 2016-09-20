@@ -23,6 +23,10 @@
     int acheivementHeight;
 }
 
+-(void)refreshPosts{
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -50,7 +54,7 @@
     
     //add scroll view
     UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight)];
-    scrollView_.backgroundColor = [UIColor customGrayColor];
+    scrollView_.backgroundColor = [UIColor primaryColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.scrollView = scrollView_;
     [self.view addSubview:scrollView_];
