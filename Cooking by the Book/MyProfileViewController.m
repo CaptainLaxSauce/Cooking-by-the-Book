@@ -8,6 +8,9 @@
 
 #import "MyProfileViewController.h"
 #import "UIColor+CustomColors.h"
+#import "DataClass.h"
+#import "Helper.h"
+#import "UIPost.h"
 
 @implementation MyProfileViewController
 {
@@ -17,14 +20,50 @@
     int navBarHeight;
     int objectBreak;
     int textHeight;
+    int objectWidth;
     int scrollHeight;
     int tabHeight;
     int imageWidth;
+    int postHeight;
     int acheivementHeight;
+    int currPostPos;
 }
 
 -(void)refreshPosts{
+    DataClass *obj = [DataClass getInstance];
+    NSString *post = [NSString stringWithFormat:@"userID=%@" ,obj.userId];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getUserPosts"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+        NSString *ret = [[NSString alloc]initWithData:postData encoding:NSUTF8StringEncoding];
+        NSLog(@"post return = %@",ret);
+        
+
+        NSDictionary *jsonPostDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        NSLog(@"postDict count = %lu",(unsigned long)jsonPostDict.count);
+        NSArray *jsonPostAry = [jsonPostDict objectForKey:@"postsInfo"];
+        NSLog(@"postAry count = %lu",(unsigned long)jsonPostAry.count);
+
+            dispatch_async(dispatch_get_main_queue(), ^(void)
+            {
+                for (int i = 0; i < jsonPostAry.count; i++)
+                {
+                    NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
+                    [self addPost:postDict];
+                }
+            });
+        
+        
+
+    }];
     
+    [dataTask resume];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self refreshPosts];
 }
 
 - (void)viewDidLoad {
@@ -43,11 +82,12 @@
     navBarHeight = self.navigationController.navigationBar.frame.size.height;
     objectBreak = 8;
     imageWidth = screenWidth/3;
-    int objectWidth = screenWidth - objectBreak*2;
+    objectWidth = screenWidth - objectBreak*2;
     textHeight = screenHeight/20;
     acheivementHeight = textHeight; //this will need to change, just using for testing
     tabHeight = self.tabBarController.tabBar.frame.size.height;
     scrollHeight = screenHeight-tabHeight-navBarHeight-statusBarHeight;
+    postHeight = textHeight*3;
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Profile";
@@ -75,12 +115,24 @@
     descLabel_.backgroundColor = [UIColor orangeColor];
     [self.scrollView addSubview:descLabel_];
     
+    currPostPos = objectBreak*5 + textHeight;
     
+}
+
+-(void)addPost:(NSDictionary *)postDict{
     
+    UIPost *post = [[UIPost alloc]initWithFrame:CGRectMake(objectBreak, currPostPos, objectWidth, postHeight)
+                                     withPostID:[postDict objectForKey:@"postID"]
+                                  withCreatorID:[postDict objectForKey:@"postCreatorID"]
+                                      withTitle:[postDict objectForKey:@"postTitle"]
+                                       withBody:[postDict objectForKey:@"postBody"]
+                                   withRecipeID:[postDict objectForKey:@"postRecipeID"]
+                                   withDateTime:[postDict objectForKey:@"postDateTime"]
+                                  withLikeCount:[postDict objectForKey:@"postLikesNumber"]
+                               withCommentCount:[postDict objectForKey:@"postCommentsNumber"]];
+     
     
-    
-    
-    
+    [self.scrollView addSubview:post];
 }
 
 

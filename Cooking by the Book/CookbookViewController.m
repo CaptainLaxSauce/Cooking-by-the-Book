@@ -38,15 +38,12 @@ int scrollHeight;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //delete this, testing purposes only
-    //DataClass *obj = [DataClass getInstance];
-    //obj.userId = @"36";
-    
     
     
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+       
        [self loadInterface];
        [self refreshRecipes];
    
@@ -54,11 +51,56 @@ int scrollHeight;
 }
 
 -(void)delRecipeTouch:(id)sender{
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview: activityView];
+    activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
+    [activityView startAnimating];
+    
+    
     UIButton *tempBtn = [sender self];
     UICookbookRecipeCell *tempCell = (UICookbookRecipeCell *) tempBtn.superview;
     [tempCell removeFromSuperview];
     NSInteger index = [cookbookRecipeCellAry indexOfObject:tempCell];
     [self shiftCellsUp:index];
+    
+    NSString *post = [NSString stringWithFormat:@"recipeID=%@" ,tempCell.recipeID];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"deleteRecipe"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+        NSString *ret = [[NSString alloc]initWithData:postData encoding:NSUTF8StringEncoding];
+        if ([ret isEqual:@"1"]){
+            DataClass *obj = [DataClass getInstance];
+            [obj deleteRecipe:tempCell.recipe];
+        }
+        else{
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                UIAlertController *alert = [UIAlertController
+                                            alertControllerWithTitle:@"Invalid Login"
+                                            message:[NSString stringWithFormat:@"The recipe deletion was unsuccessful"]
+                                            preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *ok = [UIAlertAction
+                                     actionWithTitle:@"OK"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction *action)
+                                     {
+                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                         
+                                     }];
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
+
+                
+            });
+
+        }
+        [activityView stopAnimating];
+        
+    }];
+    
+    [dataTask resume];
+    
     NSLog(@"deleted recipe %@",tempCell.recipeID);
 }
 

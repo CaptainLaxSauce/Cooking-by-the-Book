@@ -73,6 +73,10 @@ static DataClass *instance = nil;
     ((Recipe *) [self.cookbookAry objectAtIndex:[self.cookbookAry indexOfObject:recipe]]).image = image_;
 }
 
+-(void)deleteRecipe:(Recipe *)recipe{
+    [self.cookbookAry removeObject:recipe];
+}
+
 -(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key{
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:key ascending:YES selector:@selector(caseInsensitiveCompare:)];
     [theArray sortUsingDescriptors:@[sort]];
