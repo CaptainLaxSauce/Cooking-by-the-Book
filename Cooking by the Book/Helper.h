@@ -12,5 +12,7 @@
 
 
 +(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd;
++(NSString *)toUTC:(NSDate *)date;
++(NSString *)fromUTC:(NSDate *)date;
 
 @end

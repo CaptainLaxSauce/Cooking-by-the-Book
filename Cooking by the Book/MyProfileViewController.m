@@ -27,9 +27,19 @@
     int postHeight;
     int acheivementHeight;
     int currPostPos;
+    NSMutableArray *postAry;
 }
 
 -(void)refreshPosts{
+    
+    [self resetcurrPostPos];
+    
+    for (int i = 0; i < postAry.count; i++){
+        [[postAry objectAtIndex:i] removeFromSuperview];
+        [postAry removeObject:[postAry objectAtIndex:i]];
+        i = i - 1;
+    }
+    
     DataClass *obj = [DataClass getInstance];
     NSString *post = [NSString stringWithFormat:@"userID=%@" ,obj.userId];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -53,9 +63,6 @@
                     [self addPost:postDict];
                 }
             });
-        
-        
-
     }];
     
     [dataTask resume];
@@ -87,7 +94,7 @@
     acheivementHeight = textHeight; //this will need to change, just using for testing
     tabHeight = self.tabBarController.tabBar.frame.size.height;
     scrollHeight = screenHeight-tabHeight-navBarHeight-statusBarHeight;
-    postHeight = textHeight*3;
+    postHeight = textHeight*6;
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Profile";
@@ -96,6 +103,7 @@
     UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight)];
     scrollView_.backgroundColor = [UIColor primaryColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [scrollView_ setContentSize:CGSizeMake(objectWidth, objectBreak*3 + imageWidth + textHeight*2)];
     self.scrollView = scrollView_;
     [self.view addSubview:scrollView_];
     
@@ -115,7 +123,7 @@
     descLabel_.backgroundColor = [UIColor orangeColor];
     [self.scrollView addSubview:descLabel_];
     
-    currPostPos = objectBreak*5 + textHeight;
+    [self resetcurrPostPos];
     
 }
 
@@ -127,13 +135,20 @@
                                       withTitle:[postDict objectForKey:@"postTitle"]
                                        withBody:[postDict objectForKey:@"postBody"]
                                    withRecipeID:[postDict objectForKey:@"postRecipeID"]
-                                   withDateTime:[postDict objectForKey:@"postDateTime"]
+                                   withDateTime:[Helper fromUTC:[postDict objectForKey:@"postDateTime"]]
                                   withLikeCount:[postDict objectForKey:@"postLikesNumber"]
                                withCommentCount:[postDict objectForKey:@"postCommentsNumber"]];
      
-    
+    [postAry addObject:post];
     [self.scrollView addSubview:post];
+    
+    currPostPos = currPostPos + post.frame.size.height + objectBreak;
+    [self.scrollView setContentSize:CGSizeMake(objectWidth, currPostPos)];
+    
 }
 
+-(void)resetcurrPostPos{
+    currPostPos = objectBreak*5 + imageWidth + acheivementHeight + textHeight;
+}
 
 @end

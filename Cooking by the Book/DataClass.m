@@ -66,7 +66,14 @@ static DataClass *instance = nil;
     NSArray *recipeAry = [[NSArray alloc]initWithArray:self.cookbookAry];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recipeID MATCHES %@", recipeID];
     NSArray *filteredAry = [recipeAry filteredArrayUsingPredicate:predicate];
-    return [filteredAry objectAtIndex:0];
+    if (filteredAry.count == 0){
+        Recipe *recipe = [[Recipe alloc]init];
+        return recipe;
+    }
+    else{
+        return [filteredAry objectAtIndex:0];
+    }
+    
 }
 
 -(void)addImageToRecipe:(Recipe *)recipe withImage:(UIImage *)image_{

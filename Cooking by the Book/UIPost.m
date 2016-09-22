@@ -62,11 +62,13 @@
         self.commentCount = commentCount_;
         
         
-        objectBreak = 8;
+        objectBreak = 3;
         totWidth = self.frame.size.width;
         totHeight = self.frame.size.height;
-        textHeight = totHeight/8;
+        textHeight = (totHeight - objectBreak*9)/8;
         objectWidth =  totWidth - objectBreak*2;
+        
+        self.backgroundColor = [UIColor whiteColor];
         
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, objectWidth, textHeight)];
         UIFontDescriptor * fontD = [titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
@@ -74,13 +76,14 @@
         [titleLabel setText:title_];
         [self addSubview:titleLabel];
         
-        UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*2 + textHeight, objectWidth, textHeight)];
+        UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak + textHeight, objectWidth/4, textHeight)];
         [timeLabel setText:dateTime_];
+        timeLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:timeLabel];
         
         obj = [DataClass getInstance];
         Recipe *recipe = [obj getRecipe:recipeID_];
-        UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*3 + textHeight*2, objectWidth, textHeight*3) withRecipe:recipe];
+        UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(objectBreak, objectBreak + textHeight*2, objectWidth, textHeight*3 + objectBreak*2) withRecipe:recipe];
         [self addSubview:recipeCell];
         
         UILabel *bodyLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*4 + textHeight*5, objectWidth, textHeight*2)];

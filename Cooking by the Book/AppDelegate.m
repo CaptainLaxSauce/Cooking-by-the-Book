@@ -23,26 +23,22 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
-
-    NSString *post = [NSString stringWithFormat:@"initializeList"];
+    NSString *currDate = [Helper toUTC:[NSDate date]];
+    NSString *post = [NSString stringWithFormat:@"lastUpdate=%@",currDate];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"initialize"];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
     
         
-    NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-    NSLog(@"initialize = %@",ret);
-        
-    //Ethan needs to remove this on the server side
-    //ret = [ret stringByReplacingOccurrencesOfString:@"<pre>initializeList=" withString:@""];
-    //ret = [ret stringByReplacingOccurrencesOfString:@"</pre>" withString:@""];
-        
-    //NSData *retData = [ret dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        NSLog(@"initialize = %@",ret);
+        NSDictionary *initDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        NSArray *ingredientAry = [initDict objectForKey:@"ingredientInfo"];
         
         //update core data aray if value returned
-        if (ret != nil){
+        if (![ingredientAry isKindOfClass:[NSNull class]]){
+            NSLog(@"entered if");
             //clear core data for ingredients
             NSFetchRequest *delRequest = [[NSFetchRequest alloc]initWithEntityName:@"Ingredient"];
             NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:delRequest];
@@ -51,39 +47,40 @@
             NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
             [persistentStoreCoordinator executeRequest:delete withContext:managedObjectContext error:&deleteError];
             
-            //parse JSON data
-            NSDictionary *initDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
-            NSArray *ingredientAry = [initDict objectForKey:@"ingredientInfo"];
-            NSLog(@"initAry count = %lu",(unsigned long)ingredientAry.count);
-
-            //load ingredients into core data
-            for (int i=0;i<ingredientAry.count;i++){
-                NSMutableDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
-                NSString *ingredientID = [ingredientDict objectForKey:@"ingredientID"];
-                NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
-                //NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
-        
-                NSManagedObject *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"Ingredient" inManagedObjectContext:managedObjectContext];
-                [ingredient setValue:ingredientID forKey:@"ingredientID"];
-                [ingredient setValue:ingredientName forKey:@"ingredientName"];
+            dispatch_async(dispatch_get_main_queue(), ^(void){
             
-                NSError *error = nil;
-                // Save the object to persistent store
-                if (![managedObjectContext save:&error]) {
-                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                //load ingredients into core data
+                for (int i=0;i<ingredientAry.count;i++){
+                    NSMutableDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
+                    NSString *ingredientID = [ingredientDict objectForKey:@"ingredientID"];
+                    NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
+                    //NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
+            
+                    NSManagedObject *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"Ingredient" inManagedObjectContext:managedObjectContext];
+                    [ingredient setValue:ingredientID forKey:@"ingredientID"];
+                    [ingredient setValue:ingredientName forKey:@"ingredientName"];
+                
+                    NSError *error = nil;
+                    // Save the object to persistent store
+                    if (![managedObjectContext save:&error]) {
+                        NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+                    }
+            
+                    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@",[ingredientDict objectForKey:@"ingredientID"]];
+            
+                    //NSLog(@"init dict name = %@",[ingredientDict objectForKey:@"ingredientName"]);
+                    //NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientArray.count);
+                    //NSLog(@"ing id i = %@",[ingredientDict objectForKey:@"ingredientID"]);
                 }
-        
-                //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@",[ingredientDict objectForKey:@"ingredientID"]];
-        
-                //NSLog(@"init dict name = %@",[ingredientDict objectForKey:@"ingredientName"]);
-                //NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientArray.count);
-                //NSLog(@"ing id i = %@",[ingredientDict objectForKey:@"ingredientID"]);
-            }
+                DataClass *obj = [DataClass getInstance];
+                [obj initIngredientAry]; 
+                
+            });
+  
             
         }
         //initialize the data ingredient array whether core data was updated or not
-        DataClass *obj = [DataClass getInstance];
-        [obj initIngredientAry];
+
         
 
         
