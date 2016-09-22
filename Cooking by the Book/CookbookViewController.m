@@ -131,6 +131,7 @@ int scrollHeight;
          NSLog(@"2 temp recipe properties = %@ %@ %@ %@ %@",tempRecipe.title, tempRecipe.imageName, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry);
         UICookbookRecipeCell *cookCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(0, objectBreak + i*(recipeCellHeight + objectBreak), screenWidth, recipeCellHeight) withRecipe:tempRecipe];
         [cookCell.delButton addTarget:self action:@selector(delRecipeTouch:) forControlEvents:UIControlEventTouchUpInside];
+        cookCell.allowDelBtn = YES;
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchCell:)];
         [cookCell addGestureRecognizer:tapRecognizer];
         [cookbookRecipeCellAry addObject:cookCell];

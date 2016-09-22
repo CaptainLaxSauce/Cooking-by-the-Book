@@ -87,7 +87,7 @@
 }
 
 -(void)showDelBtn:(id)sender{
-    if (self.delButton.isHidden == TRUE){
+    if ((self.delButton.isHidden == TRUE) && (self.allowDelBtn)){
         [self.delButton setHidden:FALSE];
     }
     

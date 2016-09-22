@@ -15,6 +15,7 @@
 @property Recipe *recipe;
 @property NSString *recipeID; //used so this object can be found using NSPredicate
 @property UIButton *delButton;
+@property BOOL allowDelBtn;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;

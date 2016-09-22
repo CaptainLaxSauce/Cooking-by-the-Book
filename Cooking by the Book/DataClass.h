@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Recipe.h"
+#import "UIPost.h"
 
 @interface DataClass : NSObject{
 
@@ -19,6 +20,7 @@
 @property(nonatomic,retain) NSMutableArray *ingredientAry;
 @property(nonatomic,retain) NSString *userId;
 @property(nonatomic,retain) NSString *currDetailedRecipeId;
+@property(nonatomic,retain) UIPost *currDetailedPost;
 
 +(DataClass*)getInstance;
 -(void)initCookbookAry:(NSArray *)jsonCookbookAry_;

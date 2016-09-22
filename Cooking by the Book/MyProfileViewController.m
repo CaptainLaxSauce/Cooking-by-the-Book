@@ -129,7 +129,7 @@
 
 -(void)addPost:(NSDictionary *)postDict{
     
-    UIPost *post = [[UIPost alloc]initWithFrame:CGRectMake(objectBreak, currPostPos, objectWidth, postHeight)
+    UIPost *post = [[UIPost alloc]initWithFrame:CGRectMake(0, currPostPos, screenWidth, postHeight)
                                      withPostID:[postDict objectForKey:@"postID"]
                                   withCreatorID:[postDict objectForKey:@"postCreatorID"]
                                       withTitle:[postDict objectForKey:@"postTitle"]
@@ -138,12 +138,24 @@
                                    withDateTime:[Helper fromUTC:[postDict objectForKey:@"postDateTime"]]
                                   withLikeCount:[postDict objectForKey:@"postLikesNumber"]
                                withCommentCount:[postDict objectForKey:@"postCommentsNumber"]];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchPost:)];
+    [post addGestureRecognizer:tap];
      
     [postAry addObject:post];
     [self.scrollView addSubview:post];
     
     currPostPos = currPostPos + post.frame.size.height + objectBreak;
     [self.scrollView setContentSize:CGSizeMake(objectWidth, currPostPos)];
+    
+}
+
+-(void)touchPost:(UITapGestureRecognizer *)sender{
+    UIPost *post = (UIPost *)sender.view;
+    DataClass *obj = [DataClass getInstance];
+    obj.currDetailedPost = post;
+    
+    [self performSegueWithIdentifier:@"DetailedPostViewController" sender:sender];
     
 }
 

@@ -22,6 +22,7 @@
 		048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 048096661D2857D500E80F1A /* UIToggleTagButton.m */; };
 		04833E731D208B1C00631AA4 /* CreateRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04833E721D208B1C00631AA4 /* CreateRecipeViewController.m */; };
 		04833E761D20A9D600631AA4 /* UICreateIngredientCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04833E751D20A9D600631AA4 /* UICreateIngredientCell.m */; };
+		049A52A21D937BBA00C91A3E /* DetailedPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049A52A11D937BBA00C91A3E /* DetailedPostViewController.m */; };
 		04B49E441CC7063500312485 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E431CC7063500312485 /* main.m */; };
 		04B49E471CC7063500312485 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E461CC7063500312485 /* AppDelegate.m */; };
 		04B49E4D1CC7063500312485 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B49E4B1CC7063500312485 /* Main.storyboard */; };
@@ -87,6 +88,8 @@
 		04833E721D208B1C00631AA4 /* CreateRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateRecipeViewController.m; sourceTree = "<group>"; };
 		04833E741D20A9D600631AA4 /* UICreateIngredientCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICreateIngredientCell.h; sourceTree = "<group>"; };
 		04833E751D20A9D600631AA4 /* UICreateIngredientCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICreateIngredientCell.m; sourceTree = "<group>"; };
+		049A52A01D937BBA00C91A3E /* DetailedPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedPostViewController.h; sourceTree = "<group>"; };
+		049A52A11D937BBA00C91A3E /* DetailedPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedPostViewController.m; sourceTree = "<group>"; };
 		04B49E3F1CC7063500312485 /* Cooking by the Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cooking by the Book.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B49E431CC7063500312485 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04B49E451CC7063500312485 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -243,6 +246,8 @@
 				045A81F41D2072C600A90D8E /* MealPlanViewController.m */,
 				045A81EF1D2072AC00A90D8E /* MyProfileViewController.h */,
 				045A81F01D2072AC00A90D8E /* MyProfileViewController.m */,
+				049A52A01D937BBA00C91A3E /* DetailedPostViewController.h */,
+				049A52A11D937BBA00C91A3E /* DetailedPostViewController.m */,
 				047813671D1A4F2F00D9F569 /* SignupViewController.h */,
 				047813681D1A4F2F00D9F569 /* SignupViewController.m */,
 				044B398A1CCF135D0051E1CC /* LoginViewController.h */,
@@ -397,6 +402,7 @@
 				045A81F11D2072AC00A90D8E /* MyProfileViewController.m in Sources */,
 				04033FE51D90D3E000630EED /* UIPost.m in Sources */,
 				04833E731D208B1C00631AA4 /* CreateRecipeViewController.m in Sources */,
+				049A52A21D937BBA00C91A3E /* DetailedPostViewController.m in Sources */,
 				048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */,
 				044B398C1CCF135D0051E1CC /* LoginViewController.m in Sources */,
 				045A81EE1D2069A700A90D8E /* DataClass.m in Sources */,
