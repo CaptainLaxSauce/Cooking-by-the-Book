@@ -78,9 +78,29 @@ static int cornerRadius = 3;
                 
             }];
             [dataTask2 resume];
+            
+            NSString *post3 = [NSString stringWithFormat:@"userID=%@",ret];
+            NSData *postData3 = [post3 dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+            NSMutableURLRequest *request3 = [Helper setupPost:postData3 withURLEnd:@"getProfile"];
+            NSURLSession *session3 = [NSURLSession sharedSession];
+            NSURLSessionDataTask *dataTask3 = [session3 dataTaskWithRequest:request3 completionHandler:^(NSData *postData3, NSURLResponse *response3, NSError *error3) {
+                
+                NSString *ret3 = [[NSString alloc] initWithData:postData3 encoding:NSUTF8StringEncoding];
+                NSLog(@"ret3 = %@",ret3);
+                NSDictionary *jsonProfileDict = [NSJSONSerialization JSONObjectWithData:postData3 options:kNilOptions error:&error3];
+                NSLog(@"jsonProfileDict count = %lu",(unsigned long)jsonProfileDict.count);
+                [obj initProfile:jsonProfileDict];
+                
+            }];
+            [dataTask3 resume];
+            
+            
             dispatch_async(dispatch_get_main_queue(), ^(void){
             [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
             });
+            
+            
+            
         }
         
         else{

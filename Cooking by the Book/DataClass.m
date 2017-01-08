@@ -13,7 +13,6 @@
 
 
 @implementation DataClass
-//@synthesize userId;
 
 static DataClass *instance = nil;
 
@@ -25,6 +24,10 @@ static DataClass *instance = nil;
         }
     }
     return instance;
+}
+
+-(void)initProfile:(NSDictionary *)jsonProfileDict{
+    self.profileDict = jsonProfileDict;
 }
 
 -(void)initCookbookAry:(NSArray *)jsonCookbookAry_{

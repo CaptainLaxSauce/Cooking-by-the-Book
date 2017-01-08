@@ -16,6 +16,7 @@
 		045A81F81D2072FD00A90D8E /* NewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */; };
 		045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */; };
 		045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A82011D207FB300A90D8E /* CookbookViewController.m */; };
+		0461DFD71DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision in Resources */ = {isa = PBXBuildFile; fileRef = 0461DFD61DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision */; };
 		046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */; };
 		047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047813681D1A4F2F00D9F569 /* SignupViewController.m */; };
 		047E193F1D2751030011349C /* UICreateStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047E193E1D2751030011349C /* UICreateStepCell.m */; };
@@ -31,6 +32,7 @@
 		04B49E5D1CC7063500312485 /* Cooking_by_the_BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E5C1CC7063500312485 /* Cooking_by_the_BookTests.m */; };
 		04B49E681CC7063500312485 /* Cooking_by_the_BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E671CC7063500312485 /* Cooking_by_the_BookUITests.m */; };
 		04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */; };
+		04CEE7EB1E22AC85005D57CE /* CreatePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */; };
 		04E00D6B1D31BFE30016FED8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E00D6A1D31BFE30016FED8 /* CoreData.framework */; };
 		04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */; };
 		04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5ED341D3DBA18004E9474 /* Recipe.m */; };
@@ -76,6 +78,7 @@
 		045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICookbookRecipeCell.m; sourceTree = "<group>"; };
 		045A82001D207FB300A90D8E /* CookbookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CookbookViewController.h; sourceTree = "<group>"; };
 		045A82011D207FB300A90D8E /* CookbookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CookbookViewController.m; sourceTree = "<group>"; };
+		0461DFD61DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; name = CookingByTheBookProfile.mobileprovision; path = ../../../../Downloads/CookingByTheBookProfile.mobileprovision; sourceTree = "<group>"; };
 		046D1C721D5C2325008B1092 /* DetailedRecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedRecipeViewController.h; sourceTree = "<group>"; };
 		046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedRecipeViewController.m; sourceTree = "<group>"; };
 		047813671D1A4F2F00D9F569 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
@@ -106,6 +109,8 @@
 		04B49E691CC7063500312485 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04B49E751CC70A5A00312485 /* TabBarControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarControllerDelegate.h; sourceTree = "<group>"; };
 		04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarControllerDelegate.m; sourceTree = "<group>"; };
+		04CEE7E91E22AC85005D57CE /* CreatePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePostViewController.h; sourceTree = "<group>"; };
+		04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePostViewController.m; sourceTree = "<group>"; };
 		04E00D6A1D31BFE30016FED8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		04E00D6D1D31C1020016FED8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		04E5ED331D3DBA18004E9474 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -114,6 +119,7 @@
 		04E67AE51D32D4AA000371E5 /* UITagBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITagBox.m; sourceTree = "<group>"; };
 		04EEBA161D73A7AE0036E0EA /* Ingredient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ingredient.h; sourceTree = "<group>"; };
 		04EEBA171D73A7AE0036E0EA /* Ingredient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ingredient.m; sourceTree = "<group>"; };
+		04EEC9481DBD2AE90056AF82 /* Cooking by the Book.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Cooking by the Book.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +170,7 @@
 		04B49E361CC7063500312485 = {
 			isa = PBXGroup;
 			children = (
+				0461DFD61DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision */,
 				04E00D6A1D31BFE30016FED8 /* CoreData.framework */,
 				04B49E411CC7063500312485 /* Cooking by the Book */,
 				04B49E5B1CC7063500312485 /* Cooking by the BookTests */,
@@ -185,6 +192,7 @@
 		04B49E411CC7063500312485 /* Cooking by the Book */ = {
 			isa = PBXGroup;
 			children = (
+				04EEC9481DBD2AE90056AF82 /* Cooking by the Book.entitlements */,
 				04B49E431CC7063500312485 /* main.m */,
 				04B49E451CC7063500312485 /* AppDelegate.h */,
 				04B49E461CC7063500312485 /* AppDelegate.m */,
@@ -258,6 +266,8 @@
 				04833E721D208B1C00631AA4 /* CreateRecipeViewController.m */,
 				046D1C721D5C2325008B1092 /* DetailedRecipeViewController.h */,
 				046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */,
+				04CEE7E91E22AC85005D57CE /* CreatePostViewController.h */,
+				04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -330,6 +340,11 @@
 					04B49E3E1CC7063500312485 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = R48E5GJ873;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					04B49E571CC7063500312485 = {
 						CreatedOnToolsVersion = 7.3;
@@ -366,6 +381,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0461DFD71DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision in Resources */,
 				04B49E521CC7063500312485 /* LaunchScreen.storyboard in Resources */,
 				04B49E4F1CC7063500312485 /* Assets.xcassets in Resources */,
 				04B49E4D1CC7063500312485 /* Main.storyboard in Resources */,
@@ -399,6 +415,7 @@
 				045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */,
 				047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */,
 				04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */,
+				04CEE7EB1E22AC85005D57CE /* CreatePostViewController.m in Sources */,
 				045A81F11D2072AC00A90D8E /* MyProfileViewController.m in Sources */,
 				04033FE51D90D3E000630EED /* UIPost.m in Sources */,
 				04833E731D208B1C00631AA4 /* CreateRecipeViewController.m in Sources */,
@@ -506,6 +523,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: jgsmith725@gmail.com (XX3JYEZ6LU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -550,6 +568,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: jgsmith725@gmail.com (XX3JYEZ6LU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -574,7 +593,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = "Cooking by the Book/Cooking by the Book.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jgsmith725@gmail.com (XX3JYEZ6LU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Cooking by the Book/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -588,7 +608,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = "Cooking by the Book/Cooking by the Book.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jgsmith725@gmail.com (XX3JYEZ6LU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Cooking by the Book/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

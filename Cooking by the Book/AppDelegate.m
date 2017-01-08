@@ -21,7 +21,13 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Override point for customization after application launch.s
+    
+    
+    [[UIApplication sharedApplication] respondsToSelector:(@selector(registerForRemoteNotifications))];
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound) categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
     
     NSString *currDate = [Helper toUTC:[NSDate date]];
     NSString *post = [NSString stringWithFormat:@"lastUpdate=%@",currDate];
@@ -171,4 +177,11 @@
 - (NSURL *)applicationDocumentsDirectory{
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken{
+    NSString *deviceTokenString = [NSString stringWithFormat:@"%@", deviceToken];
+    NSLog(@"device token = %@", deviceTokenString);
+}
+
+
 @end

@@ -273,11 +273,6 @@ int imageViewHeight;
     [self.view endEditing:YES];
 }
 
--(void)backTouch:(id)sender{
-    self.tabBarController.selectedIndex = 2;
-   [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
-}
-
 -(void)stepperValueChange:(id)sender{
     self.portionNumLabel.text = [NSString stringWithFormat:@"%d",(int)self.portionStepper.value];
 }

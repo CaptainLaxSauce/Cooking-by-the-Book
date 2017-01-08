@@ -16,13 +16,16 @@
 
 }
 
+@property(nonatomic,retain) NSDictionary *profileDict;
 @property(nonatomic,retain) NSMutableArray *cookbookAry;
 @property(nonatomic,retain) NSMutableArray *ingredientAry;
 @property(nonatomic,retain) NSString *userId;
 @property(nonatomic,retain) NSString *currDetailedRecipeId;
 @property(nonatomic,retain) UIPost *currDetailedPost;
 
+
 +(DataClass*)getInstance;
+-(void)initProfile:(NSDictionary *)jsonProfileDict;
 -(void)initCookbookAry:(NSArray *)jsonCookbookAry_;
 -(void)addRecipe:(Recipe *)recipe;
 -(void)addImageToRecipe:(Recipe *)recipe withImage:(UIImage *)image;

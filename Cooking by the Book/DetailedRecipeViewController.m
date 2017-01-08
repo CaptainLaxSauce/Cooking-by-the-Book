@@ -31,8 +31,9 @@
 }
 
 -(void)cookedButtonTouch:(id)sender{
-    NSLog(@"COOKEEEDDD!");
+    [self performSegueWithIdentifier:@"CreatePostViewController" sender:sender];
 }
+
 
 -(void)loadInterface{
     int objectBreak=8;
@@ -47,6 +48,8 @@
     int navBarHeight = self.navigationController.navigationBar.frame.size.height;
     int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     int scrollHeight = screenHeight-statusBarHeight-navBarHeight-textHeight-objectBreak*2-tabBarHeight;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     
     self.view.backgroundColor = [UIColor primaryColor];
     
