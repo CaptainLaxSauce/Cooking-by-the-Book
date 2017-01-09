@@ -11,6 +11,7 @@
 #import "UICookbookRecipeCell.h"
 #import "UIColor+CustomColors.h"
 #import "Helper.h"
+#import "AppDelegate.h"
 
 @interface CreatePostViewController ()
 
@@ -94,6 +95,8 @@ UITextView *descField;
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 
                 [[self navigationController] popViewControllerAnimated:YES];
+                [self.tabBarController setSelectedIndex:1];
+                
             });
         }
         else{

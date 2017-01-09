@@ -11,6 +11,7 @@
 #import "DataClass.h"
 #import "Helper.h"
 #import "UIPost.h"
+#import "UIAchievementBar.h"
 
 @implementation MyProfileViewController
 {
@@ -28,6 +29,8 @@
     int acheivementHeight;
     int currPostPos;
     NSMutableArray *postAry;
+    UIImageView *imageSelectView;
+    DataClass *obj;
 }
 
 -(void)refreshPosts{
@@ -40,7 +43,6 @@
         i = i - 1;
     }
     
-    DataClass *obj = [DataClass getInstance];
     NSString *post = [NSString stringWithFormat:@"userID=%@" ,obj.userId];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getUserPosts"];
@@ -81,6 +83,42 @@
     
 }
 
+-(void)editProfileTouch:(id)sender {
+    NSLog(@"EDIT");
+}
+
+-(void)imageTouch:(id)sender{
+    NSLog(@"Image Touch");
+    
+    //[self performSegueWithIdentifier:@"ImagePickerViewController" sender:sender];
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    //picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+-(void)cameraTouch:(id)sender{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    //picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    imageSelectView.image = chosenImage;
+    imageSelectView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
 -(void)loadInterface{
     //declare constants
     screenHeight = self.view.frame.size.height;
@@ -95,33 +133,54 @@
     tabHeight = self.tabBarController.tabBar.frame.size.height;
     scrollHeight = screenHeight-tabHeight-navBarHeight-statusBarHeight;
     postHeight = textHeight*6;
+    obj = [DataClass getInstance];
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Profile";
+    //UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editProfileTouch:)];
+    //self.navigationItem.leftBarButtonItem = editButton;
     
     //add scroll view
     UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight)];
-    scrollView_.backgroundColor = [UIColor primaryColor];
+    scrollView_.backgroundColor = [UIColor customGrayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [scrollView_ setContentSize:CGSizeMake(objectWidth, objectBreak*3 + imageWidth + textHeight*2)];
     self.scrollView = scrollView_;
     [self.view addSubview:scrollView_];
     
+    /*
     UIImageView *profileImageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, objectBreak, imageWidth, imageWidth)];
     [profileImageView_ setImage:[UIImage imageNamed:@"blankface.png"]];
     self.profileImageView = profileImageView_;
     [self.scrollView addSubview:profileImageView_];
+    */
+    
+    imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, objectBreak, imageWidth, imageWidth)];
+    [imageSelectView setImage:[UIImage imageNamed:@"addimage.png"]];
+    imageSelectView.contentMode = UIViewContentModeCenter;
+    imageSelectView.userInteractionEnabled = YES;
+    [[imageSelectView layer] setBorderWidth:2.0];
+    [[imageSelectView layer] setBorderColor:[UIColor blackColor].CGColor];
+    UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTouch:)];
+    [imageSelectView addGestureRecognizer:imageTap];
+    [self.scrollView addSubview:imageSelectView];
+    
+    UIImageView *cameraImageView = [[UIImageView alloc]initWithFrame:CGRectMake(imageSelectView.frame.size.width - imageSelectView.frame.size.width/8 - 5, 0, imageSelectView.frame.size.width/8, imageSelectView.frame.size.width/8)];
+    [cameraImageView setImage:[UIImage imageNamed:@"cameraicon.png"]];
+    cameraImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *cameraTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cameraTouch:)];
+    [cameraImageView addGestureRecognizer:cameraTap];
+    [imageSelectView addSubview:cameraImageView];
     
     UILabel *titleLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*2 + imageWidth, objectWidth, textHeight)];
     titleLabel_.textAlignment = NSTextAlignmentCenter;
+    titleLabel_.text = [NSString stringWithFormat:@"Chef %@",[obj.profileDict objectForKey:@"userName"]];
     UIFontDescriptor * fontD = [titleLabel_.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
-    titleLabel_.font = [UIFont fontWithDescriptor:fontD size:0];
-    titleLabel_.backgroundColor = [UIColor yellowColor];
+    titleLabel_.font = [UIFont fontWithDescriptor:fontD size:20];
     [self.scrollView addSubview:titleLabel_];
     
-    UILabel *descLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*4 + imageWidth + acheivementHeight, objectWidth, textHeight)];
-    descLabel_.backgroundColor = [UIColor orangeColor];
-    [self.scrollView addSubview:descLabel_];
+    UIAchievementBar *achBar = [[UIAchievementBar alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*3 + imageWidth + textHeight, objectWidth, acheivementHeight)];
+    [self.scrollView addSubview:achBar];
     
     [self resetcurrPostPos];
     
@@ -160,7 +219,7 @@
 }
 
 -(void)resetcurrPostPos{
-    currPostPos = objectBreak*5 + imageWidth + acheivementHeight + textHeight;
+    currPostPos = objectBreak*4 + imageWidth + acheivementHeight + textHeight;
 }
 
 @end

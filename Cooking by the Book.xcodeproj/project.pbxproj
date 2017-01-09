@@ -33,6 +33,7 @@
 		04B49E681CC7063500312485 /* Cooking_by_the_BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E671CC7063500312485 /* Cooking_by_the_BookUITests.m */; };
 		04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */; };
 		04CEE7EB1E22AC85005D57CE /* CreatePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */; };
+		04CEE7F11E2300D0005D57CE /* UIAchievementBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE7F01E2300D0005D57CE /* UIAchievementBar.m */; };
 		04E00D6B1D31BFE30016FED8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E00D6A1D31BFE30016FED8 /* CoreData.framework */; };
 		04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */; };
 		04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5ED341D3DBA18004E9474 /* Recipe.m */; };
@@ -111,6 +112,8 @@
 		04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarControllerDelegate.m; sourceTree = "<group>"; };
 		04CEE7E91E22AC85005D57CE /* CreatePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePostViewController.h; sourceTree = "<group>"; };
 		04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePostViewController.m; sourceTree = "<group>"; };
+		04CEE7EF1E2300D0005D57CE /* UIAchievementBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAchievementBar.h; sourceTree = "<group>"; };
+		04CEE7F01E2300D0005D57CE /* UIAchievementBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAchievementBar.m; sourceTree = "<group>"; };
 		04E00D6A1D31BFE30016FED8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		04E00D6D1D31C1020016FED8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		04E5ED331D3DBA18004E9474 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -163,6 +166,8 @@
 				047E193E1D2751030011349C /* UICreateStepCell.m */,
 				048096651D2857D500E80F1A /* UIToggleTagButton.h */,
 				048096661D2857D500E80F1A /* UIToggleTagButton.m */,
+				04CEE7EF1E2300D0005D57CE /* UIAchievementBar.h */,
+				04CEE7F01E2300D0005D57CE /* UIAchievementBar.m */,
 			);
 			name = "Custom UI Elements";
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 				04B49E471CC7063500312485 /* AppDelegate.m in Sources */,
 				045A81EB1D2060A200A90D8E /* Helper.m in Sources */,
 				045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */,
+				04CEE7F11E2300D0005D57CE /* UIAchievementBar.m in Sources */,
 				047E193F1D2751030011349C /* UICreateStepCell.m in Sources */,
 				04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */,
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,

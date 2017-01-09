@@ -33,11 +33,20 @@
 }
 
 +(NSString *)fromUTC:(NSString *)currDate{
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setFormatterBehavior:NSDateFormatterBehavior10_4];
-    [df setDateFormat:@"yyyyMMddHHmmss"];
-    NSDate *convertedDate = [df dateFromString:currDate];
-    NSLog(@"conv date = %@",convertedDate);
+    NSString *dateFormat = @"yyyyMMddHHmmss";
+    NSTimeZone *inputTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+    NSDateFormatter *inputDateFormatter = [[NSDateFormatter alloc] init];
+    [inputDateFormatter setTimeZone:inputTimeZone];
+    [inputDateFormatter setDateFormat:dateFormat];
+    NSDate *date = [inputDateFormatter dateFromString:currDate];
+    
+    NSTimeZone *outputTimeZone = [NSTimeZone localTimeZone];
+    NSDateFormatter *outputDateFormatter = [[NSDateFormatter alloc] init];
+    [outputDateFormatter setTimeZone:outputTimeZone];
+    [outputDateFormatter setDateFormat:dateFormat];
+    NSString *outputString = [outputDateFormatter stringFromDate:date];
+    NSDate *convertedDate = [outputDateFormatter dateFromString:outputString];
+    
     NSDate *todayDate = [NSDate date];
     NSLog(@"today date = %@",todayDate);
     double ti = [convertedDate timeIntervalSinceDate:todayDate];
