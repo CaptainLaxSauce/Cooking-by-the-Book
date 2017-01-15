@@ -34,6 +34,10 @@
 		04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */; };
 		04CEE7EB1E22AC85005D57CE /* CreatePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */; };
 		04CEE7F11E2300D0005D57CE /* UIAchievementBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE7F01E2300D0005D57CE /* UIAchievementBar.m */; };
+		04CEE7F41E2ADC06005D57CE /* SearchRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE7F31E2ADC06005D57CE /* SearchRecipeViewController.m */; };
+		04CEE81D1E2BF255005D57CE /* HTAutocompleteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE81A1E2BF255005D57CE /* HTAutocompleteManager.m */; };
+		04CEE81E1E2BF255005D57CE /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE81C1E2BF255005D57CE /* HTAutocompleteTextField.m */; };
+		04CEE8211E2C08D1005D57CE /* FoundRecipesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE8201E2C08D1005D57CE /* FoundRecipesViewController.m */; };
 		04E00D6B1D31BFE30016FED8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E00D6A1D31BFE30016FED8 /* CoreData.framework */; };
 		04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */; };
 		04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5ED341D3DBA18004E9474 /* Recipe.m */; };
@@ -71,8 +75,6 @@
 		045A81ED1D2069A700A90D8E /* DataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataClass.m; sourceTree = "<group>"; };
 		045A81EF1D2072AC00A90D8E /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
 		045A81F01D2072AC00A90D8E /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
-		045A81F31D2072C600A90D8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Base; path = "Cooking by the Book/Base.lproj/MealPlanViewController.h"; sourceTree = "<group>"; };
-		045A81F51D2072C600A90D8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Base; path = "Cooking by the Book/Base.lproj/MealPlanViewController.m"; sourceTree = "<group>"; };
 		045A81F61D2072FD00A90D8E /* NewsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedViewController.h; sourceTree = "<group>"; };
 		045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedViewController.m; sourceTree = "<group>"; };
 		045A81F91D20767800A90D8E /* UICookbookRecipeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICookbookRecipeCell.h; sourceTree = "<group>"; };
@@ -114,6 +116,14 @@
 		04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePostViewController.m; sourceTree = "<group>"; };
 		04CEE7EF1E2300D0005D57CE /* UIAchievementBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAchievementBar.h; sourceTree = "<group>"; };
 		04CEE7F01E2300D0005D57CE /* UIAchievementBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAchievementBar.m; sourceTree = "<group>"; };
+		04CEE7F21E2ADC06005D57CE /* SearchRecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchRecipeViewController.h; sourceTree = "<group>"; };
+		04CEE7F31E2ADC06005D57CE /* SearchRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchRecipeViewController.m; sourceTree = "<group>"; };
+		04CEE8191E2BF255005D57CE /* HTAutocompleteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTAutocompleteManager.h; sourceTree = "<group>"; };
+		04CEE81A1E2BF255005D57CE /* HTAutocompleteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteManager.m; sourceTree = "<group>"; };
+		04CEE81B1E2BF255005D57CE /* HTAutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTAutocompleteTextField.h; sourceTree = "<group>"; };
+		04CEE81C1E2BF255005D57CE /* HTAutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteTextField.m; sourceTree = "<group>"; };
+		04CEE81F1E2C08D1005D57CE /* FoundRecipesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoundRecipesViewController.h; sourceTree = "<group>"; };
+		04CEE8201E2C08D1005D57CE /* FoundRecipesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoundRecipesViewController.m; sourceTree = "<group>"; };
 		04E00D6A1D31BFE30016FED8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		04E00D6D1D31C1020016FED8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		04E5ED331D3DBA18004E9474 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -154,6 +164,8 @@
 		045A81FC1D20767E00A90D8E /* Custom UI Elements */ = {
 			isa = PBXGroup;
 			children = (
+				04CEE81B1E2BF255005D57CE /* HTAutocompleteTextField.h */,
+				04CEE81C1E2BF255005D57CE /* HTAutocompleteTextField.m */,
 				045A81F91D20767800A90D8E /* UICookbookRecipeCell.h */,
 				045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */,
 				04E67AE41D32D4AA000371E5 /* UITagBox.h */,
@@ -222,6 +234,8 @@
 				045A81ED1D2069A700A90D8E /* DataClass.m */,
 				045A81E91D2060A200A90D8E /* Helper.h */,
 				045A81EA1D2060A200A90D8E /* Helper.m */,
+				04CEE8191E2BF255005D57CE /* HTAutocompleteManager.h */,
+				04CEE81A1E2BF255005D57CE /* HTAutocompleteManager.m */,
 				045931571D1902F5003D1C47 /* UIColor+CustomColors.h */,
 				045931581D1902F5003D1C47 /* UIColor+CustomColors.m */,
 				04E5ED331D3DBA18004E9474 /* Recipe.h */,
@@ -255,8 +269,6 @@
 			children = (
 				045A81F61D2072FD00A90D8E /* NewsFeedViewController.h */,
 				045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */,
-				045A81F21D2072C600A90D8E /* MealPlanViewController.h */,
-				045A81F41D2072C600A90D8E /* MealPlanViewController.m */,
 				045A81EF1D2072AC00A90D8E /* MyProfileViewController.h */,
 				045A81F01D2072AC00A90D8E /* MyProfileViewController.m */,
 				049A52A01D937BBA00C91A3E /* DetailedPostViewController.h */,
@@ -273,6 +285,10 @@
 				046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */,
 				04CEE7E91E22AC85005D57CE /* CreatePostViewController.h */,
 				04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */,
+				04CEE7F21E2ADC06005D57CE /* SearchRecipeViewController.h */,
+				04CEE7F31E2ADC06005D57CE /* SearchRecipeViewController.m */,
+				04CEE81F1E2C08D1005D57CE /* FoundRecipesViewController.h */,
+				04CEE8201E2C08D1005D57CE /* FoundRecipesViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -415,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				045A81F81D2072FD00A90D8E /* NewsFeedViewController.m in Sources */,
+				04CEE81D1E2BF255005D57CE /* HTAutocompleteManager.m in Sources */,
 				04EEBA181D73A7AE0036E0EA /* Ingredient.m in Sources */,
 				04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */,
 				045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */,
@@ -428,16 +445,19 @@
 				048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */,
 				044B398C1CCF135D0051E1CC /* LoginViewController.m in Sources */,
 				045A81EE1D2069A700A90D8E /* DataClass.m in Sources */,
+				04CEE81E1E2BF255005D57CE /* HTAutocompleteTextField.m in Sources */,
 				04B49E471CC7063500312485 /* AppDelegate.m in Sources */,
 				045A81EB1D2060A200A90D8E /* Helper.m in Sources */,
 				045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */,
 				04CEE7F11E2300D0005D57CE /* UIAchievementBar.m in Sources */,
+				04CEE8211E2C08D1005D57CE /* FoundRecipesViewController.m in Sources */,
 				047E193F1D2751030011349C /* UICreateStepCell.m in Sources */,
 				04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */,
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
 				046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */,
 				045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */,
 				04833E761D20A9D600631AA4 /* UICreateIngredientCell.m in Sources */,
+				04CEE7F41E2ADC06005D57CE /* SearchRecipeViewController.m in Sources */,
 				04B49E441CC7063500312485 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,24 +494,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		045A81F21D2072C600A90D8E /* MealPlanViewController.h */ = {
-			isa = PBXVariantGroup;
-			children = (
-				045A81F31D2072C600A90D8E /* Base */,
-			);
-			name = MealPlanViewController.h;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		045A81F41D2072C600A90D8E /* MealPlanViewController.m */ = {
-			isa = PBXVariantGroup;
-			children = (
-				045A81F51D2072C600A90D8E /* Base */,
-			);
-			name = MealPlanViewController.m;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		04B49E4B1CC7063500312485 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -602,6 +604,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Cooking by the Book/Cooking by the Book.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: jgsmith725@gmail.com (XX3JYEZ6LU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "Cooking by the Book/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.EthanJack.Cooking-by-the-Book";
@@ -617,6 +620,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Cooking by the Book/Cooking by the Book.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: jgsmith725@gmail.com (XX3JYEZ6LU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "Cooking by the Book/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.EthanJack.Cooking-by-the-Book";

@@ -94,7 +94,7 @@ UITextView *descField;
             NSLog(@"Successful post");
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 
-                [[self navigationController] popViewControllerAnimated:YES];
+                [[self navigationController] popViewControllerAnimated:NO];
                 [self.tabBarController setSelectedIndex:1];
                 
             });

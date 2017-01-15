@@ -78,15 +78,16 @@
                     //NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientArray.count);
                     //NSLog(@"ing id i = %@",[ingredientDict objectForKey:@"ingredientID"]);
                 }
-                DataClass *obj = [DataClass getInstance];
-                [obj initIngredientAry]; 
+                //DataClass *obj = [DataClass getInstance];
+                //[obj initIngredientAry];
                 
             });
   
             
         }
         //initialize the data ingredient array whether core data was updated or not
-
+        DataClass *obj = [DataClass getInstance];
+        [obj initIngredientAry];
         
 
         
@@ -147,6 +148,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
+
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DataModel" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;

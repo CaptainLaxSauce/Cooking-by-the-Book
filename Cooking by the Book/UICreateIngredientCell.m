@@ -7,6 +7,8 @@
 //
 
 #import "UICreateIngredientCell.h"
+#import "HTAutocompleteTextField.h"
+#import "HTAutocompleteManager.h"
 
 @implementation UICreateIngredientCell
 
@@ -56,7 +58,9 @@ int cornerRadius = 3;
     [self addSubview:unitTextField_];
     self.unitTextField = unitTextField_;
     
-    UITextField *titleTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(quantityWidth+unitWidth, 0, titleWidth, totalHeight)];
+    HTAutocompleteTextField *titleTextField_ = [[HTAutocompleteTextField alloc]initWithFrame:CGRectMake(quantityWidth+unitWidth, 0, titleWidth, totalHeight)];
+    titleTextField_.autocompleteDataSource = [HTAutocompleteManager sharedManager];
+    titleTextField_.autocompleteType = HTAutocompleteTypeIngredient;
     titleTextField_.placeholder = @"Ingredient";
     titleTextField_.backgroundColor = [UIColor whiteColor];
     titleTextField_.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -64,6 +68,8 @@ int cornerRadius = 3;
     [self addSubview:titleTextField_];
     self.titleTextField = titleTextField_;
     
+     
+     
     //load delete button
     if (delBtn == TRUE){
         

@@ -142,7 +142,7 @@ static int cornerRadius = 3;
     
 }
 
-
+/*
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"SignupViewController"]){
         SignupViewController *controller;
@@ -152,6 +152,7 @@ static int cornerRadius = 3;
 
     }
 }
+*/
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.emailTextField resignFirstResponder];
@@ -167,6 +168,7 @@ static int cornerRadius = 3;
     int textHeight = screenHeight/20;
     
     self.view.backgroundColor = [UIColor primaryColor];
+    self.navigationItem.title = @"Login";
     
     //create text fields
     UITextField *emailTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(objectBreak, screenHeight/2-objectBreak*2-textHeight*2, textFieldWidth, textHeight)];
