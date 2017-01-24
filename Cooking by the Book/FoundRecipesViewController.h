@@ -10,4 +10,6 @@
 
 @interface FoundRecipesViewController : UIViewController
 
+@property BOOL searchByIngredient;
+
 @end

@@ -10,6 +10,7 @@
 #import "UIColor+CustomColors.h"
 #import "HTAutocompleteTextField.h"
 #import "HTAutocompleteManager.h"
+#import "FoundRecipesViewController.h"
 
 @interface SearchRecipeViewController ()
 
@@ -19,18 +20,21 @@
 
 {
 
-int objectBreak;
-int cornerRadius;
-int screenHeight;
-int screenWidth;
-int statusBarHeight;
-int navBarHeight;
-int textHeight;
-int tabHeight;
-int scrollHeight;
-HTAutocompleteTextField *ingField1;
-HTAutocompleteTextField *ingField2;
-HTAutocompleteTextField *ingField3;
+    int objectBreak;
+    int cornerRadius;
+    int screenHeight;
+    int screenWidth;
+    int statusBarHeight;
+    int navBarHeight;
+    int textHeight;
+    int tabHeight;
+    int scrollHeight;
+    HTAutocompleteTextField *ingField1;
+    HTAutocompleteTextField *ingField2;
+    HTAutocompleteTextField *ingField3;
+    UITextField *searchTitleField;
+    BOOL searchByIngredient;
+    
 }
 
 - (void)viewDidLoad {
@@ -42,10 +46,23 @@ HTAutocompleteTextField *ingField3;
     [super didReceiveMemoryWarning];
 }
 
-- (void)submitSearchTouch:(id)sender {
-    
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"FoundRecipesViewController"]){
+        FoundRecipesViewController *controller = (FoundRecipesViewController *)segue.destinationViewController;
+        controller.searchByIngredient = searchByIngredient;
+    }
+}
+
+
+- (void)ingredientSearchTouch:(id)sender {
+    searchByIngredient = YES;
     [self performSegueWithIdentifier:@"FoundRecipesViewController" sender:sender];
 
+}
+
+- (void)titleSearchTouch:(id)sender {
+    searchByIngredient = NO;
+    [self performSegueWithIdentifier:@"FoundRecipesViewController" sender:sender];
 }
 
 -(void)dismissKeyboard
@@ -53,6 +70,7 @@ HTAutocompleteTextField *ingField3;
     [ingField1 resignFirstResponder];
     [ingField2 resignFirstResponder];
     [ingField3 resignFirstResponder];
+    [searchTitleField resignFirstResponder];
 }
 
 -(void) loadInterface {
@@ -67,6 +85,7 @@ HTAutocompleteTextField *ingField3;
     textHeight = screenHeight/20;
     tabHeight = self.tabBarController.tabBar.frame.size.height;
     scrollHeight = screenHeight-textHeight-tabHeight-objectBreak*2-navBarHeight-statusBarHeight;
+    searchByIngredient = NO;
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Search Recipes";
@@ -107,14 +126,35 @@ HTAutocompleteTextField *ingField3;
     [ingField3 setKeyboardType:UIKeyboardTypeDefault];
     [self.view addSubview:ingField3];
     
-    UIButton *submitButton = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak ,statusBarHeight + navBarHeight + objectBreak*4 + textHeight*3, objectWidth, textHeight)];
-    [submitButton addTarget:self action:@selector(submitSearchTouch:) forControlEvents:UIControlEventTouchUpInside];
-    [submitButton setTitle:@"Submit" forState:UIControlStateNormal];
-    [submitButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-    submitButton.backgroundColor = [UIColor secondaryColor];
-    submitButton.layer.cornerRadius = cornerRadius;
-    submitButton.clipsToBounds = YES;
-    [self.view addSubview:submitButton];
+    UIButton *searchIngredientButton = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak ,statusBarHeight + navBarHeight + objectBreak*4 + textHeight*3, objectWidth, textHeight)];
+    [searchIngredientButton addTarget:self action:@selector(ingredientSearchTouch:) forControlEvents:UIControlEventTouchUpInside];
+    [searchIngredientButton setTitle:@"Search by Ingredient" forState:UIControlStateNormal];
+    [searchIngredientButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    searchIngredientButton.backgroundColor = [UIColor secondaryColor];
+    searchIngredientButton.layer.cornerRadius = cornerRadius;
+    searchIngredientButton.clipsToBounds = YES;
+    [self.view addSubview:searchIngredientButton];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(objectBreak, statusBarHeight + navBarHeight + objectBreak*5 + textHeight*4, objectWidth, 1)];
+    line.backgroundColor = [UIColor customGrayColor];
+    [self.view addSubview:line];
+    
+    searchTitleField = [[UITextField alloc]initWithFrame:CGRectMake(objectBreak, statusBarHeight + navBarHeight + objectBreak*6 + textHeight*4 + 1, objectWidth, textHeight)];
+    searchTitleField.backgroundColor = [UIColor whiteColor];
+    searchTitleField.placeholder = @"Title";
+    searchTitleField.layer.cornerRadius = cornerRadius;
+    searchTitleField.clipsToBounds = YES;
+    [searchTitleField setKeyboardType:UIKeyboardTypeDefault];
+    [self.view addSubview:searchTitleField];
+    
+    UIButton *searchTitleButton =  [[UIButton alloc]initWithFrame:CGRectMake(objectBreak, statusBarHeight + navBarHeight + objectBreak*7 + textHeight*5 + 1, objectWidth, textHeight)];
+    [searchTitleButton addTarget:self action:@selector(titleSearchTouch:) forControlEvents:UIControlEventTouchUpInside];
+    [searchTitleButton setTitle:@"Search by Title" forState:UIControlStateNormal];
+    [searchTitleButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    searchTitleButton.backgroundColor = [UIColor secondaryColor];
+    searchTitleButton.layer.cornerRadius = cornerRadius;
+    searchTitleButton.clipsToBounds = YES;
+    [self.view addSubview:searchTitleButton];
     
  }
 
