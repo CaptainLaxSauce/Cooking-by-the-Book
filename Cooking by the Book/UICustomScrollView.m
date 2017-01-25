@@ -20,7 +20,7 @@
     objectBreak = objectBreak_;
     bottom = objectBreak;
     objectHeight = height;
-    [self inset]
+    //[self inset]
     
     return [self initWithFrame:frame];
     

@@ -29,8 +29,35 @@
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     
-    NSString *currDate = [Helper toUTC:[NSDate date]];
-    NSString *post = [NSString stringWithFormat:@"lastUpdate=%@",currDate];
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = [self persistentStoreCoordinator];
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"LastIngredientUpdate"];
+    NSArray *dateAry = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    
+    NSDate *updateDate = [[NSDate alloc]init];
+    if (dateAry.count > 0){
+        NSManagedObject *date = [dateAry objectAtIndex:0];
+        updateDate = [date valueForKey:@"updateDate"];
+    }
+    else {
+        NSString *dateStr = [NSString stringWithFormat:@"2000-01-01"];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+        [dateFormat setDateFormat:@"YYYY-MM-dd"];
+        updateDate = [dateFormat dateFromString:dateStr];
+    }
+    
+
+    NSString *updateStr = [Helper toUTC:updateDate];
+    
+    NSLog(@"last update date = %@",updateDate);
+    NSLog(@"last update string = %@",updateStr);
+
+
+
+    
+    
+    
+    NSString *post = [NSString stringWithFormat:@"lastUpdate=%@",updateStr];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"initialize"];
     NSURLSession *session = [NSURLSession sharedSession];
@@ -49,8 +76,6 @@
             NSFetchRequest *delRequest = [[NSFetchRequest alloc]initWithEntityName:@"Ingredient"];
             NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:delRequest];
             NSError *deleteError = nil;
-            NSPersistentStoreCoordinator *persistentStoreCoordinator = [self persistentStoreCoordinator];
-            NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
             [persistentStoreCoordinator executeRequest:delete withContext:managedObjectContext error:&deleteError];
             
             dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -78,22 +103,23 @@
                     //NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientArray.count);
                     //NSLog(@"ing id i = %@",[ingredientDict objectForKey:@"ingredientID"]);
                 }
-                //DataClass *obj = [DataClass getInstance];
-                //[obj initIngredientAry];
                 
             });
   
             
         }
-        //initialize the data ingredient array whether core data was updated or not
-        DataClass *obj = [DataClass getInstance];
-        [obj initIngredientAry];
+        
+
         
 
         
     }];
     
     [dataTask resume];
+    
+    //initialize the data ingredient array whether core data was updated or not
+    DataClass *obj = [DataClass getInstance];
+    [obj initIngredientAry];
     
     return YES;
 }

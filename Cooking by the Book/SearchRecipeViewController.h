@@ -10,4 +10,6 @@
 
 @interface SearchRecipeViewController : UIViewController
 
+@property NSArray *textFieldAry;
+
 @end

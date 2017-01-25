@@ -11,6 +11,8 @@
 #import "HTAutocompleteTextField.h"
 #import "HTAutocompleteManager.h"
 #import "FoundRecipesViewController.h"
+#import "DataClass.h"
+#import "Ingredient.h"
 
 @interface SearchRecipeViewController ()
 
@@ -34,6 +36,7 @@
     HTAutocompleteTextField *ingField3;
     UITextField *searchTitleField;
     BOOL searchByIngredient;
+    DataClass *obj;
     
 }
 
@@ -50,6 +53,21 @@
     if([segue.identifier isEqualToString:@"FoundRecipesViewController"]){
         FoundRecipesViewController *controller = (FoundRecipesViewController *)segue.destinationViewController;
         controller.searchByIngredient = searchByIngredient;
+        NSLog(@"segueingggg");
+        NSMutableArray *ingIdAry = [[NSMutableArray alloc]init];
+        for (HTAutocompleteTextField *field in self.textFieldAry){
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ingredientName MATCHES %@", field.text];
+            NSLog(@"field text = 1%@1",field.text);
+            NSArray *filteredAry = [obj.ingredientAry filteredArrayUsingPredicate:predicate];
+            NSLog(@"filteredAry created with count %lu",(unsigned long)filteredAry.count);
+            if (filteredAry.count > 0){
+                Ingredient *ing = [filteredAry objectAtIndex:0];
+                NSLog(@"Ingredient passed to search ID = %@",ing.ingredientID);
+                [ingIdAry addObject:ing.ingredientID];
+            }
+        }
+        
+        controller.ingAry = (NSArray *) ingIdAry;
     }
 }
 
@@ -86,6 +104,8 @@
     tabHeight = self.tabBarController.tabBar.frame.size.height;
     scrollHeight = screenHeight-textHeight-tabHeight-objectBreak*2-navBarHeight-statusBarHeight;
     searchByIngredient = NO;
+    
+    obj = [DataClass getInstance];
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Search Recipes";
@@ -125,6 +145,9 @@
     ingField3.clipsToBounds = YES;
     [ingField3 setKeyboardType:UIKeyboardTypeDefault];
     [self.view addSubview:ingField3];
+    
+    NSArray *textFieldAry_ = [[NSArray alloc] initWithObjects:ingField1, ingField2, ingField3, nil];
+    self.textFieldAry = textFieldAry_;
     
     UIButton *searchIngredientButton = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak ,statusBarHeight + navBarHeight + objectBreak*4 + textHeight*3, objectWidth, textHeight)];
     [searchIngredientButton addTarget:self action:@selector(ingredientSearchTouch:) forControlEvents:UIControlEventTouchUpInside];

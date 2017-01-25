@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FoundRecipesViewController : UIViewController
+@interface FoundRecipesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property BOOL searchByIngredient;
+@property NSArray *ingAry;
 
 @end

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Xcode 7.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Ingredient" syncable="YES">
         <attribute name="ingredientID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ingredientName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="LastIngredientUpdate" syncable="YES">
+        <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Ingredient" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="LastIngredientUpdate" positionX="-63" positionY="0" width="128" height="60"/>
     </elements>
 </model>

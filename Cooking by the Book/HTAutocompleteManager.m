@@ -11,6 +11,9 @@
 static HTAutocompleteManager *sharedManager;
 
 @implementation HTAutocompleteManager
+{
+    DataClass *obj;
+}
 
 
 
@@ -27,6 +30,8 @@ static HTAutocompleteManager *sharedManager;
     completionForPrefix:(NSString *)prefix
              ignoreCase:(BOOL)ignoreCase
 {
+    obj = [DataClass getInstance];
+    
     if (textField.autocompleteType == HTAutocompleteTypeEmail)
     {
         static dispatch_once_t onceToken;
@@ -327,35 +332,10 @@ static HTAutocompleteManager *sharedManager;
         static NSArray *ingredientAutocompleteArray;
         dispatch_once(&ingredientOnceToken, ^
                       {
-                          //ingredientAutocompleteArray = (NSArray*) obj.ingredientAry;
-                          //NSLog(@"ingAry count = %lu",(unsigned long)obj.ingredientAry.count);
+                          ingredientAutocompleteArray = (NSArray*) [obj.ingredientAry valueForKeyPath:@"ingredientName"];
                           
-                         ingredientAutocompleteArray = @[ @"Alfred",
-                             @"Beth",
-                             @"Carlos",
-                             @"Daniel",
-                             @"Ethan",
-                             @"Fred",
-                             @"George",
-                             @"Helen",
-                             @"Inis",
-                             @"Jennifer",
-                             @"Kylie",
-                             @"Liam",
-                             @"Melissa",
-                             @"Noah",
-                             @"Omar",
-                             @"Penelope",
-                             @"Quan",
-                             @"Rachel",
-                             @"Seth",
-                             @"Timothy",
-                             @"Ulga",
-                             @"Vanessa",
-                             @"William",
-                             @"Xao",
-                             @"Yilton",
-                             @"Zander"];
+                          
+                          NSLog(@"ingAry count = %lu",(unsigned long)obj.ingredientAry.count);
 
                       });
         

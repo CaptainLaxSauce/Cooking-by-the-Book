@@ -103,13 +103,16 @@ static DataClass *instance = nil;
     NSLog (@"ingredientCount = %lu",(unsigned long)coreIngAry.count);
     for (int i=0;i<coreIngAry.count;i++){
         NSManagedObject *coreIngredient = [coreIngAry objectAtIndex:i];
-        Ingredient *tempIng = [[Ingredient alloc]initWithName:[coreIngredient valueForKey:@"ingredientName"] withID:[coreIngredient valueForKey:@"ingredientName"]];
+        Ingredient *tempIng = [[Ingredient alloc]initWithName:[coreIngredient valueForKey:@"ingredientName"] withID:[coreIngredient valueForKey:@"ingredientID"]];
         [dataIngAry addObject:tempIng];
         NSLog(@"Data Ingredient ID = %@",[coreIngredient valueForKey:@"ingredientID"]);
         NSLog(@"Data IngredientName = %@",[coreIngredient valueForKey:@"ingredientName"]);
     }
     self.ingredientAry = dataIngAry;
     NSLog(@"Data IngredientAry count = %lu",(unsigned long)self.ingredientAry.count);
+    for (Ingredient *temp in self.ingredientAry){
+        NSLog(@"dataclass ing id = %@, name = %@",temp.ingredientID,temp.ingredientName);
+    }
 }
 
 @end
