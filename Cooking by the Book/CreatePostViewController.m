@@ -63,7 +63,7 @@ UITextView *descField;
                               obj.userId, @"creatorID",
                               obj.userId, @"wallUserID",
                               titleField.text, @"postTitle",
-                              obj.currDetailedRecipeId, @"recipeID",
+                              self.recipeID, @"recipeID",
                               descField.text, @"postBody",
                               [Helper toUTC:[NSDate date]], @"postDateTime",
                               nil];
@@ -148,7 +148,7 @@ UITextView *descField;
     [self.view addGestureRecognizer:tap];
     
     obj = [DataClass getInstance];
-    Recipe *recipe = [obj getRecipe:obj.currDetailedRecipeId];
+    Recipe *recipe = [obj getRecipe:self.recipeID];
     self.navigationItem.title = [NSString stringWithFormat:@"Create Post"];
     self.view.backgroundColor = [UIColor primaryColor];
     

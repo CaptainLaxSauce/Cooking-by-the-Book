@@ -7,6 +7,8 @@
 //
 
 #import "Helper.h"
+#import "DataClass.h"
+#import "Ingredient.h"
 
 @implementation Helper
 
@@ -70,6 +72,21 @@
     }
     
     
+}
+
++(NSString *)ingName2Id:(NSString *)name {
+    DataClass *obj = [DataClass getInstance];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ingredientName MATCHES %@", name];
+    NSArray *filteredAry = [obj.ingredientAry filteredArrayUsingPredicate:predicate];
+    NSLog(@"filteredAry created with count %lu",(unsigned long)filteredAry.count);
+    
+    if (filteredAry.count > 0){
+        Ingredient *ing = [filteredAry objectAtIndex:0];
+        NSLog(@"Ingredient passed to search ID = %@",ing.ingredientID);
+        return ing.ingredientID;
+    }
+    
+    return nil;
 }
 
 @end

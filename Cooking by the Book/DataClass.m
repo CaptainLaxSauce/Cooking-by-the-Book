@@ -42,9 +42,12 @@ static DataClass *instance = nil;
         
         for (int ii=0;ii<tagAry.count;ii++){
             NSDictionary *tagDict = [tagAry objectAtIndex:ii];
-            [tagNumAry addObject:[tagDict objectForKey:@"tagID"]];
-            NSLog(@"tagID = %@",[tagDict objectForKey:@"tagID"]);
-            NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count);
+            if ([tagDict objectForKey:@"tagID"] != (id)[NSNull null]){
+                [tagNumAry addObject:[tagDict objectForKey:@"tagID"]];
+                NSLog(@"tagID = %@",[tagDict objectForKey:@"tagID"]);
+                NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count); 
+            }
+
         }
         
         Recipe *tempRecipe = [[Recipe alloc] initBasicWithTitle:[recipeDict objectForKey:@"recipeTitle"]

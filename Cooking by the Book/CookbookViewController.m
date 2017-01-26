@@ -19,19 +19,22 @@
 
 @end
 
-static int objectBreak = 8;
+  static int objectBreak = 8;
 static int cornerRadius = 3;
-int screenHeight;
-int screenWidth;
-int statusBarHeight;
-int navBarHeight;
-int buttonHeight;
-int tabHeight;
-int scrollHeight;
 
 @implementation CookbookViewController
+
 {
+
+    int screenHeight;
+    int screenWidth;
+    int statusBarHeight;
+    int navBarHeight;
+    int buttonHeight;
+    int tabHeight;
+    int scrollHeight;
     NSMutableArray *cookbookRecipeCellAry;
+    NSString *recipeSelectedId;
 }
 
 - (void)viewDidLoad {
@@ -185,26 +188,20 @@ int scrollHeight;
  
 }
 
-/*
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:self{
     if([segue.identifier isEqualToString:@"DetailedRecipeViewController"]){
-        //UICookbookRecipeCell *cookCell = sender.view;
-        UINavigationController *navController = [segue destinationViewController];
-        DetailedRecipeViewController *controller = (DetailedRecipeViewController *)([navController viewControllers][0]);
-        controller.recipeID = @"12345";
-        NSLog(@"Cookbook recipe ID = %@",controller.recipeID);
+        DetailedRecipeViewController *controller = (DetailedRecipeViewController *)segue.destinationViewController;
+        controller.recipeID = recipeSelectedId;
         
     }
 }
-*/
- 
+
+
 -(void)touchCell:(UITapGestureRecognizer *)sender{
-    DataClass *obj = [DataClass getInstance];
     UICookbookRecipeCell *cookCell = (UICookbookRecipeCell*)sender.view;
-    NSLog(@"Cookbook recipe ID = %@",cookCell.recipe.recipeID);
-    obj.currDetailedRecipeId = cookCell.recipe.recipeID;
+    recipeSelectedId = cookCell.recipe.recipeID;
     [self performSegueWithIdentifier:@"DetailedRecipeViewController" sender:sender];
-    NSLog(@"Cell Touch");
 }
 
 -(void)createRecipeTouch:(id)sender{

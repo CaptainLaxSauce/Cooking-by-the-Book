@@ -14,5 +14,6 @@
 +(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd;
 +(NSString *)toUTC:(NSDate *)date;
 +(NSString *)fromUTC:(NSDate *)date;
++(NSString *)ingName2Id:(NSString*)name;
 
 @end

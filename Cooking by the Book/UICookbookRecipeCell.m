@@ -70,8 +70,10 @@
         descLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:descLabel];
         
-        UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(totalWidth - tagWidth, 0, tagWidth, totalHeight) withTags:Recipe_.tagAry];
-        [self addSubview:tagBox];
+        if (Recipe_.tagAry.count > 0){
+            UITagBox *tagBox = [[UITagBox alloc]initWithFrame:CGRectMake(totalWidth - tagWidth, 0, tagWidth, totalHeight) withTags:Recipe_.tagAry];
+            [self addSubview:tagBox];
+        }
         
         UIButton *delButton_ = [[UIButton alloc]initWithFrame:CGRectMake(totalWidth- tagWidth, 0, tagWidth, totalHeight)];
         delButton_.backgroundColor = [UIColor redColor];

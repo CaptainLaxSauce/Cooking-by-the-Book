@@ -55,7 +55,7 @@ int imageViewHeight;
     for (int i = 1; i<=self.ingredientAry.count; i++){
         NSMutableDictionary *ingredientDictJson = [[NSMutableDictionary alloc]init];
         UICreateIngredientCell *tempIngredient = [self.ingredientAry objectAtIndex:i-1];
-        [ingredientDictJson setObject:tempIngredient.titleTextField.text forKey:@"ingredientID"]; //Need to change this to do discrete lookup
+        [ingredientDictJson setObject:[Helper ingName2Id:tempIngredient.titleTextField.text] forKey:@"ingredientID"]; 
         [ingredientDictJson setObject:tempIngredient.unitTextField.text forKey:@"ingredientUnitID"];
         [ingredientDictJson setObject:tempIngredient.quantityTextField.text forKey:@"ingredientUnitQuantity"];
         [ingredientAryJson addObject:ingredientDictJson];

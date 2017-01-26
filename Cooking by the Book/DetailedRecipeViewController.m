@@ -7,6 +7,7 @@
 //
 
 #import "DetailedRecipeViewController.h"
+#import "CreatePostViewController.h"
 #import "DataClass.h"
 #import "Helper.h"
 #import "UIColor+CustomColors.h"
@@ -28,6 +29,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"CreatePostViewController"]){
+        CreatePostViewController *controller = (CreatePostViewController *)segue.destinationViewController;
+        controller.recipeID = self.recipeID;
+    }
 }
 
 -(void)cookedButtonTouch:(id)sender{
@@ -99,9 +107,9 @@
     [self.view addSubview:cookedButton];
     
     DataClass *obj = [DataClass getInstance];
-    self.recipe = [obj getRecipe:obj.currDetailedRecipeId];
+    self.recipe = [obj getRecipe:self.recipeID];
     self.navigationItem.title = [NSString stringWithFormat:@"%@",self.recipe.title];
-    NSString *post = [NSString stringWithFormat:@"recipeID=%@",obj.currDetailedRecipeId];
+    NSString *post = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,self.recipeID];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getRecipe"];
     NSURLSession *session = [NSURLSession sharedSession];
@@ -123,9 +131,12 @@
         NSMutableArray *tagNumAry = [[NSMutableArray alloc]init];
         for (int ii=0;ii<tagAry.count;ii++){
             NSDictionary *tagDict = [tagAry objectAtIndex:ii];
-            [tagNumAry addObject:[tagDict objectForKey:@"tagID"]];
-            NSLog(@"tagID = %@",[tagDict objectForKey:@"tagID"]);
-            NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count);
+            if ([tagDict objectForKey:@"tagID"] != (id)[NSNull null]){
+                [tagNumAry addObject:[tagDict objectForKey:@"tagID"]];
+                NSLog(@"tagID = %@",[tagDict objectForKey:@"tagID"]);
+                NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count);
+            }
+
         }
 
         
@@ -195,15 +206,6 @@
         });
     }];
     [dataTask resume];
-    NSLog(@"Detailed Recipe ID = %@",obj.currDetailedRecipeId);
-    
-
-    
-    
-    
-    
-    
-                                    
     
 }
 

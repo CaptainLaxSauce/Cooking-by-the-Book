@@ -41,6 +41,9 @@
     NSString *tagStr;
     
     for (int i = 0; i < _tagAry.count; i++){
+        NSLog(@"i = %d",i);
+        NSLog(@"tagAry.count = %lu",(unsigned long)_tagAry.count);
+        
         /*
          int xstart;
          int ystart;
@@ -73,9 +76,7 @@
             
         }
         */
-        
-        
-        
+
         TagType tagType = [[tagAry_ objectAtIndex:i] intValue];
         
         switch(tagType){
@@ -114,6 +115,8 @@
         [[tagLabel layer] setBorderWidth:2.0f];
         [[tagLabel layer] setBorderColor:tagColor.CGColor];
         [self addSubview:tagLabel];
+            
+        
     }
     
 }

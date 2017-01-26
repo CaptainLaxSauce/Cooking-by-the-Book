@@ -10,4 +10,6 @@
 
 @interface CreatePostViewController : UIViewController
 
+@property NSString *recipeID;
+
 @end

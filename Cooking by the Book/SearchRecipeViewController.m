@@ -13,6 +13,7 @@
 #import "FoundRecipesViewController.h"
 #import "DataClass.h"
 #import "Ingredient.h"
+#import "Helper.h"
 
 @interface SearchRecipeViewController ()
 
@@ -56,17 +57,9 @@
         NSLog(@"segueingggg");
         NSMutableArray *ingIdAry = [[NSMutableArray alloc]init];
         for (HTAutocompleteTextField *field in self.textFieldAry){
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ingredientName MATCHES %@", field.text];
-            NSLog(@"field text = 1%@1",field.text);
-            NSArray *filteredAry = [obj.ingredientAry filteredArrayUsingPredicate:predicate];
-            NSLog(@"filteredAry created with count %lu",(unsigned long)filteredAry.count);
-            if (filteredAry.count > 0){
-                Ingredient *ing = [filteredAry objectAtIndex:0];
-                NSLog(@"Ingredient passed to search ID = %@",ing.ingredientID);
-                [ingIdAry addObject:ing.ingredientID];
+            NSString *ingId = [Helper ingName2Id:field.text];
+                [ingIdAry addObject:ingId];
             }
-        }
-        
         controller.ingAry = (NSArray *) ingIdAry;
     }
 }
