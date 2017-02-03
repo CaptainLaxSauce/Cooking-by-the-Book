@@ -10,7 +10,6 @@
 
 @interface FoundRecipesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property BOOL searchByIngredient;
-@property NSArray *ingAry;
+@property NSArray *recipeAry;
 
 @end

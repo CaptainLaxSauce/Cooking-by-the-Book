@@ -14,6 +14,7 @@
 #import "DataClass.h"
 #import "Ingredient.h"
 #import "Helper.h"
+#import "Recipe.h"
 
 @interface SearchRecipeViewController ()
 
@@ -36,7 +37,6 @@
     HTAutocompleteTextField *ingField2;
     HTAutocompleteTextField *ingField3;
     UITextField *searchTitleField;
-    BOOL searchByIngredient;
     DataClass *obj;
     
 }
@@ -53,26 +53,78 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"FoundRecipesViewController"]){
         FoundRecipesViewController *controller = (FoundRecipesViewController *)segue.destinationViewController;
-        controller.searchByIngredient = searchByIngredient;
         NSLog(@"segueingggg");
-        NSMutableArray *ingIdAry = [[NSMutableArray alloc]init];
-        for (HTAutocompleteTextField *field in self.textFieldAry){
-            NSString *ingId = [Helper ingName2Id:field.text];
-                [ingIdAry addObject:ingId];
-            }
-        controller.ingAry = (NSArray *) ingIdAry;
+        controller.recipeAry = self.recipeAry;
     }
 }
 
 
 - (void)ingredientSearchTouch:(id)sender {
-    searchByIngredient = YES;
-    [self performSegueWithIdentifier:@"FoundRecipesViewController" sender:sender];
+    NSMutableArray *ingIdAry = [[NSMutableArray alloc]init];
+    for (HTAutocompleteTextField *field in self.textFieldAry){
+        if ([field hasText]){
+            NSString *ingId = [Helper ingName2Id:field.text];
+            [ingIdAry addObject:ingId];
+        }
+        
+    }
+    
+    NSMutableArray *dictAry = [[NSMutableArray alloc]init];
+    for (int i = 0; i < ingIdAry.count; i++){
+        NSDictionary *ingredientDict = [[NSDictionary alloc]initWithObjectsAndKeys:ingIdAry[i],@"ingredientID",nil];
+        [dictAry addObject:ingredientDict];
+    }
+    
+    NSDictionary *postDict = [[NSDictionary alloc]initWithObjectsAndKeys:
+                              dictAry, @"ingredients",
+                              nil];
+    
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:postDict options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    jsonStr = [NSString stringWithFormat:@"userID=%@&ingredients=%@",obj.userId, jsonStr];
+    NSLog(@"send JSON = %@",jsonStr);
+    NSData *postData = [jsonStr dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getSearchRecipes"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+        
+        NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        NSLog(@"search recipe ret = %@",ret);
+        
+        NSDictionary *retDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        NSArray *recipeJSONAry = [retDict objectForKey:@"recipeInfo"];
+        NSLog(@"recipeJSONAry count = %lu",(unsigned long)recipeJSONAry.count);
+        
+        
+        for (int i = 0; i < recipeJSONAry.count; i++){
+            NSDictionary *recipeDict = recipeJSONAry[i];
+            NSLog(@"curr recipe title = %@",[recipeDict objectForKey:@"recipeTitle"]);
+            //FIX - need to change what is returned from the server
+            Recipe *recipe = [[Recipe alloc]initBasicWithTitle:[recipeDict objectForKey:@"recipeTitle"]
+                                                        withID:[recipeDict objectForKey:@"recipeID"]
+                                                      withDesc:[recipeDict objectForKey:@"recipeDescription"]
+                                                 withImageName:nil
+                                                    withTagAry:nil];
+            [self.recipeAry addObject:[NSString stringWithFormat:@"hello"]];
+            NSLog(@"recipeAry count in search controller = %lu",(unsigned long)self.recipeAry.count);
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"FoundRecipesViewController" sender:sender];
+        });
+
+        
+    }];
+    
+    [dataTask resume];
+    
+   
 
 }
 
 - (void)titleSearchTouch:(id)sender {
-    searchByIngredient = NO;
     [self performSegueWithIdentifier:@"FoundRecipesViewController" sender:sender];
 }
 
@@ -96,12 +148,14 @@
     textHeight = screenHeight/20;
     tabHeight = self.tabBarController.tabBar.frame.size.height;
     scrollHeight = screenHeight-textHeight-tabHeight-objectBreak*2-navBarHeight-statusBarHeight;
-    searchByIngredient = NO;
     
     obj = [DataClass getInstance];
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Search Recipes";
+    
+    NSMutableArray *recipeAry_ = [[NSMutableArray alloc]init];
+    self.recipeAry = recipeAry_;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];

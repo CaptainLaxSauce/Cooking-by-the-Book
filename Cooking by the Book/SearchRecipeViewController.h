@@ -11,5 +11,6 @@
 @interface SearchRecipeViewController : UIViewController
 
 @property NSArray *textFieldAry;
+@property NSMutableArray *recipeAry; //an array of recipe class objects
 
 @end

@@ -35,15 +35,21 @@
     NSArray *dateAry = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
     
     NSDate *updateDate = [[NSDate alloc]init];
+    NSLog(@"dateAry count = %lu",(unsigned long)dateAry.count);
+
+    //an update date is stored
     if (dateAry.count > 0){
         NSManagedObject *date = [dateAry objectAtIndex:0];
         updateDate = [date valueForKey:@"updateDate"];
+        
     }
+    //no update date is stored
     else {
         NSString *dateStr = [NSString stringWithFormat:@"2000-01-01"];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
         [dateFormat setDateFormat:@"YYYY-MM-dd"];
         updateDate = [dateFormat dateFromString:dateStr];
+        
     }
     
 
@@ -78,48 +84,51 @@
             NSError *deleteError = nil;
             [persistentStoreCoordinator executeRequest:delete withContext:managedObjectContext error:&deleteError];
             
-            dispatch_async(dispatch_get_main_queue(), ^(void){
+            //update the update date in core data
+            if (dateAry.count > 0){
+                NSManagedObject *coreDate = [dateAry objectAtIndex:0];
+                [coreDate setValue:[NSDate date] forKey:@"updateDate"];
+            }
+            else {
+                NSManagedObject *coreDate = [NSEntityDescription insertNewObjectForEntityForName:@"LastIngredientUpdate" inManagedObjectContext:managedObjectContext];
+                [coreDate setValue:[NSDate date] forKey:@"updateDate"];
+            }
+    
+            //load ingredients into core data
+            for (int i=0;i<ingredientAry.count;i++){
+                NSMutableDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
+                NSString *ingredientID = [ingredientDict objectForKey:@"ingredientID"];
+                NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
+                //NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
+        
+                NSManagedObject *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"Ingredient" inManagedObjectContext:managedObjectContext];
+                [ingredient setValue:ingredientID forKey:@"ingredientID"];
+                [ingredient setValue:ingredientName forKey:@"ingredientName"];
             
-                //load ingredients into core data
-                for (int i=0;i<ingredientAry.count;i++){
-                    NSMutableDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
-                    NSString *ingredientID = [ingredientDict objectForKey:@"ingredientID"];
-                    NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
-                    //NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
-            
-                    NSManagedObject *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"Ingredient" inManagedObjectContext:managedObjectContext];
-                    [ingredient setValue:ingredientID forKey:@"ingredientID"];
-                    [ingredient setValue:ingredientName forKey:@"ingredientName"];
-                
-                    NSError *error = nil;
-                    // Save the object to persistent store
-                    if (![managedObjectContext save:&error]) {
-                        NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                    }
-            
-                    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@",[ingredientDict objectForKey:@"ingredientID"]];
-            
-                    //NSLog(@"init dict name = %@",[ingredientDict objectForKey:@"ingredientName"]);
-                    //NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientArray.count);
-                    //NSLog(@"ing id i = %@",[ingredientDict objectForKey:@"ingredientID"]);
+                NSError *error = nil;
+                // Save the object to persistent store
+                if (![managedObjectContext save:&error]) {
+                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
                 }
-                
-            });
+        
+                //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@",[ingredientDict objectForKey:@"ingredientID"]];
+        
+                //NSLog(@"init dict name = %@",[ingredientDict objectForKey:@"ingredientName"]);
+                //NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientArray.count);
+                //NSLog(@"ing id i = %@",[ingredientDict objectForKey:@"ingredientID"]);
+            }
+
   
             
         }
         
-
-        
-
+        //initialize the data ingredient array whether core data was updated or not
+        DataClass *obj = [DataClass getInstance];
+        [obj initIngredientAry];
         
     }];
     
     [dataTask resume];
-    
-    //initialize the data ingredient array whether core data was updated or not
-    DataClass *obj = [DataClass getInstance];
-    [obj initIngredientAry];
     
     return YES;
 }

@@ -28,7 +28,6 @@
     int textHeight;
     int tabHeight;
     int scrollHeight;
-    //UIScrollView *recipeScrollView;
     UITableView *recipeTableView;
     int scrollBottom;
     DataClass *obj;
@@ -39,71 +38,19 @@
     [super viewDidLoad];
     [self loadInterface];
     [self loadSearchRecipes];
-    NSLog(@"search by ing? %d",_searchByIngredient);
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
--(void)loadSearchByTitle {
-    
-}
-
--(void)loadSearchByIngredient {
-    NSDictionary *ingredient1Dict = [[NSDictionary alloc]initWithObjectsAndKeys:self.ingAry[0],@"ingredientID",nil];
-    NSDictionary *ingredient2Dict = [[NSDictionary alloc]initWithObjectsAndKeys:self.ingAry[1],@"ingredientID",nil];
-    NSDictionary *ingredient3Dict = [[NSDictionary alloc]initWithObjectsAndKeys:self.ingAry[2],@"ingredientID",nil];
-    
-    NSArray *dictAry = [[NSArray alloc]initWithObjects:ingredient1Dict, ingredient2Dict, ingredient3Dict, nil];
-    
-    NSDictionary *postDict = [[NSDictionary alloc]initWithObjectsAndKeys:
-                              dictAry, @"ingredients",
-                              nil];
-    
-    
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:postDict options:NSJSONWritingPrettyPrinted error:&error];
-    NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    jsonStr = [NSString stringWithFormat:@"userID=%@&ingredients=%@",obj.userId, jsonStr];
-    NSLog(@"send JSON = %@",jsonStr);
-    NSData *postData = [jsonStr dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getSearchRecipes"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
-        
-        NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-        NSLog(@"search recipe ret = %@",ret);
-        /*
-        NSDictionary *recipeDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
-        NSDictionary *recipeInfoDict = [recipeDict objectForKey:@"recipeInfo"];
-        NSArray *ingredientAry = [recipeDict objectForKey:@"ingredientInfo"];
-        NSArray *tagAry = [recipeDict objectForKey:@"tagInfo"];
-        NSArray *stepAry = [recipeDict objectForKey:@"stepInfo"];
-        */
-        
-    }];
-        
-    [dataTask resume];
-
-        
-    
-}
-                                      
-                                      
-
 - (void) loadSearchRecipes {
-    if (self.searchByIngredient == YES){
-        [self loadSearchByIngredient];
-    }
-    else {
-        [self loadSearchByTitle];
-    }
 
+    NSLog(@"recipeAry count in found controller = %lu",(unsigned long)self.recipeAry.count);
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return [self.recipeAry count];
     //return the number of recipes found or max 20
     
 }
@@ -117,7 +64,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleIdentifier];
     }
     
-    //cell.textLabel.text = self.recipeArray[indexPath.row].title;
+    NSDictionary *recipeDict = self.recipeAry[indexPath.row];
+    cell.textLabel.text = [recipeDict objectForKey:@"RecipeTitle"];
     
     return cell;
 }
