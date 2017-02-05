@@ -86,7 +86,22 @@
         return ing.ingredientID;
     }
     
-    return nil;
+    return @"";
+}
+
++(void)addImageToRecipe:(Recipe *)recipe withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion{
+
+    if (recipe.image == nil){
+        NSLog(@"image name = %@",recipe.imageName);
+        NSString *post = [NSString stringWithFormat:@"imageName=%@" ,recipe.imageName];
+        NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        NSMutableURLRequest *request = [self setupPost:postData withURLEnd:@"getImage"];
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completion];
+        [dataTask resume];
+        
+    }
+    
 }
 
 @end

@@ -17,7 +17,6 @@
 		045A81F81D2072FD00A90D8E /* NewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */; };
 		045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */; };
 		045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A82011D207FB300A90D8E /* CookbookViewController.m */; };
-		0461DFD71DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision in Resources */ = {isa = PBXBuildFile; fileRef = 0461DFD61DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision */; };
 		046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */; };
 		047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047813681D1A4F2F00D9F569 /* SignupViewController.m */; };
 		047E193F1D2751030011349C /* UICreateStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047E193E1D2751030011349C /* UICreateStepCell.m */; };
@@ -66,6 +65,7 @@
 /* Begin PBXFileReference section */
 		04033FE31D90D3E000630EED /* UIPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPost.h; sourceTree = "<group>"; };
 		04033FE41D90D3E000630EED /* UIPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPost.m; sourceTree = "<group>"; };
+		041A1AE61E46AAA100AEAFA2 /* CookingByTheBookProfile.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; name = CookingByTheBookProfile.mobileprovision; path = ../../Downloads/CookingByTheBookProfile.mobileprovision; sourceTree = "<group>"; };
 		043ABEEC1E3707ED00579596 /* UICustomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustomScrollView.h; sourceTree = "<group>"; };
 		043ABEED1E3707ED00579596 /* UICustomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICustomScrollView.m; sourceTree = "<group>"; };
 		044B398A1CCF135D0051E1CC /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -84,7 +84,6 @@
 		045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICookbookRecipeCell.m; sourceTree = "<group>"; };
 		045A82001D207FB300A90D8E /* CookbookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CookbookViewController.h; sourceTree = "<group>"; };
 		045A82011D207FB300A90D8E /* CookbookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CookbookViewController.m; sourceTree = "<group>"; };
-		0461DFD61DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; name = CookingByTheBookProfile.mobileprovision; path = ../../../../Downloads/CookingByTheBookProfile.mobileprovision; sourceTree = "<group>"; };
 		046D1C721D5C2325008B1092 /* DetailedRecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedRecipeViewController.h; sourceTree = "<group>"; };
 		046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedRecipeViewController.m; sourceTree = "<group>"; };
 		047813671D1A4F2F00D9F569 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
@@ -192,7 +191,7 @@
 		04B49E361CC7063500312485 = {
 			isa = PBXGroup;
 			children = (
-				0461DFD61DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision */,
+				041A1AE61E46AAA100AEAFA2 /* CookingByTheBookProfile.mobileprovision */,
 				04E00D6A1D31BFE30016FED8 /* CoreData.framework */,
 				04B49E411CC7063500312485 /* Cooking by the Book */,
 				04B49E5B1CC7063500312485 /* Cooking by the BookTests */,
@@ -366,6 +365,7 @@
 					04B49E3E1CC7063500312485 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = R48E5GJ873;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -407,7 +407,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0461DFD71DB9A6BB00CD619E /* CookingByTheBookProfile.mobileprovision in Resources */,
 				04B49E521CC7063500312485 /* LaunchScreen.storyboard in Resources */,
 				04B49E4F1CC7063500312485 /* Assets.xcassets in Resources */,
 				04B49E4D1CC7063500312485 /* Main.storyboard in Resources */,
@@ -610,6 +609,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Cooking by the Book/Cooking by the Book.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: jgsmith725@gmail.com (XX3JYEZ6LU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = R48E5GJ873;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "Cooking by the Book/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -626,6 +626,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Cooking by the Book/Cooking by the Book.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: jgsmith725@gmail.com (XX3JYEZ6LU)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = R48E5GJ873;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "Cooking by the Book/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -73,8 +73,7 @@ static DataClass *instance = nil;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recipeID MATCHES %@", recipeID];
     NSArray *filteredAry = [recipeAry filteredArrayUsingPredicate:predicate];
     if (filteredAry.count == 0){
-        Recipe *recipe = [[Recipe alloc]init];
-        return recipe;
+        return nil;
     }
     else{
         return [filteredAry objectAtIndex:0];

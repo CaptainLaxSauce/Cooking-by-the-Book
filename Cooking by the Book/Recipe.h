@@ -12,6 +12,8 @@
 @interface Recipe : NSObject
 
 @property NSString *title;
+@property NSString *status;
+@property NSString *recipeCreateUser;
 @property NSString *recipeID;
 @property NSString *desc;
 @property NSArray *tagAry;
@@ -26,5 +28,6 @@
 
 -(id)init;
 -(id)initBasicWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withImageName:(NSString*)imageName_ withTagAry:(NSArray *)tagAry_;
+-(id)initWithDictionary:(NSDictionary *)dict;
 -(id)initDetailedWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withImageName:(NSString *)imageName_ withTagAry:(NSArray *)tagAry_ withPrepTime:(NSNumber *)prepTime_ withCookTime:(NSNumber *)cookTime_ withTotTime:(NSNumber *)totTime_ withPortionNum:(NSNumber *)portionNum_ withIngredientAry:(NSArray *)ingredientAry_ withStepAry:(NSArray *)stepAry_ withImage:(UIImage *)image_;
 @end

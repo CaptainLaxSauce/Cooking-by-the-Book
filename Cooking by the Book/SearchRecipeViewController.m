@@ -101,26 +101,25 @@
         for (int i = 0; i < recipeJSONAry.count; i++){
             NSDictionary *recipeDict = recipeJSONAry[i];
             NSLog(@"curr recipe title = %@",[recipeDict objectForKey:@"recipeTitle"]);
-            //FIX - need to change what is returned from the server
-            Recipe *recipe = [[Recipe alloc]initBasicWithTitle:[recipeDict objectForKey:@"recipeTitle"]
-                                                        withID:[recipeDict objectForKey:@"recipeID"]
-                                                      withDesc:[recipeDict objectForKey:@"recipeDescription"]
-                                                 withImageName:nil
-                                                    withTagAry:nil];
-            [self.recipeAry addObject:[NSString stringWithFormat:@"hello"]];
-            NSLog(@"recipeAry count in search controller = %lu",(unsigned long)self.recipeAry.count);
+            //FIX - need to change what is returned from the server to match getRecipe
+
+            Recipe *recipe = [[Recipe alloc]initWithDictionary:recipeDict];
+            [self.recipeAry addObject:recipe];
+            
+            if (i == recipeJSONAry.count - 1){
+                NSLog(@"recipeAry count in search controller = %lu",(unsigned long)self.recipeAry.count);
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [self performSegueWithIdentifier:@"FoundRecipesViewController" sender:sender];
+                });
+            }
+
+            
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            [self performSegueWithIdentifier:@"FoundRecipesViewController" sender:sender];
-        });
-
         
     }];
     
     [dataTask resume];
-    
-   
 
 }
 

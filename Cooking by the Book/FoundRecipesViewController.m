@@ -55,17 +55,43 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 90;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *SimpleIdentifier = @"SimpleIdentifier";
     
     UITableViewCell *cell = [recipeTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
     }
     
-    NSDictionary *recipeDict = self.recipeAry[indexPath.row];
-    cell.textLabel.text = [recipeDict objectForKey:@"RecipeTitle"];
+    Recipe *recipe = self.recipeAry[indexPath.row];
+    
+    cell.textLabel.text = recipe.title;
+    cell.detailTextLabel.text = recipe.desc;
+    cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
+    
+   
+    if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
+        void (^addImageCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
+        addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+            recipe.image = [UIImage imageWithData:postData];
+            NSLog(@"adding image with imagename = %@",recipe.imageName);
+            if (recipe.image) {
+                //UITableViewCell *cellToUpdate = [tableView cellForRowAtIndexPath:indexPath]; // create a copy of the cell to avoid keeping a strong pointer to "cell" since that one may have been reused by the time the block is ready to update it.
+                cell.imageView.image = recipe.image;
+            }
+                
+        };
+        
+        [Helper addImageToRecipe:recipe withCompletionHandler:addImageCompletion];
+    }
+    else if (recipe.image){
+        cell.imageView.image = recipe.image;
+    }
     
     return cell;
 }
@@ -82,7 +108,7 @@
     objectWidth = screenWidth - objectBreak*2;
     textHeight = screenHeight/20;
     tabHeight = self.tabBarController.tabBar.frame.size.height;
-    scrollHeight = screenHeight-tabHeight-objectBreak-navBarHeight-statusBarHeight;
+    scrollHeight = screenHeight-tabHeight;
     
     obj = [DataClass getInstance];
     
@@ -92,9 +118,10 @@
     [self.view addSubview:scrollView];
     */
     
-    recipeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight) style:UITableViewStylePlain];
+    recipeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, scrollHeight) style:UITableViewStylePlain];
     recipeTableView.delegate = self;
     recipeTableView.dataSource = self;
+    [self.view addSubview:recipeTableView];
     
     
     UIView *testView = [[UIView alloc]init];
@@ -103,7 +130,7 @@
     UIView *testView2 = [[UIView alloc]init];
     testView.backgroundColor = [UIColor blueColor];
     
-    [recipeTableView addSubview:testView];
+    //[recipeTableView addSubview:testView];
     
     
     //add scroll view
@@ -114,6 +141,8 @@
     scrollBottom = objectBreak;
     [self.view addSubview:recipeScrollView];
     */
+    
+    
     
 }
 
