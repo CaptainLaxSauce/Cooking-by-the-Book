@@ -11,6 +11,8 @@
 #import "UICustomScrollView.h"
 #import "DataClass.h"
 #import "Helper.h"
+#import "HCSStarRatingView.h"
+#import "DetailedRecipeViewController.h"
 
 @interface FoundRecipesViewController ()
 
@@ -56,7 +58,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 90;
+    return 92;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -81,10 +83,8 @@
             recipe.image = [UIImage imageWithData:postData];
             NSLog(@"adding image with imagename = %@",recipe.imageName);
             if (recipe.image) {
-                //UITableViewCell *cellToUpdate = [tableView cellForRowAtIndexPath:indexPath]; // create a copy of the cell to avoid keeping a strong pointer to "cell" since that one may have been reused by the time the block is ready to update it.
                 cell.imageView.image = recipe.image;
             }
-                
         };
         
         [Helper addImageToRecipe:recipe withCompletionHandler:addImageCompletion];
@@ -93,7 +93,59 @@
         cell.imageView.image = recipe.image;
     }
     
+    HCSStarRatingView *starView = [[HCSStarRatingView alloc]initWithFrame:CGRectMake(120, 65, 120, 27)];
+    starView.maximumValue = 5;
+    starView.minimumValue = 0;
+    starView.value = [recipe.rating doubleValue];
+    starView.allowsHalfStars = YES;
+    starView.accurateHalfStars = YES;
+    starView.userInteractionEnabled = NO;
+    starView.tintColor = [UIColor starColor];
+    [cell.contentView addSubview:starView];
+
     return cell;
+}
+
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
+    Recipe *recipe = self.recipeAry[indexPath.row];
+    id sender = recipe;
+    [self performSegueWithIdentifier:@"DetailedRecipeViewController" sender:sender];
+    
+    
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"DetailedRecipeViewController"]){
+        DetailedRecipeViewController *controller = (DetailedRecipeViewController *)segue.destinationViewController;
+        NSLog(@"segueingggg");
+        
+        controller.recipe = ((Recipe *)sender);
+        controller.recipeID = ((Recipe *)sender).recipeID;
+    }
+
+}
+
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *add = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Add to Cookbook" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                    {
+                                        [obj addRecipe:self.recipeAry[indexPath.row]];
+                                        
+                                        //retract the button
+                                        [tableView beginUpdates];
+                                        [tableView setEditing:NO animated:NO];
+                                        [tableView endUpdates];
+                                    }];
+    add.backgroundColor = [UIColor greenColor];
+    
+    return @[add];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Nothing gets called here if you invoke `tableView:editActionsForRowAtIndexPath:` according to Apple docs so just leave this method blank
 }
                                       
 
@@ -108,41 +160,13 @@
     objectWidth = screenWidth - objectBreak*2;
     textHeight = screenHeight/20;
     tabHeight = self.tabBarController.tabBar.frame.size.height;
-    scrollHeight = screenHeight-tabHeight;
     
     obj = [DataClass getInstance];
     
-    /*
-    UICustomScrollView *scrollView = [[UICustomScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight) withObjectHeight:textHeight*3 withObjectBreak:objectBreak];
-    scrollView.backgroundColor = [UIColor customGrayColor];
-    [self.view addSubview:scrollView];
-    */
-    
-    recipeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, scrollHeight) style:UITableViewStylePlain];
+    recipeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStylePlain];
     recipeTableView.delegate = self;
     recipeTableView.dataSource = self;
     [self.view addSubview:recipeTableView];
-    
-    
-    UIView *testView = [[UIView alloc]init];
-    testView.backgroundColor = [UIColor orangeColor];
-    
-    UIView *testView2 = [[UIView alloc]init];
-    testView.backgroundColor = [UIColor blueColor];
-    
-    //[recipeTableView addSubview:testView];
-    
-    
-    //add scroll view
-    /*
-    recipeScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight)];
-    recipeScrollView.backgroundColor = [UIColor customGrayColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    scrollBottom = objectBreak;
-    [self.view addSubview:recipeScrollView];
-    */
-    
-    
     
 }
 

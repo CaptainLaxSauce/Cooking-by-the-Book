@@ -19,6 +19,7 @@
 @property NSString* dateTime;
 @property NSString* likeCount;
 @property NSString* commentCount;
+@property Recipe* recipe;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;

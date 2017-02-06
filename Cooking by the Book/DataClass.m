@@ -54,7 +54,8 @@ static DataClass *instance = nil;
                                                                          withID:[recipeDict objectForKey:@"recipeID"]
                                                                        withDesc:[recipeDict objectForKey:@"recipeDescription"]
                                                                   withImageName:[recipeDict objectForKey:@"recipeImage"]
-                                                                     withTagAry:tagNumAry];
+                                                                     withTagAry:tagNumAry
+                                                                     withRating:[NSNumber numberWithInteger:3]];//[recipeDict objectForKey:@"recipeRating"]]; need get from server 
         NSLog(@"temp recipe properties = %@ %@ %@ %@ %@",tempRecipe.title, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry, tempRecipe.imageName);
         [self.cookbookAry addObject:tempRecipe];
         NSLog(@"Cookbook ary count after initialization = %lu",(unsigned long)self.cookbookAry.count);

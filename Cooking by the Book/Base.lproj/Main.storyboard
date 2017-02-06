@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FB4-Sl-uam">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FB4-Sl-uam">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -70,7 +70,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zR0-jq-UT5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3580" y="-321.58920539730138"/>
+            <point key="canvasLocation" x="5174" y="435"/>
         </scene>
         <!--Create Post View Controller-->
         <scene sceneID="Nss-d9-gA5">
@@ -88,7 +88,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ObO-le-tyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4448.8000000000002" y="-320.68965517241384"/>
+            <point key="canvasLocation" x="6041" y="436"/>
         </scene>
         <!--Create Recipe View Controller-->
         <scene sceneID="JrN-dV-Jgm">
@@ -106,12 +106,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPK-8j-3r7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3581.5999999999999" y="469.1154422788606"/>
+            <point key="canvasLocation" x="3844" y="-213"/>
         </scene>
         <!--Search Recipes-->
         <scene sceneID="Xc0-s4-FQH">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hlI-Xs-Axe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SearchRecipeViewController" title="Search Recipes" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hzL-gA-BOv" customClass="SearchRecipeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BP8-gM-xdQ"/>
@@ -127,6 +126,7 @@
                         <segue destination="ABR-kc-hWU" kind="show" identifier="FoundRecipesViewController" id="XDg-CH-t2b"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hlI-Xs-Axe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3228" y="1224.737631184408"/>
         </scene>
@@ -143,6 +143,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="Oue-Ma-08F" kind="show" identifier="DetailedRecipeViewController" id="j37-Kb-7pp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3zZ-iq-Xg9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -235,6 +238,7 @@
                 <tabBarController storyboardIdentifier="TabBarViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Q35-td-2dk" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JEm-bF-3kx">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
@@ -309,4 +313,7 @@
             <point key="canvasLocation" x="2288.8000000000002" y="1224.737631184408"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="j37-Kb-7pp"/>
+    </inferredMetricsTieBreakers>
 </document>

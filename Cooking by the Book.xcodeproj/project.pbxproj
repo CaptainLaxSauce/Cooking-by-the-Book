@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		04033FE51D90D3E000630EED /* UIPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 04033FE41D90D3E000630EED /* UIPost.m */; };
+		041A1AE91E483AB800AEAFA2 /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */; };
+		041A1AEC1E483B9400AEAFA2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041A1AEB1E483B9400AEAFA2 /* UIKit.framework */; };
 		043ABEEE1E3707ED00579596 /* UICustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043ABEED1E3707ED00579596 /* UICustomScrollView.m */; };
 		044B398C1CCF135D0051E1CC /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044B398B1CCF135D0051E1CC /* LoginViewController.m */; };
 		045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 045931581D1902F5003D1C47 /* UIColor+CustomColors.m */; };
@@ -66,6 +68,10 @@
 		04033FE31D90D3E000630EED /* UIPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPost.h; sourceTree = "<group>"; };
 		04033FE41D90D3E000630EED /* UIPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPost.m; sourceTree = "<group>"; };
 		041A1AE61E46AAA100AEAFA2 /* CookingByTheBookProfile.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; name = CookingByTheBookProfile.mobileprovision; path = ../../Downloads/CookingByTheBookProfile.mobileprovision; sourceTree = "<group>"; };
+		041A1AE71E483AB800AEAFA2 /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
+		041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
+		041A1AEB1E483B9400AEAFA2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		041A1AED1E483BBA00AEAFA2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		043ABEEC1E3707ED00579596 /* UICustomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustomScrollView.h; sourceTree = "<group>"; };
 		043ABEED1E3707ED00579596 /* UICustomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICustomScrollView.m; sourceTree = "<group>"; };
 		044B398A1CCF135D0051E1CC /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				041A1AEC1E483B9400AEAFA2 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +170,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041A1AEA1E483B9400AEAFA2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				041A1AEB1E483B9400AEAFA2 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		045A81FC1D20767E00A90D8E /* Custom UI Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +199,8 @@
 				04CEE7F01E2300D0005D57CE /* UIAchievementBar.m */,
 				043ABEEC1E3707ED00579596 /* UICustomScrollView.h */,
 				043ABEED1E3707ED00579596 /* UICustomScrollView.m */,
+				041A1AE71E483AB800AEAFA2 /* HCSStarRatingView.h */,
+				041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */,
 			);
 			name = "Custom UI Elements";
 			sourceTree = "<group>";
@@ -192,11 +209,13 @@
 			isa = PBXGroup;
 			children = (
 				041A1AE61E46AAA100AEAFA2 /* CookingByTheBookProfile.mobileprovision */,
+				041A1AED1E483BBA00AEAFA2 /* UIKit.framework */,
 				04E00D6A1D31BFE30016FED8 /* CoreData.framework */,
 				04B49E411CC7063500312485 /* Cooking by the Book */,
 				04B49E5B1CC7063500312485 /* Cooking by the BookTests */,
 				04B49E661CC7063500312485 /* Cooking by the BookUITests */,
 				04B49E401CC7063500312485 /* Products */,
+				041A1AEA1E483B9400AEAFA2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -459,6 +478,7 @@
 				04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */,
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
 				046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */,
+				041A1AE91E483AB800AEAFA2 /* HCSStarRatingView.m in Sources */,
 				045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */,
 				043ABEEE1E3707ED00579596 /* UICustomScrollView.m in Sources */,
 				04833E761D20A9D600631AA4 /* UICreateIngredientCell.m in Sources */,

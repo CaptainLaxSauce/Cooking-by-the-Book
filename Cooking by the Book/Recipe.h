@@ -25,9 +25,29 @@
 @property NSArray *stepAry;
 @property UIImage *image;
 @property NSString *imageName;
+@property NSNumber *rating;
 
 -(id)init;
--(id)initBasicWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withImageName:(NSString*)imageName_ withTagAry:(NSArray *)tagAry_;
+-(id)initBasicWithTitle:(NSString *)title_
+                 withID:(NSString *)recipeID_
+               withDesc:(NSString *)desc_
+          withImageName:(NSString*)imageName_
+             withTagAry:(NSArray *)tagAry_
+             withRating:(NSNumber *)rating_;
+
 -(id)initWithDictionary:(NSDictionary *)dict;
--(id)initDetailedWithTitle:(NSString *)title_ withID:(NSString *)recipeID_ withDesc:(NSString *)desc_ withImageName:(NSString *)imageName_ withTagAry:(NSArray *)tagAry_ withPrepTime:(NSNumber *)prepTime_ withCookTime:(NSNumber *)cookTime_ withTotTime:(NSNumber *)totTime_ withPortionNum:(NSNumber *)portionNum_ withIngredientAry:(NSArray *)ingredientAry_ withStepAry:(NSArray *)stepAry_ withImage:(UIImage *)image_;
+
+-(id)initDetailedWithTitle:(NSString *)title_
+                    withID:(NSString *)recipeID_
+                  withDesc:(NSString *)desc_
+             withImageName:(NSString *)imageName_
+                withTagAry:(NSArray *)tagAry_
+              withPrepTime:(NSNumber *)prepTime_
+              withCookTime:(NSNumber *)cookTime_
+               withTotTime:(NSNumber *)totTime_
+            withPortionNum:(NSNumber *)portionNum_
+         withIngredientAry:(NSArray *)ingredientAry_
+               withStepAry:(NSArray *)stepAry_
+                 withImage:(UIImage *)image_
+                withRating:(NSNumber *)rating_;
 @end

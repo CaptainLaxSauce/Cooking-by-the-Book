@@ -130,7 +130,7 @@ int imageViewHeight;
         if ([recipeID intValue] > 0) {
             NSLog(@"Successful recipe post, id = %@",recipeID);
             //fix this to send images
-            Recipe *newRecipe = [[Recipe alloc]initDetailedWithTitle:self.titleTextField.text withID:recipeID withDesc:self.descTextField.text withImageName:nil withTagAry:tagAry withPrepTime:(NSNumber*)self.prepTimeField.text withCookTime:(NSNumber*)self.cookTimeField.text withTotTime:[NSNumber numberWithInt:self.totTime] withPortionNum:(NSNumber*)self.portionNumLabel.text withIngredientAry:ingredientAryJson withStepAry:stepAryJson withImage:[self.recipeImageView image]];
+            Recipe *newRecipe = [[Recipe alloc]initDetailedWithTitle:self.titleTextField.text withID:recipeID withDesc:self.descTextField.text withImageName:nil withTagAry:tagAry withPrepTime:(NSNumber*)self.prepTimeField.text withCookTime:(NSNumber*)self.cookTimeField.text withTotTime:[NSNumber numberWithInt:self.totTime] withPortionNum:(NSNumber*)self.portionNumLabel.text withIngredientAry:ingredientAryJson withStepAry:stepAryJson withImage:[self.recipeImageView image] withRating:0];
             [obj addRecipe:newRecipe];
             
             NSString *post2 = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,recipeID];

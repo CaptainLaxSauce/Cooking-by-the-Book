@@ -82,8 +82,11 @@
         [self addSubview:timeLabel];
         
         obj = [DataClass getInstance];
-        Recipe *recipe = [obj getRecipe:recipeID_];
-        UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(objectBreak, objectBreak + textHeight*2, objectWidth, textHeight*3 + objectBreak*2) withRecipe:recipe];
+        if (self.recipe == nil){
+            self.recipe = [obj getRecipe:recipeID_];
+        }
+        
+        UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(objectBreak, objectBreak + textHeight*2, objectWidth, textHeight*3 + objectBreak*2) withRecipe:self.recipe];
         [self addSubview:recipeCell];
         
         UILabel *bodyLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*4 + textHeight*5, objectWidth, textHeight*2)];

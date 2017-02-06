@@ -107,7 +107,10 @@
     [self.view addSubview:cookedButton];
     
     DataClass *obj = [DataClass getInstance];
-    self.recipe = [obj getRecipe:self.recipeID];
+    if (self.recipe == nil){
+        self.recipe = [obj getRecipe:self.recipeID];
+    }
+    
     self.navigationItem.title = [NSString stringWithFormat:@"%@",self.recipe.title];
     NSString *post = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,self.recipeID];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -202,6 +205,18 @@
             [tagBox addTags:tagNumAry];
             if (self.recipe.image != nil){
                 [recipeImageView setImage:self.recipe.image];
+            }
+            else if (![self.recipe.imageName  isEqual: @""]) {
+                void (^addImageCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
+                addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+                    self.recipe.image = [UIImage imageWithData:postData];
+                    NSLog(@"adding image with imagename = %@",self.recipe.imageName);
+                    if (self.recipe.image) {
+                        [recipeImageView setImage:self.recipe.image];
+                    }
+                };
+                
+                [Helper addImageToRecipe:self.recipe withCompletionHandler:addImageCompletion];
             }
         });
     }];

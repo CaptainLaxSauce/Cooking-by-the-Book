@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HCSStarRatingView.h"
 
 @interface NewsFeedViewController : UIViewController
 

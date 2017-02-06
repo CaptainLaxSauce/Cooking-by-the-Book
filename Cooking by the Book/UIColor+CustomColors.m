@@ -33,6 +33,10 @@
     return [UIColor colorWithRed:225.0f/255.0f green:225.0f/255.0f blue:225.0f/255.0f alpha:1.0f];
 }
 
++(UIColor*)starColor {
+    return [UIColor colorWithRed:225.0f/255.0f green:215.0f/255.0f blue:0.0f/255.0f alpha:1.0f];
+}
+
 +(UIColor*)lineColor{
     return [UIColor colorWithRed:200.0f/255.0f green:200.0f/255.0f blue:200.0f/255.0f alpha:1.0f];
 }
