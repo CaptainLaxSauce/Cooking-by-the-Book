@@ -44,6 +44,11 @@ UITextView *descField;
 }
 */
 
+/* used with starBar
+- (void)didChangeValue:(HCSStarRatingView *)sender {
+    NSLog(@"Changed rating to %.1f", sender.value);
+}
+*/
 -(void)dismissKeyboard
 {
     [descField resignFirstResponder];

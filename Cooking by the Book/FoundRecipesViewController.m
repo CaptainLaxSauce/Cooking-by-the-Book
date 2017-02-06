@@ -19,8 +19,6 @@
 
 @implementation FoundRecipesViewController
 {
-    int screenHeight;
-    int screenWidth;
     UITableView *recipeTableView;
     DataClass *obj;
 
@@ -29,6 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadInterface];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    //clear the recipeAry if popping the view to SearchRecipeViewController
+    if (self.isMovingFromParentViewController == YES){
+        [self.recipeAry removeAllObjects];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +74,9 @@
             if (recipe.image) {
                 cell.imageView.image = recipe.image;
             }
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [recipeTableView reloadData];
+            });
         };
         
         [Helper addImageToRecipe:recipe withCompletionHandler:addImageCompletion];
@@ -132,8 +140,8 @@
                                       
 
 - (void)loadInterface {
-    screenHeight = self.view.frame.size.height;
-    screenWidth = self.view.frame.size.width;
+    int screenHeight = self.view.frame.size.height;
+    int screenWidth = self.view.frame.size.width;
 
     
     obj = [DataClass getInstance];

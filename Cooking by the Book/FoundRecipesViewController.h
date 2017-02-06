@@ -10,6 +10,6 @@
 
 @interface FoundRecipesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property NSArray *recipeAry;
+@property NSMutableArray *recipeAry;
 
 @end

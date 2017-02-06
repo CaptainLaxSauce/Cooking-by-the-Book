@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CookbookViewController : UIViewController
+@interface CookbookViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 typedef enum TagType : int{
     quick = 0,
@@ -18,13 +18,10 @@ typedef enum TagType : int{
     
 } TagType;
 
-@property UIScrollView *recipeScrollView;
+@property NSMutableArray *recipeAry;
 @property UIButton *createRecipeButton;
 
 -(void)createRecipeTouch:(id)sender;
--(void)loadInterface;
--(void)refreshRecipes;
--(void)touchCell:(UITapGestureRecognizer*)sender;
--(void)delRecipeTouch:(id)sender;
+-(void)deleteRecipe:(NSIndexPath *)indexPath;
 
 @end

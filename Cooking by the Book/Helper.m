@@ -92,7 +92,6 @@
 +(void)addImageToRecipe:(Recipe *)recipe withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion{
 
     if (recipe.image == nil){
-        NSLog(@"image name = %@",recipe.imageName);
         NSString *post = [NSString stringWithFormat:@"imageName=%@" ,recipe.imageName];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSMutableURLRequest *request = [self setupPost:postData withURLEnd:@"getImage"];
