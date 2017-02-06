@@ -8,7 +8,6 @@
 
 #import "FoundRecipesViewController.h"
 #import "UIColor+CustomColors.h"
-#import "UICustomScrollView.h"
 #import "DataClass.h"
 #import "Helper.h"
 #import "HCSStarRatingView.h"
@@ -20,18 +19,9 @@
 
 @implementation FoundRecipesViewController
 {
-    int objectBreak;
-    int objectWidth;
-    int cornerRadius;
     int screenHeight;
     int screenWidth;
-    int statusBarHeight;
-    int navBarHeight;
-    int textHeight;
-    int tabHeight;
-    int scrollHeight;
     UITableView *recipeTableView;
-    int scrollBottom;
     DataClass *obj;
 
 }
@@ -39,17 +29,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadInterface];
-    [self loadSearchRecipes];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void) loadSearchRecipes {
-
-    NSLog(@"recipeAry count in found controller = %lu",(unsigned long)self.recipeAry.count);
-}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.recipeAry count];
@@ -63,7 +48,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *SimpleIdentifier = @"SimpleIdentifier";
-    
     UITableViewCell *cell = [recipeTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
     
     if (cell == nil) {
@@ -76,7 +60,7 @@
     cell.detailTextLabel.text = recipe.desc;
     cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
     
-   
+    //retrieve image from server if it hasn't been already
     if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
         void (^addImageCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
         addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
@@ -117,8 +101,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"DetailedRecipeViewController"]){
         DetailedRecipeViewController *controller = (DetailedRecipeViewController *)segue.destinationViewController;
-        NSLog(@"segueingggg");
-        
         controller.recipe = ((Recipe *)sender);
         controller.recipeID = ((Recipe *)sender).recipeID;
     }
@@ -150,16 +132,9 @@
                                       
 
 - (void)loadInterface {
-    //declare constants
-    objectBreak = 8;
-    cornerRadius = 3;
     screenHeight = self.view.frame.size.height;
     screenWidth = self.view.frame.size.width;
-    statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    objectWidth = screenWidth - objectBreak*2;
-    textHeight = screenHeight/20;
-    tabHeight = self.tabBarController.tabBar.frame.size.height;
+
     
     obj = [DataClass getInstance];
     
