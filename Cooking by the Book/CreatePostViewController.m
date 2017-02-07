@@ -12,6 +12,7 @@
 #import "UIColor+CustomColors.h"
 #import "Helper.h"
 #import "AppDelegate.h"
+#import "HCSStarRatingView.h"
 
 @interface CreatePostViewController ()
 
@@ -19,9 +20,13 @@
 
 @implementation CreatePostViewController
 
+{
 DataClass *obj;
 UITextField *titleField;
 UITextView *descField;
+HCSStarRatingView *starView;
+UIActivityIndicatorView *activityView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,35 +40,40 @@ UITextView *descField;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-/* used with starBar
 - (void)didChangeValue:(HCSStarRatingView *)sender {
     NSLog(@"Changed rating to %.1f", sender.value);
 }
 */
+
 -(void)dismissKeyboard
 {
     [descField resignFirstResponder];
     [titleField resignFirstResponder];
 }
 
-- (void) submitPostTouch:(id)sender {
-    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.view addSubview: activityView];
-    activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
-    [activityView startAnimating];
-    self.view.userInteractionEnabled = FALSE;
-    self.navigationController.view.userInteractionEnabled = FALSE;
-    self.tabBarController.view.userInteractionEnabled = FALSE;
-    
+-(void)configurePostCompletion{
+    CreatePostViewController *__weak weakSelf = self;
+    self.postCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+        [weakSelf stopActivityViewAsync:activityView];
+        
+        NSString *postID = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        NSLog(@"Post ID = %@",postID);
+
+        //successful post
+        if ([postID intValue] > 0){
+            NSLog(@"Successful post");
+            [weakSelf configureRatingCompletion];
+            [weakSelf submitRatingWeb];
+        }
+        else{
+            [weakSelf postUnsuccessfulAlertAsync];
+        }
+        
+        
+    };
+}
+
+-(void)submitPostWeb{
     NSDictionary *postDict = [[NSDictionary alloc]initWithObjectsAndKeys:
                               obj.userId, @"creatorID",
                               obj.userId, @"wallUserID",
@@ -78,76 +88,122 @@ UITextView *descField;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:postDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
     jsonStr = [NSString stringWithFormat:@"post=%@",jsonStr];
-    NSData *postData = [jsonStr dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"addPost"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            [activityView stopAnimating];
-            self.view.userInteractionEnabled = TRUE;
-            self.navigationController.view.userInteractionEnabled = TRUE;
-            self.tabBarController.view.userInteractionEnabled = TRUE;
-            
-        });
+    [Helper submitHTTPPostWithString:jsonStr withURLEnd:@"addPost" withCompletionHandler:self.postCompletion];
+}
 
-        NSString *postID = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-        NSLog(@"Post ID = %@",postID);
-        //successful post
-        if ([postID intValue] > 0){
-            NSLog(@"Successful post");
+-(void)configureRatingCompletion{
+    CreatePostViewController *__weak weakSelf = self;
+    self.ratingCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+        [weakSelf stopActivityViewAsync:activityView];
+        
+        NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        NSLog(@"Rating ret = %@",ret);
+        
+        //successful rating submission
+        if ([ret intValue] > 0){
+            NSLog(@"Successful rating submission");
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 
-                [[self navigationController] popViewControllerAnimated:NO];
-                [self.tabBarController setSelectedIndex:1];
-                
+                [weakSelf.tabBarController setSelectedIndex:1];
+                [[weakSelf navigationController] popViewControllerAnimated:NO];
             });
         }
         else{
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                UIAlertController *alert = [UIAlertController
-                                            alertControllerWithTitle:@"Post Unsuccessful"
-                                            message:@"Please try again."
-                                            preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction *ok = [UIAlertAction
-                                     actionWithTitle:@"OK"
-                                     style:UIAlertActionStyleDefault
-                                     handler:^(UIAlertAction *action)
-                                     {
-                                         [alert dismissViewControllerAnimated:YES completion:nil];
-                                         
-                                     }];
-                [alert addAction:ok];
-                [self presentViewController:alert animated:YES completion:nil];
-
-            });
+            [weakSelf postUnsuccessfulAlertAsync];
         }
-        
-    }];
-    [dataTask resume];
+    };
 }
-                                     
 
-    
-    //[self performSegueWithIdentifier:@"CreatePostViewController" sender:sender];
-    
+-(void)submitRatingWeb{
+    NSString *sendStr = [NSString stringWithFormat:@"userID=%@&recipeID=%@&rating=%.01f",obj.userId,self.recipeID,starView.value];
+    NSLog(@"sendStr for rating = %@",sendStr);
+    [Helper submitHTTPPostWithString:sendStr withURLEnd:@"addRating" withCompletionHandler:self.ratingCompletion];
+}
 
-- (void) loadInterface {
+-(UIActivityIndicatorView *)startActivityView{
+    activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview: activityView];
+    activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
+    [activityView startAnimating];
+    self.view.userInteractionEnabled = FALSE;
+    self.navigationController.view.userInteractionEnabled = FALSE;
+    self.tabBarController.view.userInteractionEnabled = FALSE;
+    
+    return activityView;
+}
+
+-(void)stopActivityViewAsync:(UIActivityIndicatorView *)activityView{
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [activityView stopAnimating];
+        self.view.userInteractionEnabled = TRUE;
+        self.navigationController.view.userInteractionEnabled = TRUE;
+        self.tabBarController.view.userInteractionEnabled = TRUE;
+        
+    });
+}
+
+-(void)postUnsuccessfulAlertAsync{
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:@"Post Unsuccessful"
+                                    message:@"Please try again."
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction *action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    });
+
+}
+
+-(void)ratingUnsuccessfulAlertAsync{
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:@"Rating Submission Unsuccessful"
+                                    message:@"Please try again."
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction *action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    });
+    
+}
+
+- (void) submitPostTouch:(id)sender {
+    activityView = [self startActivityView];
+    
+    [self configurePostCompletion];
+    [self submitPostWeb];
+    
+}
+
+-(void)loadInterface {
     int objectBreak=8;
     int cornerRadius=3;
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
     int objectWidth = screenWidth - objectBreak*2;
     int recipeCellHeight = objectWidth/4;
-    int tagBoxHeight = (objectWidth/2-objectBreak*2)*3/5;
     int textHeight = screenHeight/20;
-    int ingLabelStart = objectBreak*6 + objectWidth/2 + textHeight*3;
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     int navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-    int scrollHeight = screenHeight-statusBarHeight-navBarHeight-textHeight-objectBreak*2-tabBarHeight;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -174,15 +230,19 @@ UITextView *descField;
     descField.layer.cornerRadius = cornerRadius;
     descField.clipsToBounds = YES;
     [self.view addSubview:descField];
+
+    starView = [[HCSStarRatingView alloc]initWithFrame:CGRectMake(objectBreak, statusBarHeight + navBarHeight + objectBreak*4 + textHeight + recipeCellHeight + textHeight*5, objectWidth, textHeight * 2)];
+    starView.maximumValue = 5;
+    starView.minimumValue = 0;
+    starView.allowsHalfStars = YES;
+    starView.userInteractionEnabled = YES;
+    starView.tintColor = [UIColor starColor];
+    starView.backgroundColor = self.view.backgroundColor;
+    [self.view addSubview:starView];
     
-    UIButton *submitButton = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak ,statusBarHeight + navBarHeight + objectBreak*4 + textHeight*6 + recipeCellHeight, objectWidth, textHeight)];
-    [submitButton addTarget:self action:@selector(submitPostTouch:) forControlEvents:UIControlEventTouchUpInside];
-    [submitButton setTitle:@"Submit" forState:UIControlStateNormal];
-    [submitButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-    submitButton.backgroundColor = [UIColor secondaryColor];
-    submitButton.layer.cornerRadius = cornerRadius;
-    submitButton.clipsToBounds = YES;
-    [self.view addSubview:submitButton];
+    //add buttons
+    UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStylePlain target:self action:@selector(submitPostTouch:)];
+    self.navigationItem.rightBarButtonItem = createButton;
     
 }
 

@@ -15,10 +15,11 @@
 #import "DataClass.h"
 #import "Recipe.h"
 
-@implementation CreateRecipeViewController
 
-static int objectBreak = 8;
-static int cornerRadius = 3;
+@implementation CreateRecipeViewController
+{
+int objectBreak;
+int cornerRadius;
 int objectWidth;
 int textHeight;
 int titleHeight;
@@ -26,6 +27,8 @@ int timeHeight;
 int portionsHeight;
 int ingredientHeight;
 int imageViewHeight;
+DataClass *obj;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -98,9 +101,10 @@ int imageViewHeight;
                                        ingredientAryJson,@"recipeIngredients",
                                        stepAryJson,@"recipeSteps",
                                        tagAryJson,@"recipeTags",
+                                       @"1",@"recipeStatus",
                                        nil];
     
-    DataClass *obj = [DataClass getInstance];
+    obj = [DataClass getInstance];
     
     NSLog(@"userID in create recipe = %@",obj.userId);
     NSError *error;
@@ -347,8 +351,6 @@ int imageViewHeight;
 -(void)imageTouch:(id)sender{
     NSLog(@"Image Touch");
     
-    //[self performSegueWithIdentifier:@"ImagePickerViewController" sender:sender];
-    
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.delegate = self;
     picker.allowsEditing = YES;
@@ -377,6 +379,8 @@ int imageViewHeight;
 }
 
 -(void)loadInterface {
+    objectBreak = 8;
+    cornerRadius = 3;
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
     objectWidth = screenWidth - objectBreak*2;
@@ -604,17 +608,8 @@ int imageViewHeight;
     NSLog(@"end of loadInterface stepAry cnt = %lu",(unsigned long)self.stepAry.count);
     
     //add buttons
-    UIButton *submitRecipeButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak , screenHeight-objectBreak-textHeight-tabBarHeight, objectWidth, textHeight)];
-    [submitRecipeButton_ addTarget:self action:@selector(submitRecipeTouch:) forControlEvents:UIControlEventTouchUpInside];
-    [submitRecipeButton_ setTitle:@"Submit Recipe" forState:UIControlStateNormal];
-    [submitRecipeButton_ setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-    //[createRecipeButton_ setBackgroundImage:[UIImage imageNamed:@"app_logo.png"] forState: UIControlStateHighlighted];
-    //[createRecipeButton_ setBackgroundImage:[UIImage imageNamed:@"app_logo.png"] forState: UIControlStateSelected];
-    submitRecipeButton_.backgroundColor = [UIColor secondaryColor];
-    submitRecipeButton_.layer.cornerRadius = cornerRadius;
-    submitRecipeButton_.clipsToBounds = YES;
-    [self.view addSubview:submitRecipeButton_];
-    self.submitRecipeButton = submitRecipeButton_;
+    UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStylePlain target:self action:@selector(submitRecipeTouch:)];
+    self.navigationItem.rightBarButtonItem = createButton;
 
 }
 

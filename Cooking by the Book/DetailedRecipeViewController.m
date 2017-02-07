@@ -55,15 +55,11 @@
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     int navBarHeight = self.navigationController.navigationBar.frame.size.height;
     int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-    int scrollHeight = screenHeight-statusBarHeight-navBarHeight-textHeight-objectBreak*2-tabBarHeight;
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     
     self.view.backgroundColor = [UIColor primaryColor];
     
-    UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+navBarHeight, screenWidth, screenHeight-statusBarHeight-navBarHeight-tabBarHeight - textHeight - objectBreak*2)];
+    UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
     scrollView_.backgroundColor = [UIColor customGrayColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
     self.scrollView = scrollView_;
     [self.view addSubview:scrollView_];
     
@@ -97,14 +93,8 @@
     [ingredientsLabel setText:@"Ingredients"];
     [self.scrollView addSubview:ingredientsLabel];
     
-    UIButton *cookedButton = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak, screenHeight - tabBarHeight - textHeight - objectBreak, objectWidth, textHeight)];
-    [cookedButton setTitle:@"Recipe Cooked" forState:UIControlStateNormal];
-    [cookedButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-    [cookedButton addTarget:self action:@selector(cookedButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
-    cookedButton.backgroundColor = [UIColor secondaryColor];
-    cookedButton.layer.cornerRadius = cornerRadius;
-    cookedButton.clipsToBounds = YES;
-    [self.view addSubview:cookedButton];
+    UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Cooked!" style:UIBarButtonItemStylePlain target:self action:@selector(cookedButtonTouch:)];
+    self.navigationItem.rightBarButtonItem = createButton;
     
     DataClass *obj = [DataClass getInstance];
     if (self.recipe == nil){

@@ -9,7 +9,6 @@
 #import "CookbookViewController.h"
 #import "Recipe.h"
 #import "UIColor+CustomColors.h"
-//#import "UICookbookRecipeCell.h"
 #import "TabBarControllerDelegate.h"
 #import "DataClass.h"
 #import "DetailedRecipeViewController.h"
@@ -23,7 +22,6 @@
 @implementation CookbookViewController
 
 {
-
     DataClass *obj;
     UITableView *recipeTableView;
 }
@@ -44,10 +42,8 @@
         NSString *ret = [[NSString alloc]initWithData:postData encoding:NSUTF8StringEncoding];
         if ([ret isEqual:@"1"]){
             [obj deleteRecipe:recipe];
-            
-             dispatch_async(dispatch_get_main_queue(), ^(void){
-                 [recipeTableView reloadData];
-             });
+            [self reloadTableDataAsync];
+
         }
         else{
             [self invalidDeletionAlert];
@@ -57,6 +53,12 @@
     [dataTask resume];
     
     NSLog(@"deleted recipe %@",recipe.title);
+}
+
+-(void)reloadTableDataAsync{
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [recipeTableView reloadData];
+    });
 }
 
 -(void)invalidDeletionAlert{
@@ -116,9 +118,9 @@
             if (recipe.image) {
                 cell.imageView.image = recipe.image;
             }
-             dispatch_async(dispatch_get_main_queue(), ^(void){
-                 [recipeTableView reloadData];
-             });
+            
+            [self reloadTableDataAsync];
+    
         };
         
         [Helper addImageToRecipe:recipe withCompletionHandler:addImageCompletion];

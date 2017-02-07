@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyProfileViewController : UIViewController
+@interface MyProfileViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic,strong) UIImageView *profileImageView;

@@ -55,7 +55,6 @@
 -(void)delStepTouch:(id)sender;
 
 -(void)submitRecipeTouch:(id)sender;
--(void)backTouch:(id)sender;
 -(void)imageTouch:(id)sender;
 -(void)cameraTouch:(id)sender;
 -(void)stepperValueChange:(id)sender;

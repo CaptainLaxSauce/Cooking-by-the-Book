@@ -93,7 +93,7 @@
     //[self performSegueWithIdentifier:@"ImagePickerViewController" sender:sender];
     
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-    //picker.delegate = self;
+    picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
@@ -102,7 +102,7 @@
 
 -(void)cameraTouch:(id)sender{
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-    //picker.delegate = self;
+    picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
@@ -115,9 +115,11 @@
     imageSelectView.image = chosenImage;
     imageSelectView.contentMode = UIViewContentModeScaleAspectFit;
     
-    [picker dismissViewControllerAnimated:YES completion:NULL];
-    
+    [picker dismissViewControllerAnimated:YES completion:^(void){
+        [Helper submitImage:obj.userId withURLEnd:@"addImageToProfile" withImage:imageSelectView.image];
+    } ];
 }
+
 
 -(void)loadInterface{
     //declare constants
@@ -211,7 +213,6 @@
 
 -(void)touchPost:(UITapGestureRecognizer *)sender{
     UIPost *post = (UIPost *)sender.view;
-    DataClass *obj = [DataClass getInstance];
     obj.currDetailedPost = post;
     
     [self performSegueWithIdentifier:@"DetailedPostViewController" sender:sender];

@@ -11,5 +11,8 @@
 @interface CreatePostViewController : UIViewController
 
 @property NSString *recipeID;
+@property (copy) void (^postCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
+@property (copy) void (^ratingCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
 
 @end
+

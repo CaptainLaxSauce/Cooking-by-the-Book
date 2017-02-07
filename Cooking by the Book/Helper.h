@@ -11,7 +11,8 @@
 
 @interface Helper : NSObject
 
-
++(void)submitHTTPPostWithString:(NSString *)postString withURLEnd:(NSString *)urlEnd withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion;
++(void)submitImage:(NSString *)objectID withURLEnd:(NSString *)urlEnd withImage:(UIImage *)image;
 +(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd;
 +(NSString *)toUTC:(NSDate *)date;
 +(NSString *)fromUTC:(NSDate *)date;
