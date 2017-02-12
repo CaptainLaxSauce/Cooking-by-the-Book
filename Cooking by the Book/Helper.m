@@ -187,5 +187,49 @@
  
 }
 
++(void)postUnsuccessfulAlertAsyncOK:(NSString *)title withMessage:(NSString *)message withViewController:(UIViewController *)controller{
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:title
+                                    message:message
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction *action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+        [alert addAction:ok];
+        [controller presentViewController:alert animated:YES completion:nil];
+        
+    });
+    
+}
+
+
++(UIActivityIndicatorView *) startActivityView:(UIViewController *) controller{
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityView.center = CGPointMake(controller.view.frame.size.width/2,controller.view.frame.size.height/2);
+    [controller.view addSubview: activityView];
+    [activityView startAnimating];
+    controller.view.userInteractionEnabled = FALSE;
+    controller.navigationController.view.userInteractionEnabled = FALSE;
+    controller.tabBarController.view.userInteractionEnabled = FALSE;
+    
+    return activityView;
+}
+
++(void)stopActivityViewAsync:(UIActivityIndicatorView *)activityView withViewController:(UIViewController *)controller{
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [activityView stopAnimating];
+        controller.view.userInteractionEnabled = TRUE;
+        controller.navigationController.view.userInteractionEnabled = TRUE;
+        controller.tabBarController.view.userInteractionEnabled = TRUE;
+        
+    });
+}
 
 @end

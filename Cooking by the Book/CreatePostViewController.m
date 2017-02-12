@@ -31,12 +31,10 @@ HCSStarRatingView *starView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadInterface];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*
@@ -52,25 +50,24 @@ HCSStarRatingView *starView;
 }
 
 -(void)configurePostCompletion{
-    CreatePostViewController *__weak weakSelf = self;
-    self.postCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
-        [weakSelf stopActivityViewAsync:weakSelf.activityView];
-        
+    CompletionWeb postCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
         NSString *postID = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"Post ID = %@",postID);
 
         //successful post
         if ([postID intValue] > 0){
             NSLog(@"Successful post");
-            [weakSelf configureRatingCompletion];
-            [weakSelf submitRatingWeb];
+            [self configureRatingCompletion];
+            [self submitRatingWeb];
         }
         else{
-            [weakSelf postUnsuccessfulAlertAsync];
+            [Helper postUnsuccessfulAlertAsyncOK:@"Post Unsuccessful" withMessage:@"Please try again" withViewController:self];
         }
         
         
     };
+    
+    self.postCompletion = postCompletion;
 }
 
 -(void)submitPostWeb{
@@ -92,9 +89,8 @@ HCSStarRatingView *starView;
 }
 
 -(void)configureRatingCompletion{
-    CreatePostViewController *__weak weakSelf = self;
-    self.ratingCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
-        [weakSelf stopActivityViewAsync:weakSelf.activityView];
+     CompletionWeb ratingCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+        [Helper stopActivityViewAsync:self.activityView withViewController:self];
         
         NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"Rating ret = %@",ret);
@@ -104,14 +100,16 @@ HCSStarRatingView *starView;
             NSLog(@"Successful rating submission");
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 
-                [weakSelf.tabBarController setSelectedIndex:1];
-                [[weakSelf navigationController] popViewControllerAnimated:NO];
+                [self.tabBarController setSelectedIndex:1];
+                [[self navigationController] popViewControllerAnimated:NO];
             });
         }
         else{
-            [weakSelf postUnsuccessfulAlertAsync];
+            [Helper postUnsuccessfulAlertAsyncOK:@"Rating Submission Failed" withMessage:@"Please try again" withViewController:self];
         }
     };
+    
+    self.ratingCompletion = ratingCompletion;
 }
 
 -(void)submitRatingWeb{
@@ -120,72 +118,8 @@ HCSStarRatingView *starView;
     [Helper submitHTTPPostWithString:sendStr withURLEnd:@"addRating" withCompletionHandler:self.ratingCompletion];
 }
 
--(void) startActivityView{
-    self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.view addSubview: self.activityView];
-    self.activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
-    [self.activityView startAnimating];
-    self.view.userInteractionEnabled = FALSE;
-    self.navigationController.view.userInteractionEnabled = FALSE;
-    self.tabBarController.view.userInteractionEnabled = FALSE;
-}
-
--(void)stopActivityViewAsync:(UIActivityIndicatorView *)activityView{
-    dispatch_async(dispatch_get_main_queue(), ^(void){
-        [activityView stopAnimating];
-        self.view.userInteractionEnabled = TRUE;
-        self.navigationController.view.userInteractionEnabled = TRUE;
-        self.tabBarController.view.userInteractionEnabled = TRUE;
-        
-    });
-}
-
--(void)postUnsuccessfulAlertAsync{
-    dispatch_async(dispatch_get_main_queue(), ^(void){
-        UIAlertController *alert = [UIAlertController
-                                    alertControllerWithTitle:@"Post Unsuccessful"
-                                    message:@"Please try again."
-                                    preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction *action)
-                             {
-                                 [alert dismissViewControllerAnimated:YES completion:nil];
-                                 
-                             }];
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    });
-
-}
-
--(void)ratingUnsuccessfulAlertAsync{
-    dispatch_async(dispatch_get_main_queue(), ^(void){
-        UIAlertController *alert = [UIAlertController
-                                    alertControllerWithTitle:@"Rating Submission Unsuccessful"
-                                    message:@"Please try again."
-                                    preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction *action)
-                             {
-                                 [alert dismissViewControllerAnimated:YES completion:nil];
-                                 
-                             }];
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    });
-    
-}
-
 - (void) submitPostTouch:(id)sender {
-    [self startActivityView];
+    self.activityView = [Helper startActivityView:self];
     
     [self configurePostCompletion];
     [self submitPostWeb];

@@ -17,7 +17,10 @@
 
 @end
 
-@implementation LoginViewController
+@implementation LoginViewController {
+    UIActivityIndicatorView *activityView;
+    DataClass *obj;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,106 +30,65 @@
     
 }
 
-- (void) loginTouch:(id)sender{
-    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.view addSubview: activityView];
-    activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
-    [activityView startAnimating];
-    self.view.userInteractionEnabled = FALSE;
-    self.navigationController.view.userInteractionEnabled = FALSE;
-    self.tabBarController.view.userInteractionEnabled = FALSE;
-    
-    NSString *post = [NSString stringWithFormat:@"email=%@&password=%@",self.emailTextField.text,self.passwordTextField.text];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"login"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+-(void) configureLoginCompletion {
+    CompletionWeb loginCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
+        NSString *userId = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         
-        NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",ret);
+        [Helper stopActivityViewAsync:activityView withViewController:self];
         
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            [activityView stopAnimating];
-            self.view.userInteractionEnabled = TRUE;
-            self.navigationController.view.userInteractionEnabled = TRUE;
-            self.tabBarController.view.userInteractionEnabled = TRUE;
+        if ([userId intValue] > 0) {
             
-        });
-        
-        if ([ret intValue] > 0) {
-            
-            DataClass *obj = [DataClass getInstance];
-            obj.userId = ret;
+            obj.userId = userId;
             NSLog(@"Success! userID = %@",obj.userId);
             
-            NSString *post2 = [NSString stringWithFormat:@"userID=%@",ret];
-            NSData *postData2 = [post2 dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-            NSMutableURLRequest *request2 = [Helper setupPost:postData2 withURLEnd:@"getCookbook"];
-            NSURLSession *session2 = [NSURLSession sharedSession];
-            NSURLSessionDataTask *dataTask2 = [session2 dataTaskWithRequest:request2 completionHandler:^(NSData *postData2, NSURLResponse *response2, NSError *error2) {
-                
-                NSString *ret2 = [[NSString alloc] initWithData:postData2 encoding:NSUTF8StringEncoding];
-                NSLog(@"ret2 = %@",ret2);
-                NSDictionary *jsonCookbookDict = [NSJSONSerialization JSONObjectWithData:postData2 options:kNilOptions error:&error2];
-                NSLog(@"cookbookDict count = %lu",(unsigned long)jsonCookbookDict.count);
-                NSArray *jsonCookbookAry = [jsonCookbookDict objectForKey:@"recipeInfo"];
-                NSLog(@"cookbookAry count = %lu",(unsigned long)jsonCookbookAry.count);
-                [obj initCookbookAry:jsonCookbookAry];
-                
-            }];
-            [dataTask2 resume];
+            [self configureGetCookbookCompletion];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getCookbook" withCompletionHandler:self.getCookbookCompletion];
             
-            NSString *post3 = [NSString stringWithFormat:@"userID=%@",ret];
-            NSData *postData3 = [post3 dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-            NSMutableURLRequest *request3 = [Helper setupPost:postData3 withURLEnd:@"getProfile"];
-            NSURLSession *session3 = [NSURLSession sharedSession];
-            NSURLSessionDataTask *dataTask3 = [session3 dataTaskWithRequest:request3 completionHandler:^(NSData *postData3, NSURLResponse *response3, NSError *error3) {
-                
-                NSString *ret3 = [[NSString alloc] initWithData:postData3 encoding:NSUTF8StringEncoding];
-                NSLog(@"ret3 = %@",ret3);
-                NSDictionary *jsonProfileDict = [NSJSONSerialization JSONObjectWithData:postData3 options:kNilOptions error:&error3];
-                NSLog(@"jsonProfileDict count = %lu",(unsigned long)jsonProfileDict.count);
-                [obj initProfile:jsonProfileDict];
-                
-            }];
-            [dataTask3 resume];
-            
-            
+            [self configureGetProfileCompletion];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getProfile" withCompletionHandler:self.getProfileCompletion];
+              
             dispatch_async(dispatch_get_main_queue(), ^(void){
-            [self performSegueWithIdentifier:@"TabBarViewController" sender:sender];
+                [self performSegueWithIdentifier:@"TabBarViewController" sender:self];
             });
-            
-            
             
         }
         
         else{
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-            UIAlertController *alert = [UIAlertController
-                                        alertControllerWithTitle:@"Invalid Login"
-                                        message:[NSString stringWithFormat:@"%@\r%@",@"The username or password you entered was incorrect.",@"Please try again."]
-                                        preferredStyle:UIAlertControllerStyleAlert];
-             
-            UIAlertAction *ok = [UIAlertAction
-                                 actionWithTitle:@"OK"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction *action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                 }];
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
-            self.passwordTextField.text = [NSString stringWithFormat:@""];
-                
-            });
-        }
-        
 
-        
-    }];
+            [Helper postUnsuccessfulAlertAsyncOK:@"Invalid Login"
+                                     withMessage:[NSString stringWithFormat:@"%@\r%@",@"The username or password you entered was incorrect.",@"Please try again."]
+                              withViewController:self];
+            
+        }
+    };
     
-    [dataTask resume];
+    self.loginCompletion = loginCompletion;
+}
+
+-(void) configureGetCookbookCompletion {
+    CompletionWeb getCookbookCompetion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
+        NSDictionary *jsonCookbookDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        NSArray *jsonCookbookAry = [jsonCookbookDict objectForKey:@"recipeInfo"];
+        [obj initCookbookAry:jsonCookbookAry];
+    };
+    
+    self.getCookbookCompletion = getCookbookCompetion;
+}
+
+-(void) configureGetProfileCompletion {
+    CompletionWeb profileCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+        NSDictionary *jsonProfileDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        [obj initProfile:jsonProfileDict];
+    };
+    self.getProfileCompletion = profileCompletion;
+}
+
+- (void) loginTouch:(id)sender{
+    activityView = [Helper startActivityView:self];
+    
+    [self configureLoginCompletion];
+    NSString *loginCreds = [NSString stringWithFormat:@"email=%@&password=%@",self.emailTextField.text,self.passwordTextField.text];
+    [Helper submitHTTPPostWithString:loginCreds withURLEnd:@"login" withCompletionHandler:self.loginCompletion];
 
 }
     
@@ -163,6 +125,8 @@
     
     self.view.backgroundColor = [UIColor primaryColor];
     self.navigationItem.title = @"Login";
+    
+    obj = [DataClass getInstance];
     
     //create text fields
     UITextField *emailTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(objectBreak, screenHeight/2-objectBreak*2-textHeight*2, textFieldWidth, textHeight)];
