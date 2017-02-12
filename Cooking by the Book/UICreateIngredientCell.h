@@ -10,11 +10,11 @@
 
 @interface UICreateIngredientCell : UIView
 
-@property UITextField *quantityTextField;
-@property UITextField *unitTextField;
-@property UITextField *titleTextField;
-@property UIButton *delButton;
-@property int index;
+@property (nonatomic,strong) UITextField *quantityTextField;
+@property (nonatomic,strong) UITextField *unitTextField;
+@property (nonatomic,strong) UITextField *titleTextField;
+@property (nonatomic,strong) UIButton *delButton;
+@property (nonatomic) int index;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame withDelBtn:(BOOL)delBtn;

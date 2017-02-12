@@ -176,18 +176,16 @@
     return @"";
 }
 
-+(void)addImageToRecipe:(Recipe *)recipe withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion{
++(void)getImageWithName:(NSString *)imageName withCompletion:(CompletionWeb)completionHandler{
 
-    if (recipe.image == nil){
-        NSString *post = [NSString stringWithFormat:@"imageName=%@" ,recipe.imageName];
-        NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-        NSMutableURLRequest *request = [self setupPost:postData withURLEnd:@"getImage"];
-        NSURLSession *session = [NSURLSession sharedSession];
-        NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completion];
-        [dataTask resume];
-        
-    }
-    
+    NSString *post = [NSString stringWithFormat:@"imageName=%@",imageName];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [self setupPost:postData withURLEnd:@"getImage"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
+    [dataTask resume];
+ 
 }
+
 
 @end

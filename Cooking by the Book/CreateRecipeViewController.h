@@ -15,36 +15,36 @@
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
-@property UIScrollView *recipeScrollView;
-@property UIButton *submitRecipeButton;
-@property UIButton *backButton;
+@property (nonatomic,strong) UIScrollView *recipeScrollView;
+@property (nonatomic,strong) UIButton *submitRecipeButton;
+@property (nonatomic,strong) UIButton *backButton;
 
-@property UITextField *titleTextField;
-@property UITextField *descTextField;
+@property (nonatomic,strong) UITextField *titleTextField;
+@property (nonatomic,strong) UITextField *descTextField;
 
-@property UITextField *prepTimeField;
-@property UITextField *cookTimeField;
-@property UILabel *totTimeLabel;
-@property int totTime;
+@property (nonatomic,strong) UITextField *prepTimeField;
+@property (nonatomic,strong) UITextField *cookTimeField;
+@property (nonatomic,strong)  UILabel *totTimeLabel;
+@property (nonatomic) int totTime;
 
-@property UIStepper *portionStepper;
-@property UILabel *portionNumLabel;
+@property (nonatomic,strong) UIStepper *portionStepper;
+@property (nonatomic,strong) UILabel *portionNumLabel;
 
-@property UIButton *addIngredientButton;
-@property UIButton *addStepButton;
+@property (nonatomic,strong) UIButton *addIngredientButton;
+@property (nonatomic,strong) UIButton *addStepButton;
 
-@property UIToggleTagButton *quickTag;
-@property UIToggleTagButton *simpleTag;
-@property UIToggleTagButton *vegetarianTag;
-@property UIToggleTagButton *veganTag;
+@property (nonatomic,strong) UIToggleTagButton *quickTag;
+@property (nonatomic,strong) UIToggleTagButton *simpleTag;
+@property (nonatomic,strong) UIToggleTagButton *vegetarianTag;
+@property (nonatomic,strong) UIToggleTagButton *veganTag;
 
-@property NSMutableArray *ingredientAry;
-@property NSMutableArray *stepAry;
-@property NSMutableArray *tagAry;
-@property UIImageView *recipeImageView;
+@property (nonatomic,strong) NSMutableArray *ingredientAry;
+@property (nonatomic,strong) NSMutableArray *stepAry;
+@property (nonatomic,strong) NSMutableArray *tagAry;
+@property (nonatomic,strong) UIImageView *recipeImageView;
 
 @property (nonatomic,strong) NSMutableArray *moveAry;
-@property int ingredientIdx;
+@property (nonatomic) int ingredientIdx;
 
 -(void)timeFieldChanged;
 

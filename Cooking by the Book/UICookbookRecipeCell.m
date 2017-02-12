@@ -8,6 +8,7 @@
 
 #import "UICookbookRecipeCell.h"
 #import "UITagBox.h"
+#import "Constants.h"
 
 @implementation UICookbookRecipeCell
 
@@ -26,7 +27,6 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        int objectBreak = 8;
         int totalWidth = frame.size.width;
         int totalHeight = frame.size.height;
         int imageHeight = totalHeight - objectBreak*2;

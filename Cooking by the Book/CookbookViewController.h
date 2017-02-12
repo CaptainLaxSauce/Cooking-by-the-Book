@@ -18,8 +18,8 @@ typedef enum TagType : int{
     
 } TagType;
 
-@property NSMutableArray *recipeAry;
-@property UIButton *createRecipeButton;
+@property (nonatomic,strong) NSMutableArray *recipeAry;
+@property (nonatomic,strong) UIButton *createRecipeButton;
 
 -(void)createRecipeTouch:(id)sender;
 -(void)deleteRecipe:(NSIndexPath *)indexPath;

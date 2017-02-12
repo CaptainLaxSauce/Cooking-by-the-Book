@@ -11,11 +11,11 @@
 
 @interface UICookbookRecipeCell : UIView
 
-@property UIImageView *imageView;
-@property Recipe *recipe;
-@property NSString *recipeID; //used so this object can be found using NSPredicate
-@property UIButton *delButton;
-@property BOOL allowDelBtn;
+@property (nonatomic,strong) UIImageView *imageView;
+@property (nonatomic,strong) Recipe *recipe;
+@property (nonatomic,strong) NSString *recipeID; //used so this object can be found using NSPredicate
+@property (nonatomic,strong) UIButton *delButton;
+@property (nonatomic) BOOL allowDelBtn;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;

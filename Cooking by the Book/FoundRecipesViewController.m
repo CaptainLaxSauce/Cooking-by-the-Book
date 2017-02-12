@@ -12,6 +12,7 @@
 #import "Helper.h"
 #import "HCSStarRatingView.h"
 #import "DetailedRecipeViewController.h"
+#import "Constants.h"
 
 @interface FoundRecipesViewController ()
 
@@ -67,8 +68,7 @@
     
     //retrieve image from server if it hasn't been already
     if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
-        void (^addImageCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
-        addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+            CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
             recipe.image = [UIImage imageWithData:postData];
             NSLog(@"adding image with imagename = %@",recipe.imageName);
             if (recipe.image) {
@@ -79,7 +79,7 @@
             });
         };
         
-        [Helper addImageToRecipe:recipe withCompletionHandler:addImageCompletion];
+        [Helper getImageWithName:recipe.imageName withCompletion:addImageCompletion];
     }
     else if (recipe.image){
         cell.imageView.image = recipe.image;

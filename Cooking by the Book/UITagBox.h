@@ -18,7 +18,7 @@ typedef enum TagType : int{
     
 } TagType;
 
-@property NSArray *tagAry;
+@property (nonatomic,strong) NSArray *tagAry;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame_;

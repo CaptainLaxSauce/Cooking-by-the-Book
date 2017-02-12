@@ -11,7 +11,7 @@
 @interface MyProfileViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic,strong) UIImageView *profileImageView;
+@property (nonatomic, strong) UIImageView *profileImageView;
 @property (nonatomic, strong) UILabel *titleLabel;
 
 -(void)refreshPosts;

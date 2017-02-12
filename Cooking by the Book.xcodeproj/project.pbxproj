@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		04033FE51D90D3E000630EED /* UIPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 04033FE41D90D3E000630EED /* UIPost.m */; };
+		0412FC6E1E4F8D0200763046 /* MyFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FC6D1E4F8D0200763046 /* MyFriendsViewController.m */; };
+		0412FC771E4FB28B00763046 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FC761E4FB28B00763046 /* Friend.m */; };
+		0412FC7A1E4FBB3400763046 /* UIFriendBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FC791E4FBB3400763046 /* UIFriendBox.m */; };
+		0412FC7D1E4FBF9D00763046 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FC7C1E4FBF9D00763046 /* Constants.m */; };
 		041A1AE91E483AB800AEAFA2 /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */; };
 		041A1AEC1E483B9400AEAFA2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041A1AEB1E483B9400AEAFA2 /* UIKit.framework */; };
 		043ABEEE1E3707ED00579596 /* UICustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043ABEED1E3707ED00579596 /* UICustomScrollView.m */; };
@@ -67,6 +71,14 @@
 /* Begin PBXFileReference section */
 		04033FE31D90D3E000630EED /* UIPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPost.h; sourceTree = "<group>"; };
 		04033FE41D90D3E000630EED /* UIPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPost.m; sourceTree = "<group>"; };
+		0412FC6C1E4F8D0200763046 /* MyFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFriendsViewController.h; sourceTree = "<group>"; };
+		0412FC6D1E4F8D0200763046 /* MyFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFriendsViewController.m; sourceTree = "<group>"; };
+		0412FC751E4FB28B00763046 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
+		0412FC761E4FB28B00763046 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
+		0412FC781E4FBB3400763046 /* UIFriendBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFriendBox.h; sourceTree = "<group>"; };
+		0412FC791E4FBB3400763046 /* UIFriendBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFriendBox.m; sourceTree = "<group>"; };
+		0412FC7B1E4FBF9D00763046 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		0412FC7C1E4FBF9D00763046 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		041A1AE61E46AAA100AEAFA2 /* CookingByTheBookProfile.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; name = CookingByTheBookProfile.mobileprovision; path = ../../Downloads/CookingByTheBookProfile.mobileprovision; sourceTree = "<group>"; };
 		041A1AE71E483AB800AEAFA2 /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
 		041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
@@ -201,6 +213,8 @@
 				043ABEED1E3707ED00579596 /* UICustomScrollView.m */,
 				041A1AE71E483AB800AEAFA2 /* HCSStarRatingView.h */,
 				041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */,
+				0412FC781E4FBB3400763046 /* UIFriendBox.h */,
+				0412FC791E4FBB3400763046 /* UIFriendBox.m */,
 			);
 			name = "Custom UI Elements";
 			sourceTree = "<group>";
@@ -265,6 +279,10 @@
 				04E5ED341D3DBA18004E9474 /* Recipe.m */,
 				04EEBA161D73A7AE0036E0EA /* Ingredient.h */,
 				04EEBA171D73A7AE0036E0EA /* Ingredient.m */,
+				0412FC751E4FB28B00763046 /* Friend.h */,
+				0412FC761E4FB28B00763046 /* Friend.m */,
+				0412FC7B1E4FBF9D00763046 /* Constants.h */,
+				0412FC7C1E4FBF9D00763046 /* Constants.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -290,16 +308,18 @@
 		04B49E7E1CC70E6D00312485 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				044B398A1CCF135D0051E1CC /* LoginViewController.h */,
+				044B398B1CCF135D0051E1CC /* LoginViewController.m */,
+				047813671D1A4F2F00D9F569 /* SignupViewController.h */,
+				047813681D1A4F2F00D9F569 /* SignupViewController.m */,
 				045A81F61D2072FD00A90D8E /* NewsFeedViewController.h */,
 				045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */,
 				045A81EF1D2072AC00A90D8E /* MyProfileViewController.h */,
 				045A81F01D2072AC00A90D8E /* MyProfileViewController.m */,
+				0412FC6C1E4F8D0200763046 /* MyFriendsViewController.h */,
+				0412FC6D1E4F8D0200763046 /* MyFriendsViewController.m */,
 				049A52A01D937BBA00C91A3E /* DetailedPostViewController.h */,
 				049A52A11D937BBA00C91A3E /* DetailedPostViewController.m */,
-				047813671D1A4F2F00D9F569 /* SignupViewController.h */,
-				047813681D1A4F2F00D9F569 /* SignupViewController.m */,
-				044B398A1CCF135D0051E1CC /* LoginViewController.h */,
-				044B398B1CCF135D0051E1CC /* LoginViewController.m */,
 				045A82001D207FB300A90D8E /* CookbookViewController.h */,
 				045A82011D207FB300A90D8E /* CookbookViewController.m */,
 				04833E711D208B1C00631AA4 /* CreateRecipeViewController.h */,
@@ -457,6 +477,8 @@
 				04CEE81D1E2BF255005D57CE /* HTAutocompleteManager.m in Sources */,
 				04EEBA181D73A7AE0036E0EA /* Ingredient.m in Sources */,
 				04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */,
+				0412FC6E1E4F8D0200763046 /* MyFriendsViewController.m in Sources */,
+				0412FC7D1E4FBF9D00763046 /* Constants.m in Sources */,
 				045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */,
 				047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */,
 				04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */,
@@ -480,8 +502,10 @@
 				046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */,
 				041A1AE91E483AB800AEAFA2 /* HCSStarRatingView.m in Sources */,
 				045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */,
+				0412FC771E4FB28B00763046 /* Friend.m in Sources */,
 				043ABEEE1E3707ED00579596 /* UICustomScrollView.m in Sources */,
 				04833E761D20A9D600631AA4 /* UICreateIngredientCell.m in Sources */,
+				0412FC7A1E4FBB3400763046 /* UIFriendBox.m in Sources */,
 				04CEE7F41E2ADC06005D57CE /* SearchRecipeViewController.m in Sources */,
 				04B49E441CC7063500312485 /* main.m in Sources */,
 			);

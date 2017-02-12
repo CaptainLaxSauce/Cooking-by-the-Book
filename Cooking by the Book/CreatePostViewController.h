@@ -10,9 +10,12 @@
 
 @interface CreatePostViewController : UIViewController
 
-@property NSString *recipeID;
-@property (copy) void (^postCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
-@property (copy) void (^ratingCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
+typedef void (^completionWeb)(NSData *postData, NSURLResponse *response, NSError *error);
+
+@property (nonatomic,strong) NSString *recipeID;
+@property (nonatomic,strong) UIActivityIndicatorView *activityView;
+@property (copy) completionWeb postCompletion;
+@property (copy) completionWeb ratingCompletion;
 
 @end
 

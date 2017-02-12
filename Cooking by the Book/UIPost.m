@@ -13,7 +13,6 @@
 
 @implementation UIPost
 {
-    int objectBreak;
     int totWidth;
     int totHeight;
     int textHeight;
@@ -62,7 +61,7 @@
         self.commentCount = commentCount_;
         
         
-        objectBreak = 3;
+        int objectBreak = 3;
         totWidth = self.frame.size.width;
         totHeight = self.frame.size.height;
         textHeight = (totHeight - objectBreak*9)/8;

@@ -18,8 +18,8 @@ typedef enum TagType : int{
     
 } TagType;
 
-@property TagType tagType;
-@property bool tagged;
+@property (nonatomic) TagType tagType;
+@property (nonatomic) bool tagged;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame withTagType:(TagType)tagType_ withTagged:(BOOL)tagged_;

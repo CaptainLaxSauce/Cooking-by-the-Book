@@ -12,6 +12,7 @@
 #import "Helper.h"
 #import "UIPost.h"
 #import "UIAchievementBar.h"
+#import "Constants.h"
 
 @implementation MyProfileViewController
 {
@@ -19,7 +20,6 @@
     int screenWidth;
     int statusBarHeight;
     int navBarHeight;
-    int objectBreak;
     int textHeight;
     int objectWidth;
     int scrollHeight;
@@ -120,6 +120,10 @@
     } ];
 }
 
+-(void)friendsTouch:(id)sender{
+    [self performSegueWithIdentifier:@"MyFriendsViewController" sender:sender];
+}
+
 
 -(void)loadInterface{
     //declare constants
@@ -127,7 +131,6 @@
     screenWidth = self.view.frame.size.width;
     statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    objectBreak = 8;
     imageWidth = screenWidth/3;
     objectWidth = screenWidth - objectBreak*2;
     textHeight = screenHeight/20;
@@ -183,6 +186,9 @@
     
     UIAchievementBar *achBar = [[UIAchievementBar alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*3 + imageWidth + textHeight, objectWidth, acheivementHeight)];
     [self.scrollView addSubview:achBar];
+    
+    UIBarButtonItem *friendsButton = [[UIBarButtonItem alloc] initWithTitle:@"Friends" style:UIBarButtonItemStylePlain target:self action:@selector(friendsTouch:)];
+    self.navigationItem.rightBarButtonItem = friendsButton;
     
     [self resetcurrPostPos];
     

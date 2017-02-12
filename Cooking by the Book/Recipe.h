@@ -11,21 +11,21 @@
 
 @interface Recipe : NSObject
 
-@property NSString *title;
-@property NSString *status;
-@property NSString *recipeCreateUser;
-@property NSString *recipeID;
-@property NSString *desc;
-@property NSArray *tagAry;
-@property NSNumber *prepTime;
-@property NSNumber *cookTime;
-@property NSNumber *totTime;
-@property NSNumber *portionNum;
-@property NSArray *ingredientAry;
-@property NSArray *stepAry;
-@property UIImage *image;
-@property NSString *imageName;
-@property NSNumber *rating;
+@property (nonatomic,strong) NSString *title;
+@property (nonatomic,strong)  NSString *status;
+@property (nonatomic,strong) NSString *recipeCreateUser;
+@property (nonatomic,strong) NSString *recipeID;
+@property (nonatomic,strong) NSString *desc;
+@property (nonatomic,strong) NSArray *tagAry;
+@property (nonatomic,strong) NSNumber *prepTime;
+@property (nonatomic,strong) NSNumber *cookTime;
+@property (nonatomic,strong) NSNumber *totTime;
+@property (nonatomic,strong) NSNumber *portionNum;
+@property (nonatomic,strong) NSArray *ingredientAry;
+@property (nonatomic,strong) NSArray *stepAry;
+@property (nonatomic,strong) UIImage *image;
+@property (nonatomic,strong) NSString *imageName;
+@property (nonatomic,strong) NSNumber *rating;
 
 -(id)init;
 -(id)initBasicWithTitle:(NSString *)title_

@@ -14,12 +14,11 @@
 #import "Helper.h"
 #import "DataClass.h"
 #import "Recipe.h"
+#import "Constants.h"
 
 
 @implementation CreateRecipeViewController
 {
-int objectBreak;
-int cornerRadius;
 int objectWidth;
 int textHeight;
 int titleHeight;
@@ -379,8 +378,6 @@ DataClass *obj;
 }
 
 -(void)loadInterface {
-    objectBreak = 8;
-    cornerRadius = 3;
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
     objectWidth = screenWidth - objectBreak*2;

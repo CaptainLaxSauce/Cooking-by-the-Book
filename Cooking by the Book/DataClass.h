@@ -14,11 +14,11 @@
 
 }
 
-@property(nonatomic,retain) NSDictionary *profileDict;
-@property(nonatomic,retain) NSMutableArray *cookbookAry;
-@property(nonatomic,retain) NSMutableArray *ingredientAry;
-@property(nonatomic,retain) NSString *userId;
-@property(nonatomic,retain) UIPost *currDetailedPost;
+@property (nonatomic,retain) NSDictionary *profileDict;
+@property (nonatomic,retain) NSMutableArray *cookbookAry;
+@property (nonatomic,retain) NSMutableArray *ingredientAry;
+@property (nonatomic,retain) NSString *userId;
+@property (nonatomic,retain) UIPost *currDetailedPost;
 
 
 +(DataClass*)getInstance;

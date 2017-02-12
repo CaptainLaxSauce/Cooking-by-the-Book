@@ -11,15 +11,15 @@
 
 @interface UIPost : UIView
 
-@property NSString* postID;
-@property NSString* creatorID;
-@property NSString* title;
-@property NSString* body;
-@property NSString* recipeID;
-@property NSString* dateTime;
-@property NSString* likeCount;
-@property NSString* commentCount;
-@property Recipe* recipe;
+@property (nonatomic,strong) NSString* postID;
+@property (nonatomic,strong) NSString* creatorID;
+@property (nonatomic,strong) NSString* title;
+@property (nonatomic,strong) NSString* body;
+@property (nonatomic,strong) NSString* recipeID;
+@property (nonatomic,strong) NSString* dateTime;
+@property (nonatomic,strong) NSString* likeCount;
+@property (nonatomic,strong) NSString* commentCount;
+@property (nonatomic,strong) Recipe* recipe;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;

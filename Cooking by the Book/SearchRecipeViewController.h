@@ -10,7 +10,7 @@
 
 @interface SearchRecipeViewController : UIViewController
 
-@property NSArray *textFieldAry;
-@property NSMutableArray *recipeAry; //an array of recipe class objects
+@property (nonatomic,strong) NSArray *textFieldAry;
+@property (nonatomic,strong) NSMutableArray *recipeAry; //an array of recipe class objects
 
 @end

@@ -15,6 +15,7 @@
 #import "Ingredient.h"
 #import "Helper.h"
 #import "Recipe.h"
+#import "Constants.h"
 
 @interface SearchRecipeViewController ()
 
@@ -23,9 +24,6 @@
 @implementation SearchRecipeViewController
 
 {
-
-    int objectBreak;
-    int cornerRadius;
     int screenHeight;
     int screenWidth;
     int statusBarHeight;
@@ -137,8 +135,6 @@
 
 -(void) loadInterface {
     //declare constants
-    objectBreak = 8;
-    cornerRadius = 3;
     screenHeight = self.view.frame.size.height;
     screenWidth = self.view.frame.size.width;
     statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;

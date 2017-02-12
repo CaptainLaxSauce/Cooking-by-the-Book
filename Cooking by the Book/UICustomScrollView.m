@@ -7,17 +7,16 @@
 //
 
 #import "UICustomScrollView.h"
+#import "Constants.h"
 
 @implementation UICustomScrollView
 {
-    int objectBreak;
     int objectHeight;
     int bottom;
     
 }
 
 -(id)initWithFrame:(CGRect)frame withObjectHeight:(int)height withObjectBreak:(int)objectBreak_{
-    objectBreak = objectBreak_;
     bottom = objectBreak;
     objectHeight = height;
     //[self inset]

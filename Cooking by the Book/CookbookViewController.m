@@ -20,11 +20,13 @@
 @end
 
 @implementation CookbookViewController
-
 {
+    
     DataClass *obj;
     UITableView *recipeTableView;
 }
+
+typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSError *error);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,8 +113,7 @@
     
     //retrieve image from server if it hasn't been already
     if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
-        void (^addImageCompletion)(NSData *postData, NSURLResponse *response, NSError *error);
-        addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+        completionBlock addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
             recipe.image = [UIImage imageWithData:postData];
 
             if (recipe.image) {
@@ -123,7 +124,7 @@
     
         };
         
-        [Helper addImageToRecipe:recipe withCompletionHandler:addImageCompletion];
+        [Helper getImageWithName:recipe.imageName withCompletion:addImageCompletion];
     }
     else if (recipe.image){
         cell.imageView.image = recipe.image;

@@ -11,7 +11,7 @@
 @interface UICreateStepCell : UIView
 @property (nonatomic,strong) UILabel *numLabel;
 @property (nonatomic,strong) UITextField *textField;
-@property UIButton *delButton;
+@property (nonatomic,strong) UIButton *delButton;
 
 -(id)init;
 -(id)initWithFrame:(CGRect)frame withNumber:(NSInteger)number withDelBtn:(BOOL)delBtn;

@@ -12,6 +12,8 @@
 #import "Helper.h"
 #import "UIColor+CustomColors.h"
 #import "UITagBox.h"
+#import "Constants.h"
+
 
 @interface DetailedRecipeViewController ()
 
@@ -44,8 +46,6 @@
 
 
 -(void)loadInterface{
-    int objectBreak=8;
-    int cornerRadius=3;
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
     int objectWidth = screenWidth - objectBreak*2;
@@ -206,7 +206,7 @@
                     }
                 };
                 
-                [Helper addImageToRecipe:self.recipe withCompletionHandler:addImageCompletion];
+                [Helper getImageWithName:self.recipe.imageName withCompletion:addImageCompletion];
             }
         });
     }];

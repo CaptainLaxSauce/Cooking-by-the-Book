@@ -9,11 +9,9 @@
 #import "UICreateIngredientCell.h"
 #import "HTAutocompleteTextField.h"
 #import "HTAutocompleteManager.h"
+#import "Constants.h"
 
 @implementation UICreateIngredientCell
-
-int objectBreak = 8;
-int cornerRadius = 3;
 
 -(id)init{
     return [self initWithFrame:CGRectMake(0, 0, 100, 20) withDelBtn:FALSE];

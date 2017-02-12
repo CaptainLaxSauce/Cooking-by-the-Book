@@ -16,9 +16,6 @@
 
 @implementation SignupViewController
 
-static int objectBreak = 8;
-static int cornerRadius = 3;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.

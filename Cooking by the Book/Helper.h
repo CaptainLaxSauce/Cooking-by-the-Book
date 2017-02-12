@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Recipe.h"
+#import "Constants.h"
 
 @interface Helper : NSObject
 
@@ -17,6 +18,6 @@
 +(NSString *)toUTC:(NSDate *)date;
 +(NSString *)fromUTC:(NSDate *)date;
 +(NSString *)ingName2Id:(NSString*)name;
-+(void)addImageToRecipe:(Recipe *)recipe withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion;
++(void)getImageWithName:(NSString *)imageName withCompletion:(CompletionWeb)completionHandler;
 
 @end

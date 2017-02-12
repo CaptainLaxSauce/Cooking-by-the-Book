@@ -10,6 +10,6 @@
 
 @interface FoundRecipesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property NSMutableArray *recipeAry;
+@property (nonatomic,strong) NSMutableArray *recipeAry;
 
 @end

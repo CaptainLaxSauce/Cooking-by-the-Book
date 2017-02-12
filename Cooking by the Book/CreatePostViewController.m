@@ -13,6 +13,7 @@
 #import "Helper.h"
 #import "AppDelegate.h"
 #import "HCSStarRatingView.h"
+#import "Constants.h"
 
 @interface CreatePostViewController ()
 
@@ -25,7 +26,6 @@ DataClass *obj;
 UITextField *titleField;
 UITextView *descField;
 HCSStarRatingView *starView;
-UIActivityIndicatorView *activityView;
 }
 
 - (void)viewDidLoad {
@@ -54,7 +54,7 @@ UIActivityIndicatorView *activityView;
 -(void)configurePostCompletion{
     CreatePostViewController *__weak weakSelf = self;
     self.postCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
-        [weakSelf stopActivityViewAsync:activityView];
+        [weakSelf stopActivityViewAsync:weakSelf.activityView];
         
         NSString *postID = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"Post ID = %@",postID);
@@ -94,7 +94,7 @@ UIActivityIndicatorView *activityView;
 -(void)configureRatingCompletion{
     CreatePostViewController *__weak weakSelf = self;
     self.ratingCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
-        [weakSelf stopActivityViewAsync:activityView];
+        [weakSelf stopActivityViewAsync:weakSelf.activityView];
         
         NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"Rating ret = %@",ret);
@@ -120,16 +120,14 @@ UIActivityIndicatorView *activityView;
     [Helper submitHTTPPostWithString:sendStr withURLEnd:@"addRating" withCompletionHandler:self.ratingCompletion];
 }
 
--(UIActivityIndicatorView *)startActivityView{
-    activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.view addSubview: activityView];
-    activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
-    [activityView startAnimating];
+-(void) startActivityView{
+    self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview: self.activityView];
+    self.activityView.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height/2);
+    [self.activityView startAnimating];
     self.view.userInteractionEnabled = FALSE;
     self.navigationController.view.userInteractionEnabled = FALSE;
     self.tabBarController.view.userInteractionEnabled = FALSE;
-    
-    return activityView;
 }
 
 -(void)stopActivityViewAsync:(UIActivityIndicatorView *)activityView{
@@ -187,7 +185,7 @@ UIActivityIndicatorView *activityView;
 }
 
 - (void) submitPostTouch:(id)sender {
-    activityView = [self startActivityView];
+    [self startActivityView];
     
     [self configurePostCompletion];
     [self submitPostWeb];
@@ -195,8 +193,6 @@ UIActivityIndicatorView *activityView;
 }
 
 -(void)loadInterface {
-    int objectBreak=8;
-    int cornerRadius=3;
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
     int objectWidth = screenWidth - objectBreak*2;
