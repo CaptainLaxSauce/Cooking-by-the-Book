@@ -10,6 +10,7 @@
 
 extern int const objectBreak;
 extern int const cornerRadius;
+extern float const FRIEND_LABEL_FRACTION;
 
 typedef void(^CompletionWeb)(NSData *postData, NSURLResponse *response, NSError *error);
 

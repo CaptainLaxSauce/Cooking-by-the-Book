@@ -10,6 +10,7 @@
 
 int const objectBreak = 8;
 int const cornerRadius = 3;
+float const FRIEND_LABEL_FRACTION = 0.2;
 
 @implementation Constants
 

@@ -24,13 +24,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     [self loadInterface];
     
 }
 
--(void) configureLoginCompletion {
+-(CompletionWeb) getLoginCompletion {
     CompletionWeb loginCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
         NSString *userId = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         
@@ -41,12 +39,10 @@
             obj.userId = userId;
             NSLog(@"Success! userID = %@",obj.userId);
             
-            [self configureGetCookbookCompletion];
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getCookbook" withCompletionHandler:self.getCookbookCompletion];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getCookbook" withCompletionHandler:[self getCookbookCompletion]];
             
-            [self configureGetProfileCompletion];
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getProfile" withCompletionHandler:self.getProfileCompletion];
-              
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getProfile" withCompletionHandler:[self getProfileCompletion]];
+            
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [self performSegueWithIdentifier:@"TabBarViewController" sender:self];
             });
@@ -62,33 +58,33 @@
         }
     };
     
-    self.loginCompletion = loginCompletion;
+    return loginCompletion;
 }
 
--(void) configureGetCookbookCompletion {
+-(CompletionWeb) getCookbookCompletion {
     CompletionWeb getCookbookCompetion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
         NSDictionary *jsonCookbookDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
         NSArray *jsonCookbookAry = [jsonCookbookDict objectForKey:@"recipeInfo"];
         [obj initCookbookAry:jsonCookbookAry];
     };
     
-    self.getCookbookCompletion = getCookbookCompetion;
+    return getCookbookCompetion;
 }
 
--(void) configureGetProfileCompletion {
+-(CompletionWeb) getProfileCompletion {
     CompletionWeb profileCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
         NSDictionary *jsonProfileDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
         [obj initProfile:jsonProfileDict];
     };
-    self.getProfileCompletion = profileCompletion;
+    
+    return profileCompletion;
 }
 
 - (void) loginTouch:(id)sender{
     activityView = [Helper startActivityView:self];
     
-    [self configureLoginCompletion];
     NSString *loginCreds = [NSString stringWithFormat:@"email=%@&password=%@",self.emailTextField.text,self.passwordTextField.text];
-    [Helper submitHTTPPostWithString:loginCreds withURLEnd:@"login" withCompletionHandler:self.loginCompletion];
+    [Helper submitHTTPPostWithString:loginCreds withURLEnd:@"login" withCompletionHandler:[self getLoginCompletion]];
 
 }
     
@@ -107,6 +103,10 @@
         controller.passwordTextField1 = self.passwordTextField;
 
     }
+    else {
+
+    }
+
 }
 
 

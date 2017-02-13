@@ -12,53 +12,43 @@
 
 @implementation UIFriendBox
 
-float const LABEL_FRACTION = 1/6;
-
--(id) initWithFrame:(CGRect)frame withFriend:(Friend *)frd{
+-(id) initWithFrame:(CGRect)frame withFriend:(Friend *)frd_{
     self = [super initWithFrame:frame];
     
     if (self) {
-        _frd = frd;
-        
+        self.frd = frd_;
         [self loadInterface];
-        [self configureAddImageCompletion];
-       
-        [Helper getImageWithName:frd.imageName withCompletion:self.addImageCompletion];
-        
+
     }
     
     return self;
 }
 
--(void) configureAddImageCompletion {
-    CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            self.profileImageView.image = [UIImage imageWithData:postData];
-        });
-    };
-    self.addImageCompletion = addImageCompletion;
-}
-
--(void) addImageWeb {
-    
-}
 
 
 -(void) loadInterface{
     
     int width = self.frame.size.width;
     int height = self.frame.size.height;
-    int imageHeight = height - (height * LABEL_FRACTION);
+    int imageHeight = height - (height * FRIEND_LABEL_FRACTION);
     
-    self.profileImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, width, imageHeight)];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, width, imageHeight)];
+    imageView.image = [UIImage imageNamed:@"blankface.png"];
+    [self addSubview:imageView];
+    self.profileImageView = imageView;
     
-    self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, imageHeight, width, height * LABEL_FRACTION)];
-    self.nameLabel.text = self.frd.name;
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, imageHeight, width, height * FRIEND_LABEL_FRACTION)];
+    nameLabel.text = self.frd.username;
+    NSLog(@"adding Name label %@",self.frd.username);
+    [self addSubview:nameLabel];
+     self.nameLabel = nameLabel;
     
-    self.mutualFriendsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, imageHeight - (height * LABEL_FRACTION), width, (height * LABEL_FRACTION))];
-    self.mutualFriendsLabel.backgroundColor = [UIColor transparentGrayColor];
-    self.mutualFriendsLabel.textColor = [UIColor whiteColor];
-    self.mutualFriendsLabel.text = [NSString stringWithFormat:@"%@ mutual",self.frd.mutualFriends];
+    UILabel *mutualLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, imageHeight - (height * FRIEND_LABEL_FRACTION), width, (height * FRIEND_LABEL_FRACTION))];
+    mutualLabel.backgroundColor = [UIColor transparentGrayColor];
+    mutualLabel.textColor = [UIColor whiteColor];
+    mutualLabel.text = [NSString stringWithFormat:@"%@ mutual",self.frd.mutualFriends];
+    [self addSubview:mutualLabel];
+    self.mutualFriendsLabel = mutualLabel;
 }
 
 @end

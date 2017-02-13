@@ -52,9 +52,6 @@
     int tagBoxHeight = (objectWidth/2-objectBreak*2)*3/5;
     int textHeight = screenHeight/20;
     int ingLabelStart = objectBreak*6 + objectWidth/2 + textHeight*3;
-    int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    int navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     
     self.view.backgroundColor = [UIColor primaryColor];
     

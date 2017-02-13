@@ -33,42 +33,39 @@
     DataClass *obj;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationItem.title = @"Profile";
+}
+
 -(void)refreshPosts{
     
     [self resetcurrPostPos];
     
-    for (int i = 0; i < postAry.count; i++){
-        [[postAry objectAtIndex:i] removeFromSuperview];
-        [postAry removeObject:[postAry objectAtIndex:i]];
-        i = i - 1;
-    }
+    [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [postAry removeAllObjects];
     
-    NSString *post = [NSString stringWithFormat:@"userID=%@" ,obj.userId];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getUserPosts"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
-        NSString *ret = [[NSString alloc]initWithData:postData encoding:NSUTF8StringEncoding];
-        NSLog(@"post return = %@",ret);
-        
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@" ,obj.userId] withURLEnd:@"getUserPosts" withCompletionHandler:[self getUserPostsCompletion]];
+    
 
+}
+
+-(CompletionWeb) getUserPostsCompletion {
+    CompletionWeb userPostCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
         NSDictionary *jsonPostDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
-        NSLog(@"postDict count = %lu",(unsigned long)jsonPostDict.count);
         NSArray *jsonPostAry = [jsonPostDict objectForKey:@"postsInfo"];
-        NSLog(@"postAry count = %lu",(unsigned long)jsonPostAry.count);
 
-            dispatch_async(dispatch_get_main_queue(), ^(void)
-            {
-                for (int i = 0; i < jsonPostAry.count; i++)
-                {
-                    NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
-                    [self addPost:postDict];
-                }
-            });
-    }];
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+                       {
+                           for (int i = 0; i < jsonPostAry.count; i++)
+                           {
+                               NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
+                               [self addPost:postDict];
+                           }
+                       });
+
+    };
     
-    [dataTask resume];
-
+    return userPostCompletion;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -126,6 +123,7 @@
 
 
 -(void)loadInterface{
+    
     //declare constants
     screenHeight = self.view.frame.size.height;
     screenWidth = self.view.frame.size.width;
@@ -141,7 +139,6 @@
     obj = [DataClass getInstance];
     
     self.view.backgroundColor = [UIColor primaryColor];
-    self.navigationItem.title = @"Profile";
     //UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editProfileTouch:)];
     //self.navigationItem.leftBarButtonItem = editButton;
     

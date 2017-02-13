@@ -16,11 +16,6 @@
 @property (nonatomic,strong) UITextField *emailTextField;
 @property (nonatomic,strong) UITextField *passwordTextField;
 
-@property (copy) CompletionWeb loginCompletion;
-@property (copy) CompletionWeb getCookbookCompletion;
-@property (copy) CompletionWeb getProfileCompletion;
-
-
 -(void)loginTouch:(id)sender;
 -(void)signupTouch:(id)sender;
 -(void)loadInterface;

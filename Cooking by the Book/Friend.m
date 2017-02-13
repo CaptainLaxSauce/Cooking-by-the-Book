@@ -10,14 +10,14 @@
 
 @implementation Friend
 
--(id) initWithName:(NSString *)name withUserId:(NSString *)userId withImageName:(NSString *)imageName withMutualFriends:(NSString *)mutualFriends{
+-(id) initWithName:(NSString *)username_ withUserId:(NSString *)userId_ withImageName:(NSString *)imageName_ withMutualFriends:(NSString *)mutualFriends_{
     self = [super init];
     
     if (self) {
-        _name = name;
-        _userId = userId;
-        _imageName = imageName;
-        _mutualFriends = mutualFriends;
+        self.username = username_;
+        self.userId = userId_;
+        self.imageName = imageName_;
+        self.mutualFriends = mutualFriends_;
     }
     
     return self;

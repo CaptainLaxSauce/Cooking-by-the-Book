@@ -10,4 +10,8 @@
 
 @implementation TabBarControllerDelegate
 
+- (void)viewDidLoad {
+    
+}
+
 @end

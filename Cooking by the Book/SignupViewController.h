@@ -19,6 +19,5 @@
 
 -(void)loadInterface;
 -(void)signupTouch:(id)sender;
--(void)backTouch:(id)sender;
 
 @end

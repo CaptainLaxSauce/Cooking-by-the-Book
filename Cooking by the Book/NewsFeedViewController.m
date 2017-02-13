@@ -17,6 +17,14 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationItem.title = @"News Feed";
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
+}
 
 
 @end

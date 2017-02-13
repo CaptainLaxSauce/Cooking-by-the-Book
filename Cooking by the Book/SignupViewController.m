@@ -27,13 +27,14 @@
     
     //validate email and password meet requirements
     
-    NSLog(@"%@",self.nameTextField.text);
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"name=%@&email=%@&password=%@",self.nameTextField.text,self.emailTextField.text,self.passwordTextField2.text]
+                          withURLEnd:@"signup"
+               withCompletionHandler:[self getSignupCompletion]];
     
-    NSString *post = [NSString stringWithFormat:@"name=%@&email=%@&password=%@",self.nameTextField.text,self.emailTextField.text,self.passwordTextField2.text];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"signup"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+}
+
+-(CompletionWeb) getSignupCompletion {
+    CompletionWeb signupCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
         NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         
         if ([ret_ intValue] > 0) {
@@ -46,14 +47,9 @@
             
         }
 
-        
-    }];
-    [dataTask resume];
+    };
     
-}
-
--(void)backTouch:(id)sender{
-    [self performSegueWithIdentifier:@"LoginViewController" sender:sender];
+    return signupCompletion;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,6 +73,7 @@
     int textFieldWidth = (screenWidth-objectBreak*2);
     int textHeight = screenHeight/20;
     
+    self.navigationItem.title = @"Sign Up";
     self.view.backgroundColor = [UIColor primaryColor];
     
     //create text fields
@@ -118,18 +115,6 @@
     passwordTextField2_.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self.view addSubview:passwordTextField2_];
     self.passwordTextField2 = passwordTextField2_;
-    
-    //create buttons
-    UIButton *backButton_ = [[UIButton alloc]init];
-    backButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    backButton_.frame = CGRectMake(objectBreak, objectBreak*3, screenWidth/15, screenWidth/15);
-    [backButton_ addTarget:self action:@selector(backTouch:) forControlEvents:UIControlEventTouchUpInside];
-    [backButton_ setTitle:@"Back" forState:UIControlStateNormal];
-    backButton_.backgroundColor = [UIColor secondaryColor];
-    backButton_.layer.cornerRadius = cornerRadius;
-    backButton_.clipsToBounds = YES;
-    [self.view addSubview:backButton_];
-    self.backButton = backButton_;
     
     UIButton *signupButton_ = [[UIButton alloc]init];
     signupButton_ = [UIButton buttonWithType:UIButtonTypeRoundedRect];

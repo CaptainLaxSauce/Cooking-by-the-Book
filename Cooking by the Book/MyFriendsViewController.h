@@ -13,6 +13,8 @@
 
 
 @property (nonatomic,strong) NSMutableArray *friendAry;
-@property (copy) CompletionWeb getAllFriendsCompletion;
+@property (nonatomic,strong) NSMutableArray *friendBoxAry;
+@property (nonatomic,strong) NSMutableArray *imageAry;
 
+@property (nonatomic,strong) UIScrollView *scrollView;
 @end

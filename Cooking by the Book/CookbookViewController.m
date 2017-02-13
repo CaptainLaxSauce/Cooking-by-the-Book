@@ -23,7 +23,7 @@
 {
     
     DataClass *obj;
-    UITableView *recipeTableView;
+
 }
 
 typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSError *error);
@@ -32,6 +32,10 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
     [super viewDidLoad];
     [self loadInterface];
     
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationItem.title = @"Cookbook";
 }
 
 -(void)deleteRecipe:(NSIndexPath *) indexPath{
@@ -59,7 +63,7 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
 
 -(void)reloadTableDataAsync{
     dispatch_async(dispatch_get_main_queue(), ^(void){
-        [recipeTableView reloadData];
+        [self.recipeTableView reloadData];
     });
 }
 
@@ -99,7 +103,7 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *SimpleIdentifier = @"SimpleIdentifier";
-    UITableViewCell *cell = [recipeTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
+    UITableViewCell *cell = [self.recipeTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
@@ -182,15 +186,19 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width; 
     self.view.backgroundColor = [UIColor primaryColor];
-    self.navigationItem.title = @"Cookbook";
+    //int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    //int navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    
     
     obj = [DataClass getInstance];
     self.recipeAry = obj.cookbookAry;
     
-    recipeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStylePlain];
+    UITableView *recipeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStylePlain];
     recipeTableView.delegate = self;
     recipeTableView.dataSource = self;
+    
     [self.view addSubview:recipeTableView];
+    self.recipeTableView = recipeTableView;
 
     UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createRecipeTouch:)];
     self.navigationItem.rightBarButtonItem = createButton;

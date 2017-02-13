@@ -10,7 +10,7 @@
 
 @interface Friend : NSObject
 
-@property (nonatomic,strong) NSString *name;
+@property (nonatomic,strong) NSString *username;
 @property (nonatomic,strong) NSString *userId;
 @property (nonatomic,strong) NSString *imageName;
 @property (nonatomic,strong) NSString *mutualFriends;

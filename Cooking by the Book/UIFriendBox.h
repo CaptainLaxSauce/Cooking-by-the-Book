@@ -13,14 +13,10 @@
 
 @interface UIFriendBox : UIView
 
-extern float const LABEL_FRACTION;
-
 @property (nonatomic,strong) Friend *frd;
 @property (nonatomic,strong) UIImageView *profileImageView;
 @property (nonatomic,strong) UILabel *nameLabel;
 @property (nonatomic,strong) UILabel *mutualFriendsLabel;
-
-@property (copy) CompletionWeb addImageCompletion;
 
 -(id) initWithFrame:(CGRect)frame withFriend:(Friend *)frd;
 

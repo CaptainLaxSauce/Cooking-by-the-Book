@@ -12,6 +12,7 @@
 		0412FC771E4FB28B00763046 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FC761E4FB28B00763046 /* Friend.m */; };
 		0412FC7A1E4FBB3400763046 /* UIFriendBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FC791E4FBB3400763046 /* UIFriendBox.m */; };
 		0412FC7D1E4FBF9D00763046 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FC7C1E4FBF9D00763046 /* Constants.m */; };
+		0412FC831E5116BA00763046 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FC821E5116BA00763046 /* TabBarViewController.m */; };
 		041A1AE91E483AB800AEAFA2 /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */; };
 		041A1AEC1E483B9400AEAFA2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 041A1AEB1E483B9400AEAFA2 /* UIKit.framework */; };
 		043ABEEE1E3707ED00579596 /* UICustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043ABEED1E3707ED00579596 /* UICustomScrollView.m */; };
@@ -79,6 +80,8 @@
 		0412FC791E4FBB3400763046 /* UIFriendBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFriendBox.m; sourceTree = "<group>"; };
 		0412FC7B1E4FBF9D00763046 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		0412FC7C1E4FBF9D00763046 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		0412FC811E5116BA00763046 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
+		0412FC821E5116BA00763046 /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		041A1AE61E46AAA100AEAFA2 /* CookingByTheBookProfile.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; name = CookingByTheBookProfile.mobileprovision; path = ../../Downloads/CookingByTheBookProfile.mobileprovision; sourceTree = "<group>"; };
 		041A1AE71E483AB800AEAFA2 /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
 		041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
@@ -332,6 +335,8 @@
 				04CEE7F31E2ADC06005D57CE /* SearchRecipeViewController.m */,
 				04CEE81F1E2C08D1005D57CE /* FoundRecipesViewController.h */,
 				04CEE8201E2C08D1005D57CE /* FoundRecipesViewController.m */,
+				0412FC811E5116BA00763046 /* TabBarViewController.h */,
+				0412FC821E5116BA00763046 /* TabBarViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -489,6 +494,7 @@
 				049A52A21D937BBA00C91A3E /* DetailedPostViewController.m in Sources */,
 				048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */,
 				044B398C1CCF135D0051E1CC /* LoginViewController.m in Sources */,
+				0412FC831E5116BA00763046 /* TabBarViewController.m in Sources */,
 				045A81EE1D2069A700A90D8E /* DataClass.m in Sources */,
 				04CEE81E1E2BF255005D57CE /* HTAutocompleteTextField.m in Sources */,
 				04B49E471CC7063500312485 /* AppDelegate.m in Sources */,

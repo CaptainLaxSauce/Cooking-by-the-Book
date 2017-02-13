@@ -34,7 +34,7 @@
 }
 
 +(UIColor*)transparentGrayColor{
-    return [UIColor colorWithRed:225.0f/255.0f green:225.0f/255.0f blue:225.0f/255.0f alpha:0.3f];
+    return [UIColor colorWithRed:130.0f/255.0f green:130.0f/255.0f blue:130.0f/255.0f alpha:0.3f];
 }
 
 +(UIColor*)starColor {

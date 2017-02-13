@@ -39,6 +39,10 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationItem.title = @"Search Recipes";
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadInterface];
@@ -147,7 +151,6 @@
     obj = [DataClass getInstance];
     
     self.view.backgroundColor = [UIColor primaryColor];
-    self.navigationItem.title = @"Search Recipes";
     
     NSMutableArray *recipeAry_ = [[NSMutableArray alloc]init];
     self.recipeAry = recipeAry_;
