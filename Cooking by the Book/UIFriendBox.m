@@ -39,7 +39,8 @@
     
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, imageHeight, width, height * FRIEND_LABEL_FRACTION)];
     nameLabel.text = self.frd.username;
-    NSLog(@"adding Name label %@",self.frd.username);
+    nameLabel.textAlignment = NSTextAlignmentCenter;
+    [nameLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [self addSubview:nameLabel];
      self.nameLabel = nameLabel;
     

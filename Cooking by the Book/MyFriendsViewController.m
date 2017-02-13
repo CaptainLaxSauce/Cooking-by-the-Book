@@ -101,8 +101,10 @@
         for (int i = 0; i < self.friendAry.count; i++){
             CGRect currFrame = [self getCurrFrame:i];
             UIFriendBox *frdBox = [[UIFriendBox alloc]initWithFrame:currFrame withFriend:(Friend *)self.friendAry[i]];
+            if (![((Friend*)self.friendAry[i]).imageName  isEqual: @""]){
+                [Helper getImageWithName:((Friend*)self.friendAry[i]).imageName withCompletion:[self getAddImageCompletion:frdBox]];
+            }
             
-            [Helper getImageWithName:((Friend*)self.friendAry[i]).imageName withCompletion:[self getAddImageCompletion:frdBox]];
             
             [self.scrollView addSubview:frdBox];
             [self resizeScrollView];
@@ -115,6 +117,7 @@
 
 -(CompletionWeb) getAddImageCompletion:(UIFriendBox *)box{
     CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
+        if (postData)
         box.profileImageView.image = [UIImage imageWithData:postData];
     };
     return addImageCompletion;
