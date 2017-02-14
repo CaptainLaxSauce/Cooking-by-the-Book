@@ -130,7 +130,7 @@
     statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     navBarHeight = self.navigationController.navigationBar.frame.size.height;
     imageWidth = screenWidth/3;
-    objectWidth = screenWidth - objectBreak*2;
+    objectWidth = screenWidth - OBJECT_BREAK*2;
     textHeight = screenHeight/20;
     acheivementHeight = textHeight; //this will need to change, just using for testing
     tabHeight = self.tabBarController.tabBar.frame.size.height;
@@ -146,18 +146,18 @@
     UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight)];
     scrollView_.backgroundColor = [UIColor customGrayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [scrollView_ setContentSize:CGSizeMake(objectWidth, objectBreak*3 + imageWidth + textHeight*2)];
+    [scrollView_ setContentSize:CGSizeMake(objectWidth, OBJECT_BREAK*3 + imageWidth + textHeight*2)];
     self.scrollView = scrollView_;
     [self.view addSubview:scrollView_];
     
     /*
-    UIImageView *profileImageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, objectBreak, imageWidth, imageWidth)];
+    UIImageView *profileImageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, OBJECT_BREAK, imageWidth, imageWidth)];
     [profileImageView_ setImage:[UIImage imageNamed:@"blankface.png"]];
     self.profileImageView = profileImageView_;
     [self.scrollView addSubview:profileImageView_];
     */
     
-    imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, objectBreak, imageWidth, imageWidth)];
+    imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, OBJECT_BREAK, imageWidth, imageWidth)];
     [imageSelectView setImage:[UIImage imageNamed:@"addimage.png"]];
     imageSelectView.contentMode = UIViewContentModeCenter;
     imageSelectView.userInteractionEnabled = YES;
@@ -174,14 +174,14 @@
     [cameraImageView addGestureRecognizer:cameraTap];
     [imageSelectView addSubview:cameraImageView];
     
-    UILabel *titleLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*2 + imageWidth, objectWidth, textHeight)];
+    UILabel *titleLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*2 + imageWidth, objectWidth, textHeight)];
     titleLabel_.textAlignment = NSTextAlignmentCenter;
     titleLabel_.text = [NSString stringWithFormat:@"Chef %@",[obj.profileDict objectForKey:@"userName"]];
     UIFontDescriptor * fontD = [titleLabel_.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
     titleLabel_.font = [UIFont fontWithDescriptor:fontD size:20];
     [self.scrollView addSubview:titleLabel_];
     
-    UIAchievementBar *achBar = [[UIAchievementBar alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*3 + imageWidth + textHeight, objectWidth, acheivementHeight)];
+    UIAchievementBar *achBar = [[UIAchievementBar alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*3 + imageWidth + textHeight, objectWidth, acheivementHeight)];
     [self.scrollView addSubview:achBar];
     
     UIBarButtonItem *friendsButton = [[UIBarButtonItem alloc] initWithTitle:@"Friends" style:UIBarButtonItemStylePlain target:self action:@selector(friendsTouch:)];
@@ -209,7 +209,7 @@
     [postAry addObject:post];
     [self.scrollView addSubview:post];
     
-    currPostPos = currPostPos + post.frame.size.height + objectBreak;
+    currPostPos = currPostPos + post.frame.size.height + OBJECT_BREAK;
     [self.scrollView setContentSize:CGSizeMake(objectWidth, currPostPos)];
     
 }
@@ -223,7 +223,7 @@
 }
 
 -(void)resetcurrPostPos{
-    currPostPos = objectBreak*4 + imageWidth + acheivementHeight + textHeight;
+    currPostPos = OBJECT_BREAK*4 + imageWidth + acheivementHeight + textHeight;
 }
 
 @end

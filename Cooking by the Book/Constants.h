@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-extern int const objectBreak;
-extern int const cornerRadius;
+extern int const OBJECT_BREAK;
+extern int const CORNER_RADIUS;
 extern float const FRIEND_LABEL_FRACTION;
 
 typedef void(^CompletionWeb)(NSData *postData, NSURLResponse *response, NSError *error);

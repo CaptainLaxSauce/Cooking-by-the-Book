@@ -32,11 +32,11 @@
 -(void)addTags:(NSArray *)tagAry_{
     _tagAry = tagAry_;
     
-    int objectBreak = 3;
+    int OBJECT_BREAK = 3;
     int totalWidth = self.frame.size.width;
     int totalHeight = self.frame.size.height;
-    int tagHeight = (totalHeight - objectBreak*5)/4;
-    int tagWidth = totalWidth - objectBreak*2;
+    int tagHeight = (totalHeight - OBJECT_BREAK*5)/4;
+    int tagWidth = totalWidth - OBJECT_BREAK*2;
     UIColor *tagColor;
     NSString *tagStr;
     
@@ -48,18 +48,18 @@
          int xstart;
          int ystart;
          if (i < 2) {
-         xstart = objectBreak*2 + tagWidth;
+         xstart = OBJECT_BREAK*2 + tagWidth;
          }
          else{
-         xstart = objectBreak;
+         xstart = OBJECT_BREAK;
          }
          
          if (i % 2 == 0){
-         ystart = objectBreak;
+         ystart = OBJECT_BREAK;
          NSLog(@"i = %d, modulo = 0",i);
          }
          else{
-         ystart = objectBreak*2 + tagHeight;
+         ystart = OBJECT_BREAK*2 + tagHeight;
          NSLog(@"i = %d, modulo != 0",i);
          }
          */
@@ -105,7 +105,7 @@
                 break;
         }
         
-        UILabel *tagLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak+(tagHeight+objectBreak)*i, tagWidth, tagHeight)];
+        UILabel *tagLabel = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK+(tagHeight+OBJECT_BREAK)*i, tagWidth, tagHeight)];
         tagLabel.layer.cornerRadius = 3;
         tagLabel.text = tagStr;
         [tagLabel setTextColor:tagColor];

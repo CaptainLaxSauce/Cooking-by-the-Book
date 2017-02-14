@@ -61,21 +61,21 @@
         self.commentCount = commentCount_;
         
         
-        int objectBreak = 3;
+        int OBJECT_BREAK = 3;
         totWidth = self.frame.size.width;
         totHeight = self.frame.size.height;
-        textHeight = (totHeight - objectBreak*9)/8;
-        objectWidth =  totWidth - objectBreak*2;
+        textHeight = (totHeight - OBJECT_BREAK*9)/8;
+        objectWidth =  totWidth - OBJECT_BREAK*2;
         
         self.backgroundColor = [UIColor whiteColor];
         
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, objectWidth, textHeight)];
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK, objectWidth, textHeight)];
         UIFontDescriptor * fontD = [titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
         titleLabel.font = [UIFont fontWithDescriptor:fontD size:0];
         [titleLabel setText:title_];
         [self addSubview:titleLabel];
         
-        UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak + textHeight, objectWidth/4, textHeight)];
+        UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK + textHeight, objectWidth/4, textHeight)];
         [timeLabel setText:dateTime_];
         timeLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:timeLabel];
@@ -85,18 +85,18 @@
             self.recipe = [obj getRecipe:recipeID_];
         }
         
-        UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(objectBreak, objectBreak + textHeight*2, objectWidth, textHeight*3 + objectBreak*2) withRecipe:self.recipe];
+        UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK + textHeight*2, objectWidth, textHeight*3 + OBJECT_BREAK*2) withRecipe:self.recipe];
         [self addSubview:recipeCell];
         
-        UILabel *bodyLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*4 + textHeight*5, objectWidth, textHeight*2)];
+        UILabel *bodyLabel = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*4 + textHeight*5, objectWidth, textHeight*2)];
         [bodyLabel setText:body_];
         [self addSubview:bodyLabel];
         
-        UILabel *likesLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*5 + textHeight*7, objectWidth/2, textHeight)];
+        UILabel *likesLabel = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*5 + textHeight*7, objectWidth/2, textHeight)];
         [likesLabel setText:[NSString stringWithFormat:@"Likes: %@",likeCount_]];
         [self addSubview:likesLabel];
         
-        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak + objectWidth/2, objectBreak*5 + textHeight*7, objectWidth/2, textHeight)];
+        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK + objectWidth/2, OBJECT_BREAK*5 + textHeight*7, objectWidth/2, textHeight)];
         [commentsLabel setText:[NSString stringWithFormat:@"Comments: %@",commentCount_]];
         [self addSubview:commentsLabel];
 

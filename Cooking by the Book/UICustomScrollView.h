@@ -10,7 +10,7 @@
 
 @interface UICustomScrollView : UIScrollView
 
--(id)initWithFrame:(CGRect)frame withObjectHeight:(int)height withObjectBreak:(int)objectBreak_;
+-(id)initWithFrame:(CGRect)frame withObjectHeight:(int)height withOBJECT_BREAK:(int)OBJECT_BREAK_;
 -(void)add:(id)object;
 
 

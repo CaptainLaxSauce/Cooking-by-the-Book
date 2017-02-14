@@ -8,6 +8,7 @@
 
 #import "UIToggleTagButton.h"
 #import "UIColor+CustomColors.h"
+#import "Constants.h"
 
 @implementation UIToggleTagButton
 
@@ -45,7 +46,7 @@
         
         [self setTitle:titleStr forState:UIControlStateNormal];
         [self addTarget:self action:@selector(buttonTouch) forControlEvents:UIControlEventTouchUpInside];
-        self.layer.cornerRadius = 3;
+        [[self layer] setCornerRadius:CORNER_RADIUS];
         self.clipsToBounds = YES;
         [[self layer] setBorderWidth:2.0f];
         [self updateColor];

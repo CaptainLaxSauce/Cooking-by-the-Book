@@ -119,8 +119,8 @@
  
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
-    int buttonWidth = (screenWidth-objectBreak*3)/2;
-    int textFieldWidth = (screenWidth-objectBreak*2);
+    int buttonWidth = (screenWidth-OBJECT_BREAK*3)/2;
+    int textFieldWidth = (screenWidth-OBJECT_BREAK*2);
     int textHeight = screenHeight/20;
     
     self.view.backgroundColor = [UIColor primaryColor];
@@ -129,20 +129,20 @@
     obj = [DataClass getInstance];
     
     //create text fields
-    UITextField *emailTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(objectBreak, screenHeight/2-objectBreak*2-textHeight*2, textFieldWidth, textHeight)];
+    UITextField *emailTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(OBJECT_BREAK, screenHeight/2-OBJECT_BREAK*2-textHeight*2, textFieldWidth, textHeight)];
     emailTextField_.backgroundColor = [UIColor whiteColor];
     emailTextField_.placeholder = @"Email";
-    emailTextField_.layer.cornerRadius = cornerRadius;
+    emailTextField_.layer.cornerRadius = CORNER_RADIUS;
     emailTextField_.clipsToBounds = YES;
     emailTextField_.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [emailTextField_ setKeyboardType:UIKeyboardTypeEmailAddress];
     [self.view addSubview:emailTextField_];
     self.emailTextField = emailTextField_;
     
-    UITextField *passwordTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(objectBreak, screenHeight/2-objectBreak-textHeight, textFieldWidth, textHeight)];
+    UITextField *passwordTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(OBJECT_BREAK, screenHeight/2-OBJECT_BREAK-textHeight, textFieldWidth, textHeight)];
     passwordTextField_.backgroundColor = [UIColor whiteColor];
     passwordTextField_.placeholder = @"Password";
-    passwordTextField_.layer.cornerRadius = cornerRadius;
+    passwordTextField_.layer.cornerRadius = CORNER_RADIUS;
     passwordTextField_.clipsToBounds = YES;
     passwordTextField_.secureTextEntry = YES;
     passwordTextField_.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -151,21 +151,21 @@
     
     //create buttons
     UIButton *signupButton_ = [[UIButton alloc]init];
-    signupButton_.frame = CGRectMake(objectBreak, screenHeight/2, buttonWidth, screenHeight/10);
+    signupButton_.frame = CGRectMake(OBJECT_BREAK, screenHeight/2, buttonWidth, screenHeight/10);
     [signupButton_ addTarget:self action:@selector(signupTouch:) forControlEvents:UIControlEventTouchUpInside];
     [signupButton_ setTitle:@"Sign Up" forState:UIControlStateNormal];
     signupButton_.backgroundColor = [UIColor secondaryColor];
-    signupButton_.layer.cornerRadius = cornerRadius;
+    signupButton_.layer.cornerRadius = CORNER_RADIUS;
     signupButton_.clipsToBounds = YES;
     [self.view addSubview:signupButton_];
     self.signupButton = signupButton_;
     
     UIButton *loginButton_ = [[UIButton alloc]init];
-    loginButton_.frame = CGRectMake(buttonWidth+objectBreak*2, screenHeight/2, buttonWidth, screenHeight/10);
+    loginButton_.frame = CGRectMake(buttonWidth+OBJECT_BREAK*2, screenHeight/2, buttonWidth, screenHeight/10);
     [loginButton_ addTarget:self action:@selector(loginTouch:) forControlEvents:UIControlEventTouchUpInside];
     [loginButton_ setTitle:@"Login" forState:UIControlStateNormal];
     loginButton_.backgroundColor = [UIColor secondaryColor];
-    loginButton_.layer.cornerRadius = cornerRadius;
+    loginButton_.layer.cornerRadius = CORNER_RADIUS;
     loginButton_.clipsToBounds = YES;
     [self.view addSubview:loginButton_];
     self.loginButton = loginButton_;

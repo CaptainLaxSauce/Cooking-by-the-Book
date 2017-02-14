@@ -129,7 +129,7 @@ HCSStarRatingView *starView;
 -(void)loadInterface {
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
-    int objectWidth = screenWidth - objectBreak*2;
+    int objectWidth = screenWidth - OBJECT_BREAK*2;
     int recipeCellHeight = objectWidth/4;
     int textHeight = screenHeight/20;
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
@@ -143,25 +143,25 @@ HCSStarRatingView *starView;
     self.navigationItem.title = [NSString stringWithFormat:@"Create Post"];
     self.view.backgroundColor = [UIColor primaryColor];
     
-    titleField = [[UITextField alloc]initWithFrame:CGRectMake(objectBreak, statusBarHeight + navBarHeight + objectBreak, objectWidth, textHeight)];
+    titleField = [[UITextField alloc]initWithFrame:CGRectMake(OBJECT_BREAK, statusBarHeight + navBarHeight + OBJECT_BREAK, objectWidth, textHeight)];
     titleField.text = [NSString stringWithFormat:@"%@ cooked %@!", [obj.profileDict objectForKey:@"userName"], recipe.title];
     titleField.backgroundColor = [UIColor whiteColor];
-    titleField.layer.cornerRadius = cornerRadius;
+    titleField.layer.cornerRadius = CORNER_RADIUS;
     titleField.clipsToBounds = YES;
     [self.view addSubview:titleField];
     
-    UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(objectBreak, statusBarHeight + navBarHeight + objectBreak*2 + textHeight, objectWidth, recipeCellHeight) withRecipe:recipe];
-    recipeCell.layer.cornerRadius = cornerRadius;
+    UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(OBJECT_BREAK, statusBarHeight + navBarHeight + OBJECT_BREAK*2 + textHeight, objectWidth, recipeCellHeight) withRecipe:recipe];
+    recipeCell.layer.cornerRadius = CORNER_RADIUS;
     recipeCell.clipsToBounds = YES;
     [self.view addSubview:recipeCell];
     
-    descField = [[UITextView alloc]initWithFrame:CGRectMake(objectBreak, statusBarHeight + navBarHeight + objectBreak*3 + textHeight + recipeCellHeight, objectWidth, textHeight*5)];
+    descField = [[UITextView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, statusBarHeight + navBarHeight + OBJECT_BREAK*3 + textHeight + recipeCellHeight, objectWidth, textHeight*5)];
     descField.backgroundColor = [UIColor whiteColor];
-    descField.layer.cornerRadius = cornerRadius;
+    descField.layer.cornerRadius = CORNER_RADIUS;
     descField.clipsToBounds = YES;
     [self.view addSubview:descField];
 
-    starView = [[HCSStarRatingView alloc]initWithFrame:CGRectMake(objectBreak, statusBarHeight + navBarHeight + objectBreak*4 + textHeight + recipeCellHeight + textHeight*5, objectWidth, textHeight * 2)];
+    starView = [[HCSStarRatingView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, statusBarHeight + navBarHeight + OBJECT_BREAK*4 + textHeight + recipeCellHeight + textHeight*5, objectWidth, textHeight * 2)];
     starView.maximumValue = 5;
     starView.minimumValue = 0;
     starView.allowsHalfStars = YES;

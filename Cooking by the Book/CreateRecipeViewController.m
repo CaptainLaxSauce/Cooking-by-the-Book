@@ -330,21 +330,21 @@ DataClass *obj;
     
     for (NSInteger i=index; i<self.moveAry.count;i++){
         UIView *currView = [self.moveAry objectAtIndex:i];
-        currView.frame = CGRectMake(currView.frame.origin.x, currView.frame.origin.y - textHeight - objectBreak, currView.frame.size.width, currView.frame.size.height);
+        currView.frame = CGRectMake(currView.frame.origin.x, currView.frame.origin.y - textHeight - OBJECT_BREAK, currView.frame.size.width, currView.frame.size.height);
     }
-    [self.recipeScrollView setContentSize:CGSizeMake(self.view.frame.size.width,self.recipeScrollView.contentSize.height - textHeight - objectBreak)];
+    [self.recipeScrollView setContentSize:CGSizeMake(self.view.frame.size.width,self.recipeScrollView.contentSize.height - textHeight - OBJECT_BREAK)];
 }
 
 -(void)shiftObjectsDown:(NSInteger)index{
     for (NSInteger i=self.moveAry.count-1; i>index;i--){
         UIView *currView = [self.moveAry objectAtIndex:i];
-        currView.frame = CGRectMake(currView.frame.origin.x, currView.frame.origin.y + textHeight + objectBreak, currView.frame.size.width, currView.frame.size.height);
+        currView.frame = CGRectMake(currView.frame.origin.x, currView.frame.origin.y + textHeight + OBJECT_BREAK, currView.frame.size.width, currView.frame.size.height);
         
         //shift down in moveAry
         [self.moveAry insertObject:[self.moveAry objectAtIndex:i] atIndex:i+1];
         [self.moveAry removeObjectAtIndex:i];
     }
-    [self.recipeScrollView setContentSize:CGSizeMake(self.view.frame.size.width,self.recipeScrollView.contentSize.height + textHeight + objectBreak)];
+    [self.recipeScrollView setContentSize:CGSizeMake(self.view.frame.size.width,self.recipeScrollView.contentSize.height + textHeight + OBJECT_BREAK)];
 }
 
 -(void)imageTouch:(id)sender{
@@ -380,20 +380,20 @@ DataClass *obj;
 -(void)loadInterface {
     int screenHeight = self.view.frame.size.height;
     int screenWidth = self.view.frame.size.width;
-    objectWidth = screenWidth - objectBreak*2;
+    objectWidth = screenWidth - OBJECT_BREAK*2;
     textHeight = screenHeight/20;
     int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     int navBarHeight = self.navigationController.navigationBar.frame.size.height;
     int stepperWidth = 94;
     int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-    int scrollHeight = screenHeight-statusBarHeight-navBarHeight-textHeight-objectBreak*2-tabBarHeight;
-    int labelWidth = (screenWidth-objectBreak*2)/10;
-    int tagWidth = (screenWidth-objectBreak*3)/2;
+    int scrollHeight = screenHeight-statusBarHeight-navBarHeight-textHeight-OBJECT_BREAK*2-tabBarHeight;
+    int labelWidth = (screenWidth-OBJECT_BREAK*2)/10;
+    int tagWidth = (screenWidth-OBJECT_BREAK*3)/2;
     
-    titleHeight = objectBreak*3+textHeight*2;
-    timeHeight = objectBreak*2+textHeight;
-    portionsHeight = objectBreak*2+textHeight+titleHeight+timeHeight;
-    ingredientHeight = textHeight*3+objectBreak*4;
+    titleHeight = OBJECT_BREAK*3+textHeight*2;
+    timeHeight = OBJECT_BREAK*2+textHeight;
+    portionsHeight = OBJECT_BREAK*2+textHeight+titleHeight+timeHeight;
+    ingredientHeight = textHeight*3+OBJECT_BREAK*4;
     imageViewHeight = screenWidth+textHeight;
     
     self.view.backgroundColor = [UIColor primaryColor];
@@ -414,34 +414,34 @@ DataClass *obj;
     self.recipeScrollView = recipeScrollView_;
     
     //add title and description
-    UITextField *titleTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, objectWidth, textHeight)];
+    UITextField *titleTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK, objectWidth, textHeight)];
     titleTextField_.placeholder = @"Title";
     titleTextField_.backgroundColor = [UIColor whiteColor];
-    titleTextField_.layer.cornerRadius = cornerRadius;
+    titleTextField_.layer.cornerRadius = CORNER_RADIUS;
     titleTextField_.clipsToBounds = YES;
     [self.recipeScrollView addSubview:titleTextField_];
     self.titleTextField = titleTextField_;
     
-    UITextField *descTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(objectBreak, objectBreak*2 + textHeight, objectWidth, textHeight)];
+    UITextField *descTextField_ = [[UITextField alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*2 + textHeight, objectWidth, textHeight)];
     descTextField_.placeholder = @"Description (optional)";
     descTextField_.backgroundColor = [UIColor whiteColor];
     descTextField_.backgroundColor = [UIColor whiteColor];
-    descTextField_.layer.cornerRadius = cornerRadius;
+    descTextField_.layer.cornerRadius = CORNER_RADIUS;
     [self.recipeScrollView addSubview:descTextField_];
     self.descTextField = descTextField_;
     
-    UIView *titleLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, titleHeight, objectWidth, 1)];
+    UIView *titleLine_ = [[UIView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, titleHeight, objectWidth, 1)];
     titleLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:titleLine_];
     
     //add times
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, titleHeight+objectBreak, labelWidth*1.6, textHeight)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, titleHeight+OBJECT_BREAK, labelWidth*1.6, textHeight)];
     timeLabel.text = @"Time";
     [self.recipeScrollView addSubview:timeLabel];
     
-    UIView *timeView = [[UIView alloc]initWithFrame:CGRectMake(objectBreak+labelWidth*1.6, titleHeight+objectBreak, labelWidth*4, textHeight)];
+    UIView *timeView = [[UIView alloc]initWithFrame:CGRectMake(OBJECT_BREAK+labelWidth*1.6, titleHeight+OBJECT_BREAK, labelWidth*4, textHeight)];
     timeView.backgroundColor = [UIColor whiteColor];
-    timeView.layer.cornerRadius = cornerRadius;
+    timeView.layer.cornerRadius = CORNER_RADIUS;
     timeView.clipsToBounds = YES;
     [self.recipeScrollView addSubview:timeView];
     
@@ -459,126 +459,126 @@ DataClass *obj;
     [timeView addSubview:cookTimeField_];
     self.cookTimeField = cookTimeField_;
     
-    UILabel *totTimeLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak*2+labelWidth*6, titleHeight+objectBreak, labelWidth*5, textHeight)];
+    UILabel *totTimeLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK*2+labelWidth*6, titleHeight+OBJECT_BREAK, labelWidth*5, textHeight)];
     totTimeLabel_.text = @"Total: 0 minutes";
     [self.recipeScrollView addSubview:totTimeLabel_];
     self.totTimeLabel = totTimeLabel_;
     
-    UIView *timeLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, titleHeight+objectBreak*2+textHeight, objectWidth, 1)];
+    UIView *timeLine_ = [[UIView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, titleHeight+OBJECT_BREAK*2+textHeight, objectWidth, 1)];
     timeLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:timeLine_];
     
     //add portions
-    UIStepper *portionStepper_ = [[UIStepper alloc]initWithFrame:CGRectMake(screenWidth-objectBreak-stepperWidth, objectBreak+titleHeight+timeHeight+2, 0, 0)];
+    UIStepper *portionStepper_ = [[UIStepper alloc]initWithFrame:CGRectMake(screenWidth-OBJECT_BREAK-stepperWidth, OBJECT_BREAK+titleHeight+timeHeight+2, 0, 0)];
     portionStepper_.minimumValue = 1;
     portionStepper_.value = 4;
     [portionStepper_ addTarget:self action:@selector(stepperValueChange:) forControlEvents:UIControlEventValueChanged];
     [self.recipeScrollView addSubview:portionStepper_];
     self.portionStepper = portionStepper_;
     
-    UILabel *portionNumLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth-objectBreak*2-stepperWidth-labelWidth, objectBreak+titleHeight+timeHeight, labelWidth, textHeight)];
+    UILabel *portionNumLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth-OBJECT_BREAK*2-stepperWidth-labelWidth, OBJECT_BREAK+titleHeight+timeHeight, labelWidth, textHeight)];
     portionNumLabel_.text = [NSString stringWithFormat:@"%d",(int)self.portionStepper.value];
     [self.recipeScrollView addSubview:portionNumLabel_];
     self.portionNumLabel = portionNumLabel_;
     
-    UILabel *portionLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, objectBreak+titleHeight+timeHeight, labelWidth*4, textHeight)];
+    UILabel *portionLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK+titleHeight+timeHeight, labelWidth*4, textHeight)];
     portionLabel_.text = @"Portions";
     [self.recipeScrollView addSubview:portionLabel_];
     
-    UIView *portionLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight, objectWidth, 1)];
+    UIView *portionLine_ = [[UIView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight, objectWidth, 1)];
     portionLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:portionLine_];
     
     //add ingredients
-    UILabel *ingredientLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+objectBreak, labelWidth*4, textHeight)];
+    UILabel *ingredientLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+OBJECT_BREAK, labelWidth*4, textHeight)];
     ingredientLabel_.text = @"Ingredients";
     [self.recipeScrollView addSubview:ingredientLabel_];
     
-    UICreateIngredientCell *ingredient_ = [[UICreateIngredientCell alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+objectBreak*2+textHeight, objectWidth, textHeight) withDelBtn:FALSE];
+    UICreateIngredientCell *ingredient_ = [[UICreateIngredientCell alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+OBJECT_BREAK*2+textHeight, objectWidth, textHeight) withDelBtn:FALSE];
     [self.recipeScrollView addSubview:ingredient_];
     [ingredientAry_ addObject:ingredient_];
     [moveAry_ addObject:ingredient_];
     
-    UIButton *addIngredientButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+objectBreak*3+textHeight*2, objectWidth, textHeight)];
+    UIButton *addIngredientButton_ = [[UIButton alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+OBJECT_BREAK*3+textHeight*2, objectWidth, textHeight)];
     [addIngredientButton_ addTarget:self action:@selector(addIngredientTouch) forControlEvents:UIControlEventTouchUpInside];
     [addIngredientButton_ setTitle:@"Add Ingredient" forState:UIControlStateNormal];
     addIngredientButton_.backgroundColor = [UIColor secondaryColor];
-    addIngredientButton_.layer.cornerRadius = cornerRadius;
+    addIngredientButton_.layer.cornerRadius = CORNER_RADIUS;
     addIngredientButton_.clipsToBounds = YES;
     [self.recipeScrollView addSubview:addIngredientButton_];
     self.addIngredientButton = addIngredientButton_;
     [moveAry_ addObject:addIngredientButton_];
     
-    UIView *ingredientLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight, objectWidth, 1)];
+    UIView *ingredientLine_ = [[UIView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight, objectWidth, 1)];
     ingredientLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:ingredientLine_];
     [moveAry_ addObject:ingredientLine_];
     self.ingredientIdx=0;
     
     //add steps
-    UILabel *stepLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight+objectBreak, objectWidth, textHeight)];
+    UILabel *stepLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight+OBJECT_BREAK, objectWidth, textHeight)];
     stepLabel_.text = @"Steps";
     [self.recipeScrollView addSubview:stepLabel_];
     [moveAry_ addObject:stepLabel_];
     
-    UICreateStepCell *step_ = [[UICreateStepCell alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight+objectBreak*2+textHeight, objectWidth, textHeight) withNumber:1 withDelBtn:FALSE];
+    UICreateStepCell *step_ = [[UICreateStepCell alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight+OBJECT_BREAK*2+textHeight, objectWidth, textHeight) withNumber:1 withDelBtn:FALSE];
     [self.recipeScrollView addSubview:step_];
     [stepAry_ addObject:step_];
     [moveAry_ addObject:step_];
     
-    UIButton *addStepButton_ = [[UIButton alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight+objectBreak*3+textHeight*2, objectWidth, textHeight)];
+    UIButton *addStepButton_ = [[UIButton alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight+OBJECT_BREAK*3+textHeight*2, objectWidth, textHeight)];
     [addStepButton_ addTarget:self action:@selector(addStepTouch) forControlEvents:UIControlEventTouchUpInside];
     [addStepButton_ setTitle:@"Add Step" forState:UIControlStateNormal];
     addStepButton_.backgroundColor = [UIColor secondaryColor];
-    addStepButton_.layer.cornerRadius = cornerRadius;
+    addStepButton_.layer.cornerRadius = CORNER_RADIUS;
     addStepButton_.clipsToBounds = YES;
     [self.recipeScrollView addSubview:addStepButton_];
     self.addStepButton = addStepButton_;
     [moveAry_ addObject:addStepButton_];
     
-    UIView *stepLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight+objectBreak*4+textHeight*3, objectWidth, 1)];
+    UIView *stepLine_ = [[UIView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight+OBJECT_BREAK*4+textHeight*3, objectWidth, 1)];
     stepLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:stepLine_];
     [moveAry_ addObject:stepLine_];
     
     //add tags
-    UILabel *tagLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak, objectWidth, textHeight)];
+    UILabel *tagLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight*2+OBJECT_BREAK, objectWidth, textHeight)];
     tagLabel_.text = @"Tags";
     [self.recipeScrollView addSubview:tagLabel_];
     [moveAry_ addObject:tagLabel_];
     
-    UIToggleTagButton *quickTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*2+textHeight, tagWidth, textHeight) withTagType:0 withTagged:FALSE];
+    UIToggleTagButton *quickTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight*2+OBJECT_BREAK*2+textHeight, tagWidth, textHeight) withTagType:0 withTagged:FALSE];
     [self.recipeScrollView addSubview:quickTag_];
     [moveAry_ addObject:quickTag_];
     self.quickTag = quickTag_;
     
-    UIToggleTagButton *simpleTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(objectBreak*2+tagWidth, portionsHeight+ingredientHeight*2+objectBreak*2+textHeight, tagWidth, textHeight) withTagType:1 withTagged:FALSE];
+    UIToggleTagButton *simpleTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(OBJECT_BREAK*2+tagWidth, portionsHeight+ingredientHeight*2+OBJECT_BREAK*2+textHeight, tagWidth, textHeight) withTagType:1 withTagged:FALSE];
     [self.recipeScrollView addSubview:simpleTag_];
     [moveAry_ addObject:simpleTag_];
     self.simpleTag = simpleTag_;
     
-    UIToggleTagButton *vegetarianTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*3+textHeight*2, tagWidth, textHeight) withTagType:2 withTagged:FALSE];
+    UIToggleTagButton *vegetarianTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight*2+OBJECT_BREAK*3+textHeight*2, tagWidth, textHeight) withTagType:2 withTagged:FALSE];
     [self.recipeScrollView addSubview:vegetarianTag_];
     [moveAry_ addObject:vegetarianTag_];
     self.vegetarianTag = vegetarianTag_;
     
-    UIToggleTagButton *veganTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(objectBreak*2+tagWidth, portionsHeight+ingredientHeight*2+objectBreak*3+textHeight*2, tagWidth, textHeight) withTagType:3 withTagged:FALSE];
+    UIToggleTagButton *veganTag_ = [[UIToggleTagButton alloc]initWithFrame:CGRectMake(OBJECT_BREAK*2+tagWidth, portionsHeight+ingredientHeight*2+OBJECT_BREAK*3+textHeight*2, tagWidth, textHeight) withTagType:3 withTagged:FALSE];
     [self.recipeScrollView addSubview:veganTag_];
     [moveAry_ addObject:veganTag_];
     self.veganTag = veganTag_;
     
     //add imageSelectView
-    UIView *imageLine_ = [[UIView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*4+textHeight*3,screenWidth - objectBreak*2, 1)];
+    UIView *imageLine_ = [[UIView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight*2+OBJECT_BREAK*4+textHeight*3,screenWidth - OBJECT_BREAK*2, 1)];
     imageLine_.backgroundColor = [UIColor lineColor];
     [self.recipeScrollView addSubview:imageLine_];
     [moveAry_ addObject:imageLine_];
     
-    UILabel *imageLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*5+textHeight*3,objectWidth, textHeight)];
+    UILabel *imageLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight*2+OBJECT_BREAK*5+textHeight*3,objectWidth, textHeight)];
     imageLabel_.text = @"Image";
     [self.recipeScrollView addSubview:imageLabel_];
     [moveAry_ addObject:imageLabel_];
     
-    UIImageView *imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, portionsHeight+ingredientHeight*2+objectBreak*6+textHeight*4, screenWidth - objectBreak*2, screenWidth - objectBreak*2)];
+    UIImageView *imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, portionsHeight+ingredientHeight*2+OBJECT_BREAK*6+textHeight*4, screenWidth - OBJECT_BREAK*2, screenWidth - OBJECT_BREAK*2)];
     [imageSelectView setImage:[UIImage imageNamed:@"addimage.png"]];
     imageSelectView.contentMode = UIViewContentModeCenter;
     imageSelectView.userInteractionEnabled = YES;

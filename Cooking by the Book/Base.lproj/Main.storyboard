@@ -205,10 +205,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="5El-0A-l9S" kind="show" identifier="ProfileViewController" id="iPB-NQ-qXK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V02-rt-DB6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1593" y="2167"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="q2v-Br-qWO">
+            <objects>
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="5El-0A-l9S" customClass="ProfileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1XB-y3-ThC"/>
+                        <viewControllerLayoutGuide type="bottom" id="01P-QZ-wzC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8dQ-ES-geh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PcK-yf-ZvQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2626" y="2167"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="YkA-G9-zHe">

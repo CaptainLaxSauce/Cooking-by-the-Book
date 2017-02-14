@@ -29,8 +29,8 @@
     if (self) {
         int totalWidth = frame.size.width;
         int totalHeight = frame.size.height;
-        int imageHeight = totalHeight - objectBreak*2;
-        int titleHeight = (totalHeight-objectBreak*3)/3;
+        int imageHeight = totalHeight - OBJECT_BREAK*2;
+        int titleHeight = (totalHeight-OBJECT_BREAK*3)/3;
         int tagWidth = totalHeight;
         
         self.recipe = Recipe_;
@@ -46,7 +46,7 @@
         swipeR.direction = UISwipeGestureRecognizerDirectionRight;
         [self addGestureRecognizer:swipeR];
         
-        UIImageView *imageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(objectBreak, objectBreak, imageHeight, imageHeight)];
+        UIImageView *imageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK, imageHeight, imageHeight)];
          if (Recipe_.image != nil){
              imageView_.image = Recipe_.image;
                   }
@@ -57,14 +57,14 @@
         [self addSubview:_imageView];
         
         
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, objectBreak, totalWidth - imageHeight - tagWidth - objectBreak*2, titleHeight)];
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+OBJECT_BREAK*2, OBJECT_BREAK, totalWidth - imageHeight - tagWidth - OBJECT_BREAK*2, titleHeight)];
         UIFontDescriptor * fontD = [titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
         titleLabel.font = [UIFont fontWithDescriptor:fontD size:0];
         titleLabel.text = Recipe_.title;
         titleLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:titleLabel];
         
-        UILabel *descLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+objectBreak*2, titleHeight+objectBreak*2, totalWidth - imageHeight - tagWidth - objectBreak*2, totalHeight - titleHeight - objectBreak*3)];
+        UILabel *descLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageHeight+OBJECT_BREAK*2, titleHeight+OBJECT_BREAK*2, totalWidth - imageHeight - tagWidth - OBJECT_BREAK*2, totalHeight - titleHeight - OBJECT_BREAK*3)];
         descLabel.text = Recipe_.desc;
         descLabel.numberOfLines = 3;
         descLabel.adjustsFontSizeToFitWidth = YES;

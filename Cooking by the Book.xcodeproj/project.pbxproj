@@ -25,6 +25,7 @@
 		045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */; };
 		045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A82011D207FB300A90D8E /* CookbookViewController.m */; };
 		046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */; };
+		0476861B1E529D7200A1051E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476861A1E529D7200A1051E /* ProfileViewController.m */; };
 		047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047813681D1A4F2F00D9F569 /* SignupViewController.m */; };
 		047E193F1D2751030011349C /* UICreateStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047E193E1D2751030011349C /* UICreateStepCell.m */; };
 		048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 048096661D2857D500E80F1A /* UIToggleTagButton.m */; };
@@ -107,6 +108,8 @@
 		045A82011D207FB300A90D8E /* CookbookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CookbookViewController.m; sourceTree = "<group>"; };
 		046D1C721D5C2325008B1092 /* DetailedRecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedRecipeViewController.h; sourceTree = "<group>"; };
 		046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedRecipeViewController.m; sourceTree = "<group>"; };
+		047686191E529D7200A1051E /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		0476861A1E529D7200A1051E /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		047813671D1A4F2F00D9F569 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		047813681D1A4F2F00D9F569 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		047E193D1D2751020011349C /* UICreateStepCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICreateStepCell.h; sourceTree = "<group>"; };
@@ -321,6 +324,8 @@
 				045A81F01D2072AC00A90D8E /* MyProfileViewController.m */,
 				0412FC6C1E4F8D0200763046 /* MyFriendsViewController.h */,
 				0412FC6D1E4F8D0200763046 /* MyFriendsViewController.m */,
+				047686191E529D7200A1051E /* ProfileViewController.h */,
+				0476861A1E529D7200A1051E /* ProfileViewController.m */,
 				049A52A01D937BBA00C91A3E /* DetailedPostViewController.h */,
 				049A52A11D937BBA00C91A3E /* DetailedPostViewController.m */,
 				045A82001D207FB300A90D8E /* CookbookViewController.h */,
@@ -485,6 +490,7 @@
 				0412FC6E1E4F8D0200763046 /* MyFriendsViewController.m in Sources */,
 				0412FC7D1E4FBF9D00763046 /* Constants.m in Sources */,
 				045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */,
+				0476861B1E529D7200A1051E /* ProfileViewController.m in Sources */,
 				047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */,
 				04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */,
 				04CEE7EB1E22AC85005D57CE /* CreatePostViewController.m in Sources */,

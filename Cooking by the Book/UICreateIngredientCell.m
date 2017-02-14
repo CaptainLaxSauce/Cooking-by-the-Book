@@ -22,7 +22,7 @@
     
     if (self){
         [self loadInterface:delBtn];
-        self.layer.cornerRadius = cornerRadius;
+        self.layer.cornerRadius = CORNER_RADIUS;
         self.clipsToBounds = YES;
     }
     return self;
@@ -36,7 +36,7 @@
 -(void)loadInterface:(BOOL)delBtn{
     int totalWidth = self.frame.size.width;
     int totalHeight = self.frame.size.height;
-    int quantityWidth = (totalWidth-objectBreak*2)/8;
+    int quantityWidth = (totalWidth-OBJECT_BREAK*2)/8;
     int unitWidth = quantityWidth*2;
     int titleWidth = totalWidth-unitWidth-quantityWidth*2;
     

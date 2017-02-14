@@ -34,6 +34,7 @@
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, width, imageHeight)];
     imageView.image = [UIImage imageNamed:@"blankface.png"];
+    imageView.userInteractionEnabled = YES;
     [self addSubview:imageView];
     self.profileImageView = imageView;
     

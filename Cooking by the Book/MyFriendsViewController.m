@@ -11,6 +11,7 @@
 #import "Friend.h"
 #import "UIFriendBox.h"
 #import "Helper.h"
+#import "ProfileViewController.h"
 
 @interface MyFriendsViewController ()
 
@@ -42,15 +43,15 @@
     
     //even numbers are in left column
     if (i % 2 == 0){
-        x = objectBreak;
+        x = OBJECT_BREAK;
 
     }
     //odd numbers in right column
     else {
-        x = objectBreak*2 + friendWidth;
+        x = OBJECT_BREAK*2 + friendWidth;
     }
     
-    y = objectBreak + i/2 * (friendHeight + objectBreak);
+    y = OBJECT_BREAK + i/2 * (friendHeight + OBJECT_BREAK);
     
     return(CGRectMake(x, y, friendWidth, friendHeight));
     
@@ -100,7 +101,9 @@
     dispatch_async(dispatch_get_main_queue(), ^(void){
         for (int i = 0; i < self.friendAry.count; i++){
             CGRect currFrame = [self getCurrFrame:i];
+            UITapGestureRecognizer *friendTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(friendTouch:)];
             UIFriendBox *frdBox = [[UIFriendBox alloc]initWithFrame:currFrame withFriend:(Friend *)self.friendAry[i]];
+            [frdBox addGestureRecognizer:friendTap];
             if (![((Friend*)self.friendAry[i]).imageName  isEqual: @""]){
                 [Helper getImageWithName:((Friend*)self.friendAry[i]).imageName withCompletion:[self getAddImageCompletion:frdBox]];
             }
@@ -111,8 +114,6 @@
             
         }
     });
-    
-    
 }
 
 -(CompletionWeb) getAddImageCompletion:(UIFriendBox *)box{
@@ -123,16 +124,25 @@
     return addImageCompletion;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"ProfileViewController"]){
+        ProfileViewController *controller = (ProfileViewController *)segue.destinationViewController;
+        controller.frd = ((UIFriendBox *)sender).frd;
+        
+    }
+}
 
+-(void) friendTouch:(UIGestureRecognizer *)sender {
+    [self performSegueWithIdentifier:@"ProfileViewController" sender:(UIFriendBox *)sender.view];
+}
 
 -(void)loadInterface{
     self.navigationItem.title = @"Friends";
     
     obj = [DataClass getInstance];
     
-    friendWidth = (self.view.frame.size.width - objectBreak * 3) / 2;
+    friendWidth = (self.view.frame.size.width - OBJECT_BREAK * 3) / 2;
     friendHeight = friendWidth + (friendWidth * FRIEND_LABEL_FRACTION);
-    
     
     UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.scrollView = scrollView_;

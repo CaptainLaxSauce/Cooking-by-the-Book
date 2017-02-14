@@ -17,4 +17,5 @@
 @property (nonatomic,strong) NSMutableArray *imageAry;
 
 @property (nonatomic,strong) UIScrollView *scrollView;
+
 @end
