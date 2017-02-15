@@ -12,7 +12,7 @@
 @interface Recipe : NSObject
 
 @property (nonatomic,strong) NSString *title;
-@property (nonatomic,strong)  NSString *status;
+@property (nonatomic,strong) NSString *status;
 @property (nonatomic,strong) NSString *recipeCreateUser;
 @property (nonatomic,strong) NSString *recipeID;
 @property (nonatomic,strong) NSString *desc;
@@ -27,7 +27,6 @@
 @property (nonatomic,strong) NSString *imageName;
 @property (nonatomic,strong) NSNumber *rating;
 
--(id)init;
 -(id)initBasicWithTitle:(NSString *)title_
                  withID:(NSString *)recipeID_
                withDesc:(NSString *)desc_
@@ -35,7 +34,7 @@
              withTagAry:(NSArray *)tagAry_
              withRating:(NSNumber *)rating_;
 
--(id)initWithDictionary:(NSDictionary *)dict;
+-(id)initWithJSONDictionary:(NSDictionary *)dict;
 
 -(id)initDetailedWithTitle:(NSString *)title_
                     withID:(NSString *)recipeID_
@@ -48,6 +47,6 @@
             withPortionNum:(NSNumber *)portionNum_
          withIngredientAry:(NSArray *)ingredientAry_
                withStepAry:(NSArray *)stepAry_
-                 withImage:(UIImage *)image_
                 withRating:(NSNumber *)rating_;
+
 @end

@@ -10,15 +10,13 @@
 
 @implementation Ingredient
 
--(id)init{
-    return [self initWithName:nil withID:nil];
-}
-
--(id)initWithName:(NSString *)ingredientName_ withID:(NSString *)ingredientID_{
+-(id)initWithTitle:(NSString *)title_ withID:(NSString *)ingredientID_ withUnitName:(NSString *)unitName_ withUnitQuantity:(NSString *)unitQuantity_{
     self = [super init];
     if (self){
         self.ingredientID = ingredientID_;
-        self.ingredientName = ingredientName_;
+        self.title = title_;
+        self.unitName = unitName_;
+        self.unitQuantity = unitQuantity_;
     }
     return self;
 }   

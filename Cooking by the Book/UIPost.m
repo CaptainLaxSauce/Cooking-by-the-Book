@@ -82,7 +82,7 @@
         
         obj = [DataClass getInstance];
         if (self.recipe == nil){
-            self.recipe = [obj getRecipe:recipeID_];
+            self.recipe = [obj getRecipeFromCookbook:recipeID_];
         }
         
         UICookbookRecipeCell *recipeCell = [[UICookbookRecipeCell alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK + textHeight*2, objectWidth, textHeight*3 + OBJECT_BREAK*2) withRecipe:self.recipe];

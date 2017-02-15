@@ -8,12 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyProfileViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MyProfileViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIImageView *profileImageView;
-@property (nonatomic, strong) UILabel *titleLabel;
-
--(void)refreshPosts;
+@property (nonatomic,strong) NSMutableArray *postAry;
 
 @end

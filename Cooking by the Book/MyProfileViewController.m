@@ -7,10 +7,12 @@
 //
 
 #import "MyProfileViewController.h"
+#import "DetailedPostViewController.h"
 #import "UIColor+CustomColors.h"
 #import "DataClass.h"
 #import "Helper.h"
 #import "UIPost.h"
+#import "Post.h"
 #import "UIAchievementBar.h"
 #import "Constants.h"
 
@@ -28,56 +30,50 @@
     int postHeight;
     int acheivementHeight;
     int currPostPos;
-    NSMutableArray *postAry;
     UIImageView *imageSelectView;
+    UITableView *postTableView;
     DataClass *obj;
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    self.navigationItem.title = @"Profile";
-}
-
 -(void)refreshPosts{
+    [self.postAry removeAllObjects];
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.userId] withURLEnd:@"getUserPosts" withCompletionHandler:[self getUserPostsCompletion]];
     
-    [self resetcurrPostPos];
-    
-    [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [postAry removeAllObjects];
-    
-    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@" ,obj.userId] withURLEnd:@"getUserPosts" withCompletionHandler:[self getUserPostsCompletion]];
-    
-
 }
 
 -(CompletionWeb) getUserPostsCompletion {
     CompletionWeb userPostCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
         NSDictionary *jsonPostDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
         NSArray *jsonPostAry = [jsonPostDict objectForKey:@"postsInfo"];
-
-        dispatch_async(dispatch_get_main_queue(), ^(void)
-                       {
-                           for (int i = 0; i < jsonPostAry.count; i++)
-                           {
-                               NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
-                               [self addPost:postDict];
-                           }
-                       });
-
+        
+        for (int i = 0; i < jsonPostAry.count; i++)
+        {
+            NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
+            Post *post = [[Post alloc]initWithPostID:[postDict objectForKey:@"postID"]
+                                          withCreatorID:[postDict objectForKey:@"postCreatorID"]
+                                              withTitle:[postDict objectForKey:@"postTitle"]
+                                               withBody:[postDict objectForKey:@"postBody"]
+                                           withRecipeID:[postDict objectForKey:@"postRecipeID"]
+                                           withDateTime:[Helper fromUTC:[postDict objectForKey:@"postDateTime"]]
+                                          withLikeCount:[postDict objectForKey:@"postLikesNumber"]
+                                       withCommentCount:[postDict objectForKey:@"postCommentsNumber"]];
+            
+            
+            [self.postAry addObject:post];
+        }
     };
     
     return userPostCompletion;
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [self refreshPosts];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     [self loadInterface];
     
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [self refreshPosts];
 }
 
 -(void)editProfileTouch:(id)sender {
@@ -123,7 +119,6 @@
 
 
 -(void)loadInterface{
-    
     //declare constants
     screenHeight = self.view.frame.size.height;
     screenWidth = self.view.frame.size.width;
@@ -138,17 +133,13 @@
     postHeight = textHeight*6;
     obj = [DataClass getInstance];
     
-    self.view.backgroundColor = [UIColor primaryColor];
+    self.navigationItem.title = @"Profile";
+    
+    UIBarButtonItem *friendsButton = [[UIBarButtonItem alloc] initWithTitle:@"Friends" style:UIBarButtonItemStylePlain target:self action:@selector(friendsTouch:)];
+    self.navigationItem.rightBarButtonItem = friendsButton;
+    
     //UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editProfileTouch:)];
     //self.navigationItem.leftBarButtonItem = editButton;
-    
-    //add scroll view
-    UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight + navBarHeight, screenWidth, scrollHeight)];
-    scrollView_.backgroundColor = [UIColor customGrayColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    [scrollView_ setContentSize:CGSizeMake(objectWidth, OBJECT_BREAK*3 + imageWidth + textHeight*2)];
-    self.scrollView = scrollView_;
-    [self.view addSubview:scrollView_];
     
     /*
     UIImageView *profileImageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, OBJECT_BREAK, imageWidth, imageWidth)];
@@ -165,7 +156,6 @@
     [[imageSelectView layer] setBorderColor:[UIColor blackColor].CGColor];
     UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTouch:)];
     [imageSelectView addGestureRecognizer:imageTap];
-    [self.scrollView addSubview:imageSelectView];
     
     UIImageView *cameraImageView = [[UIImageView alloc]initWithFrame:CGRectMake(imageSelectView.frame.size.width - imageSelectView.frame.size.width/8 - 5, 0, imageSelectView.frame.size.width/8, imageSelectView.frame.size.width/8)];
     [cameraImageView setImage:[UIImage imageNamed:@"cameraicon.png"]];
@@ -179,51 +169,111 @@
     titleLabel_.text = [NSString stringWithFormat:@"Chef %@",[obj.profileDict objectForKey:@"userName"]];
     UIFontDescriptor * fontD = [titleLabel_.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
     titleLabel_.font = [UIFont fontWithDescriptor:fontD size:20];
-    [self.scrollView addSubview:titleLabel_];
     
     UIAchievementBar *achBar = [[UIAchievementBar alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*3 + imageWidth + textHeight, objectWidth, acheivementHeight)];
-    [self.scrollView addSubview:achBar];
-    
-    UIBarButtonItem *friendsButton = [[UIBarButtonItem alloc] initWithTitle:@"Friends" style:UIBarButtonItemStylePlain target:self action:@selector(friendsTouch:)];
-    self.navigationItem.rightBarButtonItem = friendsButton;
-    
-    [self resetcurrPostPos];
     
 }
 
 -(void)addPost:(NSDictionary *)postDict{
     
-    UIPost *post = [[UIPost alloc]initWithFrame:CGRectMake(0, currPostPos, screenWidth, postHeight)
-                                     withPostID:[postDict objectForKey:@"postID"]
-                                  withCreatorID:[postDict objectForKey:@"postCreatorID"]
-                                      withTitle:[postDict objectForKey:@"postTitle"]
-                                       withBody:[postDict objectForKey:@"postBody"]
-                                   withRecipeID:[postDict objectForKey:@"postRecipeID"]
-                                   withDateTime:[Helper fromUTC:[postDict objectForKey:@"postDateTime"]]
-                                  withLikeCount:[postDict objectForKey:@"postLikesNumber"]
-                               withCommentCount:[postDict objectForKey:@"postCommentsNumber"]];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchPost:)];
-    [post addGestureRecognizer:tap];
-     
-    [postAry addObject:post];
-    [self.scrollView addSubview:post];
-    
-    currPostPos = currPostPos + post.frame.size.height + OBJECT_BREAK;
-    [self.scrollView setContentSize:CGSizeMake(objectWidth, currPostPos)];
+
     
 }
 
--(void)touchPost:(UITapGestureRecognizer *)sender{
-    UIPost *post = (UIPost *)sender.view;
-    obj.currDetailedPost = post;
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.postAry count];
+    //return the number of recipes found or max 20
     
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 92;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *SimpleIdentifier = @"SimpleIdentifier";
+    UITableViewCell *cell = [postTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
+    }
+    
+    Post *post = self.postAry[indexPath.row];
+    
+    cell.textLabel.text = post.title;
+    cell.detailTextLabel.text = post.body;
+    cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
+    
+    //retrieve image from server if it hasn't been already
+    /*
+    if (![post.imageName  isEqual: @""] && recipe.image == nil){
+        CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+            recipe.image = [UIImage imageWithData:postData];
+            NSLog(@"adding image with imagename = %@",recipe.imageName);
+            if (recipe.image) {
+                cell.imageView.image = recipe.image;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [recipeTableView reloadData];
+            });
+        };
+        
+        [Helper getImageWithName:recipe.imageName withCompletion:addImageCompletion];
+    }
+    else if (recipe.image){
+        cell.imageView.image = recipe.image;
+    }
+    */
+    
+    //[cell.contentView addSubview:starView];
+    
+    return cell;
+}
+
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
+    Post *post = self.postAry[indexPath.row];
+    id sender = post;
     [self performSegueWithIdentifier:@"DetailedPostViewController" sender:sender];
     
+    
 }
 
--(void)resetcurrPostPos{
-    currPostPos = OBJECT_BREAK*4 + imageWidth + acheivementHeight + textHeight;
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"DetailedPostViewController"]){
+        DetailedPostViewController *controller = (DetailedPostViewController *)segue.destinationViewController;
+        controller.post = ((Post *)sender);
+        controller.postId = ((Recipe *)sender).recipeID;
+    }
+    
+}
+
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                 {
+                                     //delete post from server and remove it from view
+                                     //[obj addRecipe:self.recipeAry[indexPath.row]];
+                                     
+                                     //retract the button
+                                     [tableView beginUpdates];
+                                     [tableView setEditing:NO animated:NO];
+                                     [tableView endUpdates];
+                                 }];
+    delete.backgroundColor = [UIColor redColor];
+    
+    return @[delete];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Nothing gets called here if you invoke `tableView:editActionsForRowAtIndexPath:` according to Apple docs so just leave this method blank
 }
 
 @end

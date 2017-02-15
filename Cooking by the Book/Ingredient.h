@@ -10,10 +10,11 @@
 
 @interface Ingredient : NSObject
 
-@property (nonatomic,strong) NSString *ingredientName;
+@property (nonatomic,strong) NSString *title;
 @property (nonatomic,strong) NSString *ingredientID;
+@property (nonatomic,strong) NSString *unitName;
+@property (nonatomic,strong) NSString *unitQuantity;
 
--(id)init;
--(id)initWithName:(NSString *)ingredientName withID:(NSString *)ingredientID;
+-(id)initWithTitle:(NSString *)title_ withID:(NSString *)ingredientID_ withUnitName:(NSString *)unitName_ withUnitQuantity:(NSString *)unitQuantity_;
 
 @end

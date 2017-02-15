@@ -38,14 +38,11 @@ static DataClass *instance = nil;
         NSDictionary *recipeDict = [jsonCookbookAry_ objectAtIndex:i];
         NSArray *tagAry = [recipeDict objectForKey:@"tagInfo"];
         NSMutableArray *tagNumAry = [[NSMutableArray alloc]init];
-        NSLog(@"tagAry count = %lu",(unsigned long)tagAry.count);
         
         for (int ii=0;ii<tagAry.count;ii++){
             NSDictionary *tagDict = [tagAry objectAtIndex:ii];
             if ([tagDict objectForKey:@"tagID"] != (id)[NSNull null]){
                 [tagNumAry addObject:[tagDict objectForKey:@"tagID"]];
-                NSLog(@"tagID = %@",[tagDict objectForKey:@"tagID"]);
-                NSLog(@"tagAry count inside ii loop = %lu",(unsigned long)tagAry.count); 
             }
 
         }
@@ -55,10 +52,8 @@ static DataClass *instance = nil;
                                                                        withDesc:[recipeDict objectForKey:@"recipeDescription"]
                                                                   withImageName:[recipeDict objectForKey:@"recipeImage"]
                                                                      withTagAry:tagNumAry
-                                                                     withRating:[NSNumber numberWithInteger:3]];//[recipeDict objectForKey:@"recipeRating"]]; need get from server 
-        NSLog(@"temp recipe properties = %@ %@ %@ %@ %@",tempRecipe.title, tempRecipe.recipeID, tempRecipe.desc, tempRecipe.tagAry, tempRecipe.imageName);
+                                                                     withRating:[NSNumber numberWithInteger:3]];//[recipeDict objectForKey:@"recipeRating"]]; need get from server
         [self.cookbookAry addObject:tempRecipe];
-        NSLog(@"Cookbook ary count after initialization = %lu",(unsigned long)self.cookbookAry.count);
     }
     
     self.cookbookAry = [self alphebetizeAry:self.cookbookAry withKey:@"title"];
@@ -69,7 +64,7 @@ static DataClass *instance = nil;
     self.cookbookAry = [self alphebetizeAry:self.cookbookAry withKey:@"title"];
 }
 
--(Recipe *)getRecipe:(NSString *)recipeID{
+-(Recipe *)getRecipeFromCookbook:(NSString *)recipeID{
     NSArray *recipeAry = [[NSArray alloc]initWithArray:self.cookbookAry];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recipeID MATCHES %@", recipeID];
     NSArray *filteredAry = [recipeAry filteredArrayUsingPredicate:predicate];
@@ -106,7 +101,7 @@ static DataClass *instance = nil;
     NSLog (@"ingredientCount = %lu",(unsigned long)coreIngAry.count);
     for (int i=0;i<coreIngAry.count;i++){
         NSManagedObject *coreIngredient = [coreIngAry objectAtIndex:i];
-        Ingredient *tempIng = [[Ingredient alloc]initWithName:[coreIngredient valueForKey:@"ingredientName"] withID:[coreIngredient valueForKey:@"ingredientID"]];
+        Ingredient *tempIng = [[Ingredient alloc]initWithTitle:[coreIngredient valueForKey:@"ingredientName"] withID:[coreIngredient valueForKey:@"ingredientID"] withUnitName:@"" withUnitQuantity:@""];
         [dataIngAry addObject:tempIng];
         NSLog(@"Data Ingredient ID = %@",[coreIngredient valueForKey:@"ingredientID"]);
         NSLog(@"Data IngredientName = %@",[coreIngredient valueForKey:@"ingredientName"]);
@@ -114,7 +109,7 @@ static DataClass *instance = nil;
     self.ingredientAry = dataIngAry;
     NSLog(@"Data IngredientAry count = %lu",(unsigned long)self.ingredientAry.count);
     for (Ingredient *temp in self.ingredientAry){
-        NSLog(@"dataclass ing id = %@, name = %@",temp.ingredientID,temp.ingredientName);
+        NSLog(@"dataclass ing id = %@, name = %@",temp.ingredientID,temp.title);
     }
 }
 

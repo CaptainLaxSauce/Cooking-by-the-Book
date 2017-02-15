@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Post.h"
 
 @interface DetailedPostViewController : UIViewController
+
+@property (nonatomic,strong) NSString *postId;
+@property (nonatomic,strong) Post *post;
+
 
 @end

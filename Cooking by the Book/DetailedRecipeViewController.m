@@ -93,7 +93,7 @@
     
     DataClass *obj = [DataClass getInstance];
     if (self.recipe == nil){
-        self.recipe = [obj getRecipe:self.recipeID];
+        self.recipe = [obj getRecipeFromCookbook:self.recipeID];
     }
     
     self.navigationItem.title = [NSString stringWithFormat:@"%@",self.recipe.title];

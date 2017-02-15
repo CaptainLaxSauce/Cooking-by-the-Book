@@ -139,7 +139,7 @@ HCSStarRatingView *starView;
     [self.view addGestureRecognizer:tap];
     
     obj = [DataClass getInstance];
-    Recipe *recipe = [obj getRecipe:self.recipeID];
+    Recipe *recipe = [obj getRecipeFromCookbook:self.recipeID];
     self.navigationItem.title = [NSString stringWithFormat:@"Create Post"];
     self.view.backgroundColor = [UIColor primaryColor];
     

@@ -69,7 +69,7 @@
                 NSLog(@"curr recipe title = %@",[recipeDict objectForKey:@"recipeTitle"]);
                 //TODO - need to change what is returned from the server to match getRecipe
                 
-                Recipe *recipe = [[Recipe alloc]initWithDictionary:recipeDict];
+                Recipe *recipe = [[Recipe alloc]initWithJSONDictionary:recipeDict];
                 [self.recipeAry addObject:recipe];
                 
                 if (i == recipeJSONAry.count - 1){
