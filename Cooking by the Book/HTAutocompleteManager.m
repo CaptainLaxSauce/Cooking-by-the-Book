@@ -332,7 +332,7 @@ static HTAutocompleteManager *sharedManager;
         static NSArray *ingredientAutocompleteArray;
         dispatch_once(&ingredientOnceToken, ^
                       {
-                          ingredientAutocompleteArray = (NSArray*) [obj.ingredientAry valueForKeyPath:@"ingredientName"];
+                          ingredientAutocompleteArray = (NSArray*) [obj.ingredientAry valueForKeyPath:@"title"];
                           
                           
                           NSLog(@"ingAry count = %lu",(unsigned long)obj.ingredientAry.count);

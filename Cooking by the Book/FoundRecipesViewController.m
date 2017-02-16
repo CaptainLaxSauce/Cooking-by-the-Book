@@ -69,14 +69,17 @@
     //retrieve image from server if it hasn't been already
     if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
             CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
-            recipe.image = [UIImage imageWithData:postData];
-            NSLog(@"adding image with imagename = %@",recipe.imageName);
-            if (recipe.image) {
-                cell.imageView.image = recipe.image;
-            }
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                [recipeTableView reloadData];
-            });
+            UIImage *retImage = [UIImage imageWithData:postData];
+                NSLog(@"in completion handler for addImage");
+                if (retImage != nil){
+                    NSLog(@"adding image with imagename = %@ with title %@ with indexPath %ld",recipe.imageName, recipe.title, (long)indexPath.row);
+                    recipe.image = retImage;
+                    cell.imageView.image = recipe.image;
+                    dispatch_async(dispatch_get_main_queue(), ^(void){
+                        [recipeTableView reloadData];
+                    });
+                }
+
         };
         
         [Helper getImageWithName:recipe.imageName withCompletion:addImageCompletion];

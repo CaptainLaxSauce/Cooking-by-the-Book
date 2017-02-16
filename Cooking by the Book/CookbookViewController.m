@@ -14,6 +14,7 @@
 #import "DetailedRecipeViewController.h"
 #import "Helper.h"
 #import "HCSStarRatingView.h"
+#import "Constants.h"
 
 @interface CookbookViewController()
 
@@ -21,21 +22,13 @@
 
 @implementation CookbookViewController
 {
-    
     DataClass *obj;
-
 }
-
-typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSError *error);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadInterface];
     
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    self.navigationItem.title = @"Cookbook";
 }
 
 -(void)deleteRecipe:(NSIndexPath *) indexPath{
@@ -94,7 +87,10 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.recipeAry count];
+    if (self.searchController.active && ![self.searchController.searchBar.text  isEqual: @""]) {
+        return self.searchResults.count;
+    }
+    return self.recipeAry.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -109,7 +105,14 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
     }
     
-    Recipe *recipe = self.recipeAry[indexPath.row];
+    Recipe *recipe = [[Recipe alloc]init];
+    if (self.searchController.active && ![self.searchController.searchBar.text isEqual: @""]){
+        recipe = self.searchResults[indexPath.row];
+    }
+    else{
+        recipe = self.recipeAry[indexPath.row];
+    }
+
     
     cell.textLabel.text = recipe.title;
     cell.detailTextLabel.text = recipe.desc;
@@ -117,7 +120,7 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
     
     //retrieve image from server if it hasn't been already
     if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
-        completionBlock addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+        CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
             recipe.image = [UIImage imageWithData:postData];
 
             if (recipe.image) {
@@ -181,6 +184,17 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
     //Nothing gets called here if you invoke `tableView:editActionsForRowAtIndexPath:` according to Apple docs so just leave this method blank
 }
 
+-(void)filterContentForSearchText:(NSString *)searchText scope:(NSString*)scope {
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"%K contains %@", @"title", searchText];
+    self.searchResults = [[NSArray alloc]initWithArray:[self.recipeAry filteredArrayUsingPredicate:resultPredicate]];
+    
+    [self.recipeTableView reloadData];
+}
+
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    [self filterContentForSearchText:searchController.searchBar.text scope:@"ALL"];
+}
+
 -(void)loadInterface{
     //declare constants
     int screenHeight = self.view.frame.size.height;
@@ -188,6 +202,8 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
     self.view.backgroundColor = [UIColor primaryColor];
     //int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     //int navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    
+    self.navigationItem.title = @"Cookbook";
     
     
     obj = [DataClass getInstance];
@@ -202,6 +218,17 @@ typedef void (^completionBlock)(NSData *postData, NSURLResponse *response, NSErr
 
     UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createRecipeTouch:)];
     self.navigationItem.rightBarButtonItem = createButton;
+    
+    UISearchController *searchController = [[UISearchController alloc]initWithSearchResultsController: nil];
+    searchController.searchResultsUpdater = self;
+    searchController.dimsBackgroundDuringPresentation = false;
+    searchController.definesPresentationContext = true;
+    self.searchController = searchController;
+    
+    // Install the search bar as the table header.
+    self.recipeTableView.tableHeaderView = searchController.searchBar;
+    self.recipeTableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height);
+    
     
 }
 

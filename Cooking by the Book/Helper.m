@@ -163,7 +163,7 @@
 
 +(NSString *)ingName2Id:(NSString *)name {
     DataClass *obj = [DataClass getInstance];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ingredientName MATCHES %@", name];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title MATCHES %@", name];
     NSArray *filteredAry = [obj.ingredientAry filteredArrayUsingPredicate:predicate];
     NSLog(@"filteredAry created with count %lu",(unsigned long)filteredAry.count);
     

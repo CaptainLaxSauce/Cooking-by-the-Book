@@ -145,7 +145,7 @@
                 NSDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
                 NSString *unitName = [ingredientDict objectForKey:@"unitName"];
                 NSString *unitQuantity = [ingredientDict objectForKey:@"unitQuantity"];
-                NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
+                NSString *ingredientName = [ingredientDict objectForKey:@"title"];
                 ingLabel.text = [NSString stringWithFormat:@"%@ %@ %@", unitQuantity, unitName, ingredientName];
                 ingLabel.backgroundColor = [UIColor whiteColor];
                 ingLabel.layer.cornerRadius = CORNER_RADIUS;

@@ -94,7 +94,7 @@
     NSMutableArray *ingAry = [[NSMutableArray alloc]init];
     for (int i = 0; i < jsonIngAry.count; i++){
         NSDictionary *ingDict = [jsonIngAry objectAtIndex:i];
-        Ingredient *ing = [[Ingredient alloc]initWithTitle:[ingDict objectForKey:@"ingredientName"]
+        Ingredient *ing = [[Ingredient alloc]initWithTitle:[ingDict objectForKey:@"title"]
                                                    withID:nil
                                              withUnitName:[ingDict objectForKey:@"unitName"]
                                          withUnitQuantity:[ingDict objectForKey:@"unitQuantity"]];

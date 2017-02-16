@@ -136,6 +136,10 @@
     [self performSegueWithIdentifier:@"ProfileViewController" sender:(UIFriendBox *)sender.view];
 }
 
+-(void) addFriendsTouch:(id)sender{
+    [self performSegueWithIdentifier:@"AddFriendsViewController" sender:sender];
+}
+
 -(void)loadInterface{
     self.navigationItem.title = @"Friends";
     
@@ -143,6 +147,9 @@
     
     friendWidth = (self.view.frame.size.width - OBJECT_BREAK * 3) / 2;
     friendHeight = friendWidth + (friendWidth * FRIEND_LABEL_FRACTION);
+    
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addFriendsTouch:)];
+    self.navigationItem.rightBarButtonItem = addButton;
     
     UIScrollView *scrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.scrollView = scrollView_;

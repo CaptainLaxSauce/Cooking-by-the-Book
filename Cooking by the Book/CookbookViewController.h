@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CookbookViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface CookbookViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate>
 
 typedef enum TagType : int{
     quick = 0,
@@ -20,6 +20,8 @@ typedef enum TagType : int{
 
 @property (nonatomic,strong) NSMutableArray *recipeAry;
 @property (nonatomic,strong) UITableView *recipeTableView;
+@property (nonatomic,strong) UISearchController *searchController;
+@property (nonatomic,strong) NSArray *searchResults;
 @property (nonatomic,strong) UIButton *createRecipeButton;
 
 -(void)createRecipeTouch:(id)sender;

@@ -207,6 +207,7 @@
                     </view>
                     <connections>
                         <segue destination="5El-0A-l9S" kind="show" identifier="ProfileViewController" id="iPB-NQ-qXK"/>
+                        <segue destination="zJp-cN-rTM" kind="show" identifier="AddFriendsViewController" id="9d0-kt-yhZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V02-rt-DB6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -229,7 +230,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PcK-yf-ZvQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2626" y="2167"/>
+            <point key="canvasLocation" x="3305" y="2001"/>
+        </scene>
+        <!--Add Friends View Controller-->
+        <scene sceneID="Q0Z-bO-hSB">
+            <objects>
+                <viewController storyboardIdentifier="AddFriendsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zJp-cN-rTM" customClass="AddFriendsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lXU-eZ-Svt"/>
+                        <viewControllerLayoutGuide type="bottom" id="y97-sw-0du"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="umR-GV-Hcc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sXK-qo-23X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3305" y="2733"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="YkA-G9-zHe">

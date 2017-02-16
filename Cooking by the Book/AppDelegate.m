@@ -98,7 +98,7 @@
             for (int i=0;i<ingredientAry.count;i++){
                 NSMutableDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
                 NSString *ingredientID = [ingredientDict objectForKey:@"ingredientID"];
-                NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
+                NSString *ingredientName = [ingredientDict objectForKey:@"title"];
                 //NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
         
                 NSManagedObject *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"Ingredient" inManagedObjectContext:managedObjectContext];

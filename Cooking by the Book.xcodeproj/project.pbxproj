@@ -26,6 +26,7 @@
 		045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A82011D207FB300A90D8E /* CookbookViewController.m */; };
 		046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */; };
 		0476861B1E529D7200A1051E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476861A1E529D7200A1051E /* ProfileViewController.m */; };
+		0476861E1E53E9AF00A1051E /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476861D1E53E9AF00A1051E /* Post.m */; };
 		047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047813681D1A4F2F00D9F569 /* SignupViewController.m */; };
 		047E193F1D2751030011349C /* UICreateStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047E193E1D2751030011349C /* UICreateStepCell.m */; };
 		048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 048096661D2857D500E80F1A /* UIToggleTagButton.m */; };
@@ -46,6 +47,7 @@
 		04CEE81D1E2BF255005D57CE /* HTAutocompleteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE81A1E2BF255005D57CE /* HTAutocompleteManager.m */; };
 		04CEE81E1E2BF255005D57CE /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE81C1E2BF255005D57CE /* HTAutocompleteTextField.m */; };
 		04CEE8211E2C08D1005D57CE /* FoundRecipesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CEE8201E2C08D1005D57CE /* FoundRecipesViewController.m */; };
+		04D77FD41E55480100144DBD /* AddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D77FD31E55480100144DBD /* AddFriendsViewController.m */; };
 		04E00D6B1D31BFE30016FED8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E00D6A1D31BFE30016FED8 /* CoreData.framework */; };
 		04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */; };
 		04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5ED341D3DBA18004E9474 /* Recipe.m */; };
@@ -110,6 +112,8 @@
 		046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedRecipeViewController.m; sourceTree = "<group>"; };
 		047686191E529D7200A1051E /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		0476861A1E529D7200A1051E /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		0476861C1E53E9AF00A1051E /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		0476861D1E53E9AF00A1051E /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		047813671D1A4F2F00D9F569 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		047813681D1A4F2F00D9F569 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		047E193D1D2751020011349C /* UICreateStepCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICreateStepCell.h; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 		04CEE81C1E2BF255005D57CE /* HTAutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteTextField.m; sourceTree = "<group>"; };
 		04CEE81F1E2C08D1005D57CE /* FoundRecipesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoundRecipesViewController.h; sourceTree = "<group>"; };
 		04CEE8201E2C08D1005D57CE /* FoundRecipesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoundRecipesViewController.m; sourceTree = "<group>"; };
+		04D77FD21E55480100144DBD /* AddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsViewController.h; sourceTree = "<group>"; };
+		04D77FD31E55480100144DBD /* AddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsViewController.m; sourceTree = "<group>"; };
 		04E00D6A1D31BFE30016FED8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		04E00D6D1D31C1020016FED8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		04E5ED331D3DBA18004E9474 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -256,15 +262,16 @@
 				04B49E431CC7063500312485 /* main.m */,
 				04B49E451CC7063500312485 /* AppDelegate.h */,
 				04B49E461CC7063500312485 /* AppDelegate.m */,
-				045A81FC1D20767E00A90D8E /* Custom UI Elements */,
-				04B49E7E1CC70E6D00312485 /* ViewControllers */,
-				04B49E4B1CC7063500312485 /* Main.storyboard */,
 				04B49E751CC70A5A00312485 /* TabBarControllerDelegate.h */,
 				04B49E761CC70A5A00312485 /* TabBarControllerDelegate.m */,
+				045A81FC1D20767E00A90D8E /* Custom UI Elements */,
+				04B49E7E1CC70E6D00312485 /* ViewControllers */,
+				04D77FCE1E5544EA00144DBD /* Data Elements */,
+				04B49E421CC7063500312485 /* Supporting Files */,
+				04B49E4B1CC7063500312485 /* Main.storyboard */,
 				04B49E4E1CC7063500312485 /* Assets.xcassets */,
 				04B49E501CC7063500312485 /* LaunchScreen.storyboard */,
 				04B49E531CC7063500312485 /* Info.plist */,
-				04B49E421CC7063500312485 /* Supporting Files */,
 			);
 			path = "Cooking by the Book";
 			sourceTree = "<group>";
@@ -273,20 +280,12 @@
 			isa = PBXGroup;
 			children = (
 				04E00D6C1D31C1020016FED8 /* DataModel.xcdatamodeld */,
-				045A81EC1D2069A700A90D8E /* DataClass.h */,
-				045A81ED1D2069A700A90D8E /* DataClass.m */,
 				045A81E91D2060A200A90D8E /* Helper.h */,
 				045A81EA1D2060A200A90D8E /* Helper.m */,
 				04CEE8191E2BF255005D57CE /* HTAutocompleteManager.h */,
 				04CEE81A1E2BF255005D57CE /* HTAutocompleteManager.m */,
 				045931571D1902F5003D1C47 /* UIColor+CustomColors.h */,
 				045931581D1902F5003D1C47 /* UIColor+CustomColors.m */,
-				04E5ED331D3DBA18004E9474 /* Recipe.h */,
-				04E5ED341D3DBA18004E9474 /* Recipe.m */,
-				04EEBA161D73A7AE0036E0EA /* Ingredient.h */,
-				04EEBA171D73A7AE0036E0EA /* Ingredient.m */,
-				0412FC751E4FB28B00763046 /* Friend.h */,
-				0412FC761E4FB28B00763046 /* Friend.m */,
 				0412FC7B1E4FBF9D00763046 /* Constants.h */,
 				0412FC7C1E4FBF9D00763046 /* Constants.m */,
 			);
@@ -326,6 +325,8 @@
 				0412FC6D1E4F8D0200763046 /* MyFriendsViewController.m */,
 				047686191E529D7200A1051E /* ProfileViewController.h */,
 				0476861A1E529D7200A1051E /* ProfileViewController.m */,
+				04D77FD21E55480100144DBD /* AddFriendsViewController.h */,
+				04D77FD31E55480100144DBD /* AddFriendsViewController.m */,
 				049A52A01D937BBA00C91A3E /* DetailedPostViewController.h */,
 				049A52A11D937BBA00C91A3E /* DetailedPostViewController.m */,
 				045A82001D207FB300A90D8E /* CookbookViewController.h */,
@@ -344,6 +345,23 @@
 				0412FC821E5116BA00763046 /* TabBarViewController.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		04D77FCE1E5544EA00144DBD /* Data Elements */ = {
+			isa = PBXGroup;
+			children = (
+				045A81EC1D2069A700A90D8E /* DataClass.h */,
+				045A81ED1D2069A700A90D8E /* DataClass.m */,
+				04E5ED331D3DBA18004E9474 /* Recipe.h */,
+				04E5ED341D3DBA18004E9474 /* Recipe.m */,
+				04EEBA161D73A7AE0036E0EA /* Ingredient.h */,
+				04EEBA171D73A7AE0036E0EA /* Ingredient.m */,
+				0412FC751E4FB28B00763046 /* Friend.h */,
+				0412FC761E4FB28B00763046 /* Friend.m */,
+				0476861C1E53E9AF00A1051E /* Post.h */,
+				0476861D1E53E9AF00A1051E /* Post.m */,
+			);
+			name = "Data Elements";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -505,9 +523,11 @@
 				04CEE81E1E2BF255005D57CE /* HTAutocompleteTextField.m in Sources */,
 				04B49E471CC7063500312485 /* AppDelegate.m in Sources */,
 				045A81EB1D2060A200A90D8E /* Helper.m in Sources */,
+				04D77FD41E55480100144DBD /* AddFriendsViewController.m in Sources */,
 				045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */,
 				04CEE7F11E2300D0005D57CE /* UIAchievementBar.m in Sources */,
 				04CEE8211E2C08D1005D57CE /* FoundRecipesViewController.m in Sources */,
+				0476861E1E53E9AF00A1051E /* Post.m in Sources */,
 				047E193F1D2751030011349C /* UICreateStepCell.m in Sources */,
 				04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */,
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
