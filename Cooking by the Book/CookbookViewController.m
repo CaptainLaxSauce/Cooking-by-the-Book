@@ -32,26 +32,24 @@
 }
 
 -(void)deleteRecipe:(NSIndexPath *) indexPath{
-    Recipe *recipe = ((Recipe*)self.recipeAry[indexPath.row]);
-    NSString *post = [NSString stringWithFormat:@"recipeID=%@" ,recipe.recipeID];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"deleteRecipe"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
+    Recipe *recipe = [self getRecipeSelectedAtIndexPath:indexPath];
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"recipeID=%@", recipe.recipeID] withURLEnd:@"deleteRecipe" withCompletionHandler:[self getDeleteCompletionWeb:recipe]];
+}
+
+-(CompletionWeb)getDeleteCompletionWeb:(Recipe *)recipe {
+    CompletionWeb deleteCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
         NSString *ret = [[NSString alloc]initWithData:postData encoding:NSUTF8StringEncoding];
         if ([ret isEqual:@"1"]){
-            [obj deleteRecipe:recipe];
+            [obj deleteRecipeFromCookbook:recipe];
             [self reloadTableDataAsync];
-
+            
         }
         else{
             [self invalidDeletionAlert];
         }
-    }];
+    };
     
-    [dataTask resume];
-    
-    NSLog(@"deleted recipe %@",recipe.title);
+    return deleteCompletion;
 }
 
 -(void)reloadTableDataAsync{
@@ -94,7 +92,18 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 93;
+    return self.recipeTableView.frame.size.height / 6;
+}
+
+-(Recipe *) getRecipeSelectedAtIndexPath:(NSIndexPath *)indexPath{
+    Recipe *recipe = [[Recipe alloc]init];
+    if (self.searchController.active && ![self.searchController.searchBar.text isEqual: @""]){
+        recipe = self.searchResults[indexPath.row];
+    }
+    else{
+        recipe = self.recipeAry[indexPath.row];
+    }
+    return recipe;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -105,15 +114,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
     }
     
-    Recipe *recipe = [[Recipe alloc]init];
-    if (self.searchController.active && ![self.searchController.searchBar.text isEqual: @""]){
-        recipe = self.searchResults[indexPath.row];
-    }
-    else{
-        recipe = self.recipeAry[indexPath.row];
-    }
+    Recipe *recipe = [self getRecipeSelectedAtIndexPath:indexPath];
 
-    
     cell.textLabel.text = recipe.title;
     cell.detailTextLabel.text = recipe.desc;
     cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
@@ -151,7 +153,8 @@
 }
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
-    Recipe *recipe = self.recipeAry[indexPath.row];
+    Recipe *recipe = [self getRecipeSelectedAtIndexPath:indexPath];
+    
     id sender = recipe;
     [self performSegueWithIdentifier:@"DetailedRecipeViewController" sender:sender];
 
@@ -164,6 +167,7 @@
         controller.recipeID = ((Recipe *)sender).recipeID;
     }
     
+    self.searchController.active = NO;
 }
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {

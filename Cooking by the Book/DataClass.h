@@ -26,7 +26,7 @@
 -(void)initCookbookAry:(NSArray *)jsonCookbookAry_;
 -(void)addRecipe:(Recipe *)recipe;
 -(void)addImageToRecipe:(Recipe *)recipe withImage:(UIImage *)image;
--(void)deleteRecipe:(Recipe *)recipe;
+-(void)deleteRecipeFromCookbook:(Recipe *)recipe;
 -(Recipe *)getRecipeFromCookbook:(NSString *)recipeID;
 -(NSMutableArray *)alphebetizeAry:(NSMutableArray *)theArray withKey:(NSString *)key;
 -(void)initIngredientAry;

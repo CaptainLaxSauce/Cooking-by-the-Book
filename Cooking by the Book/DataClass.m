@@ -81,7 +81,7 @@ static DataClass *instance = nil;
     ((Recipe *) [self.cookbookAry objectAtIndex:[self.cookbookAry indexOfObject:recipe]]).image = image_;
 }
 
--(void)deleteRecipe:(Recipe *)recipe{
+-(void)deleteRecipeFromCookbook:(Recipe *)recipe{
     [self.cookbookAry removeObject:recipe];
 }
 
