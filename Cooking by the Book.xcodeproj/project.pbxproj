@@ -53,6 +53,7 @@
 		04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5ED341D3DBA18004E9474 /* Recipe.m */; };
 		04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E67AE51D32D4AA000371E5 /* UITagBox.m */; };
 		04EEBA181D73A7AE0036E0EA /* Ingredient.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EEBA171D73A7AE0036E0EA /* Ingredient.m */; };
+		04F297411E6C73EA00CDC502 /* UIPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F297401E6C73EA00CDC502 /* UIPostTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,8 @@
 		04EEBA161D73A7AE0036E0EA /* Ingredient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ingredient.h; sourceTree = "<group>"; };
 		04EEBA171D73A7AE0036E0EA /* Ingredient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ingredient.m; sourceTree = "<group>"; };
 		04EEC9481DBD2AE90056AF82 /* Cooking by the Book.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Cooking by the Book.entitlements"; sourceTree = "<group>"; };
+		04F2973F1E6C73EA00CDC502 /* UIPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPostTableViewCell.h; sourceTree = "<group>"; };
+		04F297401E6C73EA00CDC502 /* UIPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPostTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +230,8 @@
 				041A1AE81E483AB800AEAFA2 /* HCSStarRatingView.m */,
 				0412FC781E4FBB3400763046 /* UIFriendBox.h */,
 				0412FC791E4FBB3400763046 /* UIFriendBox.m */,
+				04F2973F1E6C73EA00CDC502 /* UIPostTableViewCell.h */,
+				04F297401E6C73EA00CDC502 /* UIPostTableViewCell.m */,
 			);
 			name = "Custom UI Elements";
 			sourceTree = "<group>";
@@ -532,6 +537,7 @@
 				04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */,
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
 				046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */,
+				04F297411E6C73EA00CDC502 /* UIPostTableViewCell.m in Sources */,
 				041A1AE91E483AB800AEAFA2 /* HCSStarRatingView.m in Sources */,
 				045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */,
 				0412FC771E4FB28B00763046 /* Friend.m in Sources */,

@@ -11,5 +11,6 @@
 @interface MyProfileViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic,strong) NSMutableArray *postAry;
+@property (nonatomic,strong) UITableView *postTableView;
 
 @end

@@ -23,6 +23,7 @@
 @implementation CookbookViewController
 {
     DataClass *obj;
+    int cellHeight;
 }
 
 - (void)viewDidLoad {
@@ -92,7 +93,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return self.recipeTableView.frame.size.height / 6;
+    return cellHeight;
 }
 
 -(Recipe *) getRecipeSelectedAtIndexPath:(NSIndexPath *)indexPath{
@@ -112,43 +113,44 @@
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
-    }
     
-    Recipe *recipe = [self getRecipeSelectedAtIndexPath:indexPath];
+    
+        Recipe *recipe = [self getRecipeSelectedAtIndexPath:indexPath];
 
-    cell.textLabel.text = recipe.title;
-    cell.detailTextLabel.text = recipe.desc;
-    cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
-    
-    //retrieve image from server if it hasn't been already
-    if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
-        CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
-            recipe.image = [UIImage imageWithData:postData];
-
-            if (recipe.image) {
-                cell.imageView.image = recipe.image;
-            }
-            
-            [self reloadTableDataAsync];
-    
-        };
+        cell.textLabel.text = recipe.title;
+        cell.detailTextLabel.text = recipe.desc;
+        cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
         
-        [Helper getImageWithName:recipe.imageName withCompletion:addImageCompletion];
-    }
-    else if (recipe.image){
-        cell.imageView.image = recipe.image;
-    }
+        //retrieve image from server if it hasn't been already
+        if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
+            CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+                recipe.image = [UIImage imageWithData:postData];
+
+                if (recipe.image) {
+                    cell.imageView.image = recipe.image;
+                }
+                
+                [self reloadTableDataAsync];
+        
+            };
+            
+            [Helper getImageWithName:recipe.imageName withCompletion:addImageCompletion];
+        }
+        else if (recipe.image){
+            cell.imageView.image = recipe.image;
+        }
     
-    HCSStarRatingView *starView = [[HCSStarRatingView alloc]initWithFrame:CGRectMake(120, 65, 120, 27)];
-    starView.maximumValue = 5;
-    starView.minimumValue = 0;
-    starView.value = [recipe.rating doubleValue];
-    starView.allowsHalfStars = YES;
-    starView.accurateHalfStars = YES;
-    starView.userInteractionEnabled = NO;
-    starView.tintColor = [UIColor starColor];
-    [cell.contentView addSubview:starView];
-    
+        HCSStarRatingView *starView = [[HCSStarRatingView alloc]initWithFrame:CGRectMake(cell.separatorInset.left * 2 + cellHeight, cellHeight*2/3, self.view.frame.size.width / 3, cellHeight / 3)];
+        starView.maximumValue = 5;
+        starView.minimumValue = 0;
+        starView.value = [recipe.rating doubleValue];
+        starView.allowsHalfStars = YES;
+        starView.accurateHalfStars = YES;
+        starView.userInteractionEnabled = NO;
+        starView.tintColor = [UIColor starColor];
+        [cell.contentView addSubview:starView];
+        
+    }
     return cell;
 }
 
@@ -219,6 +221,8 @@
     
     [self.view addSubview:recipeTableView];
     self.recipeTableView = recipeTableView;
+    
+    cellHeight = recipeTableView.frame.size.height / 6;
 
     UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createRecipeTouch:)];
     self.navigationItem.rightBarButtonItem = createButton;

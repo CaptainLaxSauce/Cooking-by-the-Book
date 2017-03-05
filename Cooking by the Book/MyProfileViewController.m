@@ -15,6 +15,7 @@
 #import "Post.h"
 #import "UIAchievementBar.h"
 #import "Constants.h"
+#import "UIPostTableViewCell.h"
 
 @implementation MyProfileViewController
 {
@@ -31,7 +32,6 @@
     int acheivementHeight;
     int currPostPos;
     UIImageView *imageSelectView;
-    UITableView *postTableView;
     DataClass *obj;
 }
 
@@ -46,34 +46,35 @@
         NSDictionary *jsonPostDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
         NSArray *jsonPostAry = [jsonPostDict objectForKey:@"postsInfo"];
         
+        NSLog(@"jsonPostAry = %@",jsonPostAry);
+        
         for (int i = 0; i < jsonPostAry.count; i++)
         {
             NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
-            Post *post = [[Post alloc]initWithPostID:[postDict objectForKey:@"postID"]
-                                          withCreatorID:[postDict objectForKey:@"postCreatorID"]
-                                              withTitle:[postDict objectForKey:@"postTitle"]
-                                               withBody:[postDict objectForKey:@"postBody"]
-                                           withRecipeID:[postDict objectForKey:@"postRecipeID"]
-                                           withDateTime:[Helper fromUTC:[postDict objectForKey:@"postDateTime"]]
-                                          withLikeCount:[postDict objectForKey:@"postLikesNumber"]
-                                       withCommentCount:[postDict objectForKey:@"postCommentsNumber"]];
-            
+            Post *post = [[Post alloc]initWithJSONDict:postDict];
+            NSLog(@"post title = %@",post.title);
             
             [self.postAry addObject:post];
         }
+        
+        NSLog(@"postAry before reloading table data = %@", self.postAry);
+        [self reloadTableDataAsync];
+        
     };
     
     return userPostCompletion;
+}
+
+-(void)reloadTableDataAsync{
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [self.postTableView reloadData];
+    });
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadInterface];
     
-}
-
--(void)viewDidAppear:(BOOL)animated {
-    [self refreshPosts];
 }
 
 -(void)editProfileTouch:(id)sender {
@@ -138,8 +139,9 @@
     UIBarButtonItem *friendsButton = [[UIBarButtonItem alloc] initWithTitle:@"Friends" style:UIBarButtonItemStylePlain target:self action:@selector(friendsTouch:)];
     self.navigationItem.rightBarButtonItem = friendsButton;
     
-    //UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editProfileTouch:)];
-    //self.navigationItem.leftBarButtonItem = editButton;
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStylePlain];
+    [self.view addSubview:tableView];
+    self.postTableView = tableView;
     
     /*
     UIImageView *profileImageView_ = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, OBJECT_BREAK, imageWidth, imageWidth)];
@@ -170,13 +172,18 @@
     UIFontDescriptor * fontD = [titleLabel_.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
     titleLabel_.font = [UIFont fontWithDescriptor:fontD size:20];
     
-    UIAchievementBar *achBar = [[UIAchievementBar alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*3 + imageWidth + textHeight, objectWidth, acheivementHeight)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, imageWidth + textHeight + OBJECT_BREAK * 3)];
+    [headerView addSubview:imageSelectView];
+    [headerView addSubview:titleLabel_];
     
-}
-
--(void)addPost:(NSDictionary *)postDict{
+    self.postTableView.tableHeaderView = headerView;
+    self.postTableView.dataSource = self;
+    self.postTableView.delegate = self;
     
-
+    self.postAry = [[NSMutableArray alloc]init];
+    
+    [self refreshPosts];
+    //UIAchievementBar *achBar = [[UIAchievementBar alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*3 + imageWidth + textHeight, objectWidth, acheivementHeight)];
     
 }
 
@@ -186,28 +193,30 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.postAry count];
+    NSLog(@"count of postAry = %lu",(unsigned long)self.postAry.count);
+    return self.postAry.count;
     //return the number of recipes found or max 20
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 92;
+    return self.postTableView.frame.size.height / 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *SimpleIdentifier = @"SimpleIdentifier";
-    UITableViewCell *cell = [postTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
+    UIPostTableViewCell *cell = [self.postTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
-    }
+        cell = [[UIPostTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
+    
     
     Post *post = self.postAry[indexPath.row];
     
-    cell.textLabel.text = post.title;
-    cell.detailTextLabel.text = post.body;
-    cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
+    cell.titleLabel.text = post.title;
+        NSLog(@"post.title = %@",post.title);
+    //cell.detailTextLabel.text = post.body;
+    //cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
     
     //retrieve image from server if it hasn't been already
     /*
@@ -231,7 +240,7 @@
     */
     
     //[cell.contentView addSubview:starView];
-    
+    }
     return cell;
 }
 
