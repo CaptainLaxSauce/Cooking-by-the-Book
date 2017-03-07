@@ -172,13 +172,15 @@
     UIFontDescriptor * fontD = [titleLabel_.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
     titleLabel_.font = [UIFont fontWithDescriptor:fontD size:20];
     
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, imageWidth + textHeight + OBJECT_BREAK * 3)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, imageWidth + textHeight + OBJECT_BREAK * 3 + 10)];
     [headerView addSubview:imageSelectView];
     [headerView addSubview:titleLabel_];
     
     self.postTableView.tableHeaderView = headerView;
     self.postTableView.dataSource = self;
     self.postTableView.delegate = self;
+    self.postTableView.rowHeight = self.postTableView.frame.size.height / 2;
+    self.postTableView.backgroundColor = [UIColor lightGrayColor];
     
     self.postAry = [[NSMutableArray alloc]init];
     
@@ -192,28 +194,35 @@
 }
 
 
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSLog(@"count of postAry = %lu",(unsigned long)self.postAry.count);
     return self.postAry.count;
     //return the number of recipes found or max 20
     
 }
-
+/*
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return self.postTableView.frame.size.height / 3;
 }
-
+*/
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *SimpleIdentifier = @"SimpleIdentifier";
     UIPostTableViewCell *cell = [self.postTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
     
     if (cell == nil) {
         cell = [[UIPostTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
+        
+        Post *post = self.postAry[indexPath.section];
     
-    
-    Post *post = self.postAry[indexPath.row];
-    
-    cell.titleLabel.text = post.title;
+        cell.titleLabel.text = post.title;
+        cell.bodyLabel.text = post.body;
+        cell.recipeTitleLabel.text = post.recipe.title;
+        cell.recipeDescLabel.text = post.recipe.desc;
+        cell.starRatingView.value = 3; //TODO add user rating value to posts
+        [cell.likeButton setTitle:[NSString stringWithFormat:@"%@ likes",post.likeCount] forState:UIControlStateNormal];
+        [cell.commentButton setTitle:[NSString stringWithFormat:@"%@ comments",post.commentCount] forState:UIControlStateNormal];
+        
         NSLog(@"post.title = %@",post.title);
     //cell.detailTextLabel.text = post.body;
     //cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
@@ -245,7 +254,7 @@
 }
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
-    Post *post = self.postAry[indexPath.row];
+    Post *post = self.postAry[indexPath.section];
     id sender = post;
     [self performSegueWithIdentifier:@"DetailedPostViewController" sender:sender];
     
