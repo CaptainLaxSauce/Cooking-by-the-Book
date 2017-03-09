@@ -13,6 +13,7 @@
 #import "Helper.h"
 #import "UIPost.h"
 #import "Post.h"
+#import "User.h"
 #import "UIAchievementBar.h"
 #import "Constants.h"
 #import "UIPostTableViewCell.h"
@@ -46,24 +47,68 @@
         NSDictionary *jsonPostDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
         NSArray *jsonPostAry = [jsonPostDict objectForKey:@"postsInfo"];
         
-        NSLog(@"jsonPostAry = %@",jsonPostAry);
-        
         for (int i = 0; i < jsonPostAry.count; i++)
         {
             NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
             Post *post = [[Post alloc]initWithJSONDict:postDict];
-            NSLog(@"post title = %@",post.title);
+
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",post.creatorID] withURLEnd:@"getProfile" withCompletionHandler:[self getUserCompletion:post]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"recipeID=%@",post.recipe.recipeID] withURLEnd:@"getImageThumbnail" withCompletionHandler:[self getRecipeImageCompletion:post.recipe]];
             
             [self.postAry addObject:post];
         }
         
-        NSLog(@"postAry before reloading table data = %@", self.postAry);
         [self reloadTableDataAsync];
         
     };
     
     return userPostCompletion;
 }
+
+-(CompletionWeb)getUserCompletion:(Post*)post{
+    CompletionWeb userCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
+        NSDictionary *jsonUserDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        
+        User *user = [[User alloc]initWithDict:jsonUserDict];
+        post.user = user;
+
+        if(![user.imageName isEqual:@""]){
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",user.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:[self getPosterImageCompletion:user]];
+        }
+    };
+    
+    return userCompletion;
+}
+
+-(CompletionWeb)getPosterImageCompletion:(User *)user{
+    CompletionWeb imageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
+        UIImage *image = [UIImage imageWithData:postData];
+        
+        if (image){
+            user.profileImage = image;
+        }
+        
+        [self reloadTableDataAsync];
+    };
+    return imageCompletion;
+}
+
+-(CompletionWeb)getRecipeImageCompletion:(Recipe*)recipe{
+    CompletionWeb imageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
+        UIImage *image = [UIImage imageWithData:postData];
+        
+        if (image){
+            recipe.image = image;
+        }
+        
+        [self reloadTableDataAsync];
+    };
+    return imageCompletion;
+}
+
+
+ 
+
 
 -(void)reloadTableDataAsync{
     dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -151,9 +196,7 @@
     */
     
     imageSelectView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth/2 - imageWidth/2, OBJECT_BREAK, imageWidth, imageWidth)];
-    [imageSelectView setImage:[UIImage imageNamed:@"addimage.png"]];
-    imageSelectView.contentMode = UIViewContentModeCenter;
-    imageSelectView.userInteractionEnabled = YES;
+    [imageSelectView setImage:[UIImage imageNamed:@"blankface.png"]];
     [[imageSelectView layer] setBorderWidth:2.0];
     [[imageSelectView layer] setBorderColor:[UIColor blackColor].CGColor];
     UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTouch:)];
@@ -161,10 +204,10 @@
     
     UIImageView *cameraImageView = [[UIImageView alloc]initWithFrame:CGRectMake(imageSelectView.frame.size.width - imageSelectView.frame.size.width/8 - 5, 0, imageSelectView.frame.size.width/8, imageSelectView.frame.size.width/8)];
     [cameraImageView setImage:[UIImage imageNamed:@"cameraicon.png"]];
-    cameraImageView.userInteractionEnabled = YES;
     UITapGestureRecognizer *cameraTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cameraTouch:)];
     [cameraImageView addGestureRecognizer:cameraTap];
     [imageSelectView addSubview:cameraImageView];
+    cameraImageView.hidden = TRUE;
     
     UILabel *titleLabel_ = [[UILabel alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*2 + imageWidth, objectWidth, textHeight)];
     titleLabel_.textAlignment = NSTextAlignmentCenter;
@@ -176,17 +219,26 @@
     [headerView addSubview:imageSelectView];
     [headerView addSubview:titleLabel_];
     
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]init];
+    [refreshControl addTarget:self action:@selector(refreshPosts) forControlEvents:UIControlEventValueChanged];
+    
+    self.postTableView.refreshControl = refreshControl;
     self.postTableView.tableHeaderView = headerView;
     self.postTableView.dataSource = self;
     self.postTableView.delegate = self;
     self.postTableView.rowHeight = self.postTableView.frame.size.height / 2;
-    self.postTableView.backgroundColor = [UIColor lightGrayColor];
+    self.postTableView.backgroundColor = [UIColor customGrayColor];
+    self.postTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.postAry = [[NSMutableArray alloc]init];
     
     [self refreshPosts];
     //UIAchievementBar *achBar = [[UIAchievementBar alloc]initWithFrame:CGRectMake(OBJECT_BREAK, OBJECT_BREAK*3 + imageWidth + textHeight, objectWidth, acheivementHeight)];
     
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    //[self refreshPosts];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -198,32 +250,28 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSLog(@"count of postAry = %lu",(unsigned long)self.postAry.count);
     return self.postAry.count;
-    //return the number of recipes found or max 20
     
 }
-/*
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return self.postTableView.frame.size.height / 3;
-}
-*/
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *SimpleIdentifier = @"SimpleIdentifier";
-    UIPostTableViewCell *cell = [self.postTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
+    UIPostTableViewCell *cell = (UIPostTableViewCell*)[self.postTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
+    NSLog(@"cellForRowCall with indexpath = %@",indexPath);
     
     if (cell == nil) {
         cell = [[UIPostTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
-        Post *post = self.postAry[indexPath.section];
-    
-        cell.titleLabel.text = post.title;
-        cell.bodyLabel.text = post.body;
-        cell.recipeTitleLabel.text = post.recipe.title;
-        cell.recipeDescLabel.text = post.recipe.desc;
-        cell.starRatingView.value = 3; //TODO add user rating value to posts
-        [cell.likeButton setTitle:[NSString stringWithFormat:@"%@ likes",post.likeCount] forState:UIControlStateNormal];
-        [cell.commentButton setTitle:[NSString stringWithFormat:@"%@ comments",post.commentCount] forState:UIControlStateNormal];
+        //NSLog(@"creatorID = %@",post.creatorID);
+        /*
+        if (![post.creatorID isEqual: @""]){
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",post.creatorID] withURLEnd:@"getProfile" withCompletionHandler:[self getUserCompletion:cell]];
+
+        }
+        */
         
-        NSLog(@"post.title = %@",post.title);
+       // NSLog(@"post.title = %@",post.title);
     //cell.detailTextLabel.text = post.body;
     //cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
     
@@ -250,11 +298,25 @@
     
     //[cell.contentView addSubview:starView];
     }
+    Post *post = self.postAry[indexPath.row];
+    cell.titleLabel.text = post.title;
+    NSLog(@"post date time = %@",post.dateTime);
+    cell.postersImageView.image = post.user.profileImage;
+    cell.postersNameLabel.text = [Helper chefName:post.user.chefLevelName withName:post.user.userName];
+    cell.timeLabel.text = post.dateTime;
+    cell.bodyLabel.text = post.body;
+    cell.recipeImageView.image = post.recipe.image;
+    cell.recipeTitleLabel.text = post.recipe.title;
+    cell.recipeDescLabel.text = post.recipe.desc;
+    cell.starRatingView.value = 3; //TODO add user rating value to posts
+    [cell.likeButton setTitle:[NSString stringWithFormat:@"%@ likes",post.likeCount] forState:UIControlStateNormal];
+    [cell.commentButton setTitle:[NSString stringWithFormat:@"%@ comments",post.commentCount] forState:UIControlStateNormal];
+
     return cell;
 }
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
-    Post *post = self.postAry[indexPath.section];
+    Post *post = self.postAry[indexPath.row];
     id sender = post;
     [self performSegueWithIdentifier:@"DetailedPostViewController" sender:sender];
     

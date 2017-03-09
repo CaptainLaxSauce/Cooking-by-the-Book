@@ -147,12 +147,21 @@
         return @"less than a minute ago";
     } else if (ti < 3600) {
         int diff = round(ti / 60);
+        if (diff == 1){
+            return @"1 minute ago";
+        }
         return [NSString stringWithFormat:@"%d minutes ago", diff];
     } else if (ti < 86400) {
         int diff = round(ti / 60 / 60);
+        if (diff == 1){
+            return @"1 hour ago";
+        }
         return[NSString stringWithFormat:@"%d hours ago", diff];
     } else if (ti < 31536000) {
         int diff = round(ti / 60 / 60 / 24);
+        if (diff == 1){
+            return @"1 day ago";
+        }
         return[NSString stringWithFormat:@"%d days ago", diff];
     } else {
         return @"over a year ago";
@@ -176,15 +185,13 @@
     return @"";
 }
 
-+(void)getImageWithName:(NSString *)imageName withCompletion:(CompletionWeb)completionHandler{
-
-    NSString *post = [NSString stringWithFormat:@"imageName=%@",imageName];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [self setupPost:postData withURLEnd:@"getImage"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
-    [dataTask resume];
- 
++(NSString *)chefName:(NSString*)chefLevel withName:(NSString*)name{
+    if ([chefLevel isEqual:@""]){
+        return name;
+    }
+    
+    return [NSString stringWithFormat:@"%@ %@",chefLevel, name];
+    
 }
 
 +(void)postUnsuccessfulAlertAsyncOK:(NSString *)title withMessage:(NSString *)message withViewController:(UIViewController *)controller{

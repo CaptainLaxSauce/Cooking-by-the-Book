@@ -200,8 +200,8 @@
                         [recipeImageView setImage:self.recipe.image];
                     }
                 };
-                
-                [Helper getImageWithName:self.recipe.imageName withCompletion:addImageCompletion];
+                [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",self.recipe.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:addImageCompletion];
+
             }
         });
     }];

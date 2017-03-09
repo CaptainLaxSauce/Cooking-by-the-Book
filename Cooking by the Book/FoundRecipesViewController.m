@@ -81,8 +81,8 @@
                 }
 
         };
-        
-        [Helper getImageWithName:recipe.imageName withCompletion:addImageCompletion];
+        [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",recipe.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:addImageCompletion];
+       
     }
     else if (recipe.image){
         cell.imageView.image = recipe.image;

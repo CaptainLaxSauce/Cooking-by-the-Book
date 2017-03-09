@@ -105,7 +105,7 @@
             UIFriendBox *frdBox = [[UIFriendBox alloc]initWithFrame:currFrame withFriend:(Friend *)self.friendAry[i]];
             [frdBox addGestureRecognizer:friendTap];
             if (![((Friend*)self.friendAry[i]).imageName  isEqual: @""]){
-                [Helper getImageWithName:((Friend*)self.friendAry[i]).imageName withCompletion:[self getAddImageCompletion:frdBox]];
+                [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",((Friend*)self.friendAry[i]).imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:[self getAddImageCompletion:frdBox]];
             }
             
             

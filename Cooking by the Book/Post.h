@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Recipe.h"
+#import "User.h"
 
 @interface Post : NSObject
 
@@ -20,6 +21,7 @@
 @property (nonatomic,strong) NSString* likeCount;
 @property (nonatomic,strong) NSString* commentCount;
 @property (nonatomic,strong) Recipe* recipe;
+@property (nonatomic,strong) User* user;
 
 -(id)initWithJSONDict:(NSDictionary *)dict;
 

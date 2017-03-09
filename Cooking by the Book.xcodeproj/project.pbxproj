@@ -54,6 +54,7 @@
 		04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E67AE51D32D4AA000371E5 /* UITagBox.m */; };
 		04EEBA181D73A7AE0036E0EA /* Ingredient.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EEBA171D73A7AE0036E0EA /* Ingredient.m */; };
 		04F297411E6C73EA00CDC502 /* UIPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F297401E6C73EA00CDC502 /* UIPostTableViewCell.m */; };
+		04F297441E70E61700CDC502 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F297431E70E61700CDC502 /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,8 @@
 		04EEC9481DBD2AE90056AF82 /* Cooking by the Book.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Cooking by the Book.entitlements"; sourceTree = "<group>"; };
 		04F2973F1E6C73EA00CDC502 /* UIPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPostTableViewCell.h; sourceTree = "<group>"; };
 		04F297401E6C73EA00CDC502 /* UIPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPostTableViewCell.m; sourceTree = "<group>"; };
+		04F297421E70E61700CDC502 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		04F297431E70E61700CDC502 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -365,6 +368,8 @@
 				0412FC761E4FB28B00763046 /* Friend.m */,
 				0476861C1E53E9AF00A1051E /* Post.h */,
 				0476861D1E53E9AF00A1051E /* Post.m */,
+				04F297421E70E61700CDC502 /* User.h */,
+				04F297431E70E61700CDC502 /* User.m */,
 			);
 			name = "Data Elements";
 			sourceTree = "<group>";
@@ -514,6 +519,7 @@
 				0412FC7D1E4FBF9D00763046 /* Constants.m in Sources */,
 				045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */,
 				0476861B1E529D7200A1051E /* ProfileViewController.m in Sources */,
+				04F297441E70E61700CDC502 /* User.m in Sources */,
 				047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */,
 				04E00D6E1D31C1020016FED8 /* DataModel.xcdatamodeld in Sources */,
 				04CEE7EB1E22AC85005D57CE /* CreatePostViewController.m in Sources */,

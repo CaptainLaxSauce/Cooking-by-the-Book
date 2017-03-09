@@ -15,13 +15,13 @@
 //Web service functions
 +(void)submitHTTPPostWithString:(NSString *)postString withURLEnd:(NSString *)urlEnd withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion;
 +(void)submitImage:(NSString *)objectID withURLEnd:(NSString *)urlEnd withImage:(UIImage *)image;
-+(void)getImageWithName:(NSString *)imageName withCompletion:(CompletionWeb)completionHandler;
 +(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd;
 
 //Conversion functions
 +(NSString *)toUTC:(NSDate *)date;
 +(NSString *)fromUTC:(NSDate *)date;
 +(NSString *)ingName2Id:(NSString*)name;
++(NSString *)chefName:(NSString*)chefLevel withName:(NSString*)name;
 
 //Alert functions
 +(void)postUnsuccessfulAlertAsyncOK:(NSString *)title withMessage:(NSString *)message withViewController:(UIViewController *)controller;

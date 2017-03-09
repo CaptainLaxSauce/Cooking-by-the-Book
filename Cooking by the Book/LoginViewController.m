@@ -170,6 +170,12 @@
     [self.view addSubview:loginButton_];
     self.loginButton = loginButton_;
     
+    //TODO remove for production code
+    self.emailTextField.text = @"a";
+    self.passwordTextField.text = @"a";
+    [self loginTouch:self];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
