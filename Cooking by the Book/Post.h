@@ -23,6 +23,7 @@
 @property (nonatomic,strong) Recipe* recipe;
 @property (nonatomic,strong) User* user;
 
+-(id)initWithNewsFeedJSONDict:(NSDictionary *)dict;
 -(id)initWithJSONDict:(NSDictionary *)dict;
 
 -(id)initWithPostID:(NSString *)postID_

@@ -15,6 +15,19 @@
     DataClass *obj;
 }
 
+-(id)initWithNewsFeedJSONDict:(NSDictionary *)dict{
+    return [self initWithPostID:[dict objectForKey:@"newsDeedID"]
+                  withCreatorID:[dict objectForKey:@"newsFeedCreatorID"]
+                      withTitle:[dict objectForKey:@"newsFeedTitle"]
+                       withBody:[dict objectForKey:@"newsFeedBody"]
+                   withRecipeID:[dict objectForKey:@"newsFeedRecipeID"]
+                   withDateTime:[dict objectForKey:@"newsFeedDateTime"]
+                  withLikeCount:nil //[dict objectForKey:@"newsFeedLikesNumber"]
+               withCommentCount:nil //[dict objectForKey:@"newsFeedCommentsNumber"]
+            ];
+    
+}
+
 -(id)initWithJSONDict:(NSDictionary *)dict{
     return [self initWithPostID:[dict objectForKey:@"postID"]
                   withCreatorID:[dict objectForKey:@"postCreatorID"]

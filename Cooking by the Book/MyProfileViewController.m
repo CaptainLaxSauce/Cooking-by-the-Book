@@ -113,6 +113,7 @@
 -(void)reloadTableDataAsync{
     dispatch_async(dispatch_get_main_queue(), ^(void){
         [self.postTableView reloadData];
+        [self.postTableView.refreshControl endRefreshing];
     });
 }
 

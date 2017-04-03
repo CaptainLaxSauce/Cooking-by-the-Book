@@ -21,7 +21,6 @@
 		045A81EB1D2060A200A90D8E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81EA1D2060A200A90D8E /* Helper.m */; };
 		045A81EE1D2069A700A90D8E /* DataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81ED1D2069A700A90D8E /* DataClass.m */; };
 		045A81F11D2072AC00A90D8E /* MyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81F01D2072AC00A90D8E /* MyProfileViewController.m */; };
-		045A81F81D2072FD00A90D8E /* NewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */; };
 		045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */; };
 		045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A82011D207FB300A90D8E /* CookbookViewController.m */; };
 		046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */; };
@@ -55,6 +54,8 @@
 		04EEBA181D73A7AE0036E0EA /* Ingredient.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EEBA171D73A7AE0036E0EA /* Ingredient.m */; };
 		04F297411E6C73EA00CDC502 /* UIPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F297401E6C73EA00CDC502 /* UIPostTableViewCell.m */; };
 		04F297441E70E61700CDC502 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F297431E70E61700CDC502 /* User.m */; };
+		04F297471E91A6BD00CDC502 /* UINewsFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F297461E91A6BD00CDC502 /* UINewsFeedTableViewCell.m */; };
+		04F2974A1E91AD2000CDC502 /* NewsFeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F297491E91AD2000CDC502 /* NewsFeedTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,8 +105,6 @@
 		045A81ED1D2069A700A90D8E /* DataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataClass.m; sourceTree = "<group>"; };
 		045A81EF1D2072AC00A90D8E /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
 		045A81F01D2072AC00A90D8E /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
-		045A81F61D2072FD00A90D8E /* NewsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedViewController.h; sourceTree = "<group>"; };
-		045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedViewController.m; sourceTree = "<group>"; };
 		045A81F91D20767800A90D8E /* UICookbookRecipeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICookbookRecipeCell.h; sourceTree = "<group>"; };
 		045A81FA1D20767800A90D8E /* UICookbookRecipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICookbookRecipeCell.m; sourceTree = "<group>"; };
 		045A82001D207FB300A90D8E /* CookbookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CookbookViewController.h; sourceTree = "<group>"; };
@@ -171,6 +170,10 @@
 		04F297401E6C73EA00CDC502 /* UIPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPostTableViewCell.m; sourceTree = "<group>"; };
 		04F297421E70E61700CDC502 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		04F297431E70E61700CDC502 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		04F297451E91A6BD00CDC502 /* UINewsFeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UINewsFeedTableViewCell.h; sourceTree = "<group>"; };
+		04F297461E91A6BD00CDC502 /* UINewsFeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UINewsFeedTableViewCell.m; sourceTree = "<group>"; };
+		04F297481E91AD2000CDC502 /* NewsFeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedTableViewController.h; sourceTree = "<group>"; };
+		04F297491E91AD2000CDC502 /* NewsFeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +238,8 @@
 				0412FC791E4FBB3400763046 /* UIFriendBox.m */,
 				04F2973F1E6C73EA00CDC502 /* UIPostTableViewCell.h */,
 				04F297401E6C73EA00CDC502 /* UIPostTableViewCell.m */,
+				04F297451E91A6BD00CDC502 /* UINewsFeedTableViewCell.h */,
+				04F297461E91A6BD00CDC502 /* UINewsFeedTableViewCell.m */,
 			);
 			name = "Custom UI Elements";
 			sourceTree = "<group>";
@@ -325,8 +330,8 @@
 				044B398B1CCF135D0051E1CC /* LoginViewController.m */,
 				047813671D1A4F2F00D9F569 /* SignupViewController.h */,
 				047813681D1A4F2F00D9F569 /* SignupViewController.m */,
-				045A81F61D2072FD00A90D8E /* NewsFeedViewController.h */,
-				045A81F71D2072FD00A90D8E /* NewsFeedViewController.m */,
+				04F297481E91AD2000CDC502 /* NewsFeedTableViewController.h */,
+				04F297491E91AD2000CDC502 /* NewsFeedTableViewController.m */,
 				045A81EF1D2072AC00A90D8E /* MyProfileViewController.h */,
 				045A81F01D2072AC00A90D8E /* MyProfileViewController.m */,
 				0412FC6C1E4F8D0200763046 /* MyFriendsViewController.h */,
@@ -511,7 +516,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				045A81F81D2072FD00A90D8E /* NewsFeedViewController.m in Sources */,
 				04CEE81D1E2BF255005D57CE /* HTAutocompleteManager.m in Sources */,
 				04EEBA181D73A7AE0036E0EA /* Ingredient.m in Sources */,
 				04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */,
@@ -537,6 +541,7 @@
 				04D77FD41E55480100144DBD /* AddFriendsViewController.m in Sources */,
 				045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */,
 				04CEE7F11E2300D0005D57CE /* UIAchievementBar.m in Sources */,
+				04F297471E91A6BD00CDC502 /* UINewsFeedTableViewCell.m in Sources */,
 				04CEE8211E2C08D1005D57CE /* FoundRecipesViewController.m in Sources */,
 				0476861E1E53E9AF00A1051E /* Post.m in Sources */,
 				047E193F1D2751030011349C /* UICreateStepCell.m in Sources */,
@@ -544,6 +549,7 @@
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
 				046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */,
 				04F297411E6C73EA00CDC502 /* UIPostTableViewCell.m in Sources */,
+				04F2974A1E91AD2000CDC502 /* NewsFeedTableViewController.m in Sources */,
 				041A1AE91E483AB800AEAFA2 /* HCSStarRatingView.m in Sources */,
 				045931591D1902F5003D1C47 /* UIColor+CustomColors.m in Sources */,
 				0412FC771E4FB28B00763046 /* Friend.m in Sources */,
