@@ -21,7 +21,7 @@
                       withTitle:[dict objectForKey:@"newsFeedTitle"]
                        withBody:[dict objectForKey:@"newsFeedBody"]
                    withRecipeID:[dict objectForKey:@"newsFeedRecipeID"]
-                   withDateTime:[dict objectForKey:@"newsFeedDateTime"]
+                   withDateTime:[Helper fromUTC:[dict objectForKey:@"newsFeedDateTime"]]
                   withLikeCount:nil //[dict objectForKey:@"newsFeedLikesNumber"]
                withCommentCount:nil //[dict objectForKey:@"newsFeedCommentsNumber"]
             ];

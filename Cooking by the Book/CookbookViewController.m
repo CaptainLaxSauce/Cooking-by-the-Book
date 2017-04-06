@@ -113,6 +113,7 @@
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:SimpleIdentifier];
+    }
     
     
         Recipe *recipe = [self getRecipeSelectedAtIndexPath:indexPath];
@@ -150,7 +151,7 @@
         starView.tintColor = [UIColor starColor];
         [cell.contentView addSubview:starView];
         
-    }
+
     return cell;
 }
 

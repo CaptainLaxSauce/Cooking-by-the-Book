@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Friend : NSObject
 
 @property (nonatomic,strong) NSString *username;
 @property (nonatomic,strong) NSString *userId;
 @property (nonatomic,strong) NSString *imageName;
+@property (nonatomic,strong) UIImage *image;
 @property (nonatomic,strong) NSString *mutualFriends;
 
+-(id)initWithDict:(NSDictionary *)dict;
 -(id) initWithName:(NSString *)name withUserId:(NSString *)userId withImageName:(NSString *)imageName withMutualFriends:(NSString *)mutualFriends;
 
 

@@ -10,6 +10,13 @@
 
 @implementation Friend
 
+-(id)initWithDict:(NSDictionary *)dict{
+    return [self initWithName:[dict objectForKey:@"userName"]
+                   withUserId:[dict objectForKey:@"friendUserID"]
+                withImageName:[dict objectForKey:@"userImage"]
+            withMutualFriends:[dict objectForKey:@"mutualFriends"]];
+}
+
 -(id) initWithName:(NSString *)username_ withUserId:(NSString *)userId_ withImageName:(NSString *)imageName_ withMutualFriends:(NSString *)mutualFriends_{
     self = [super init];
     

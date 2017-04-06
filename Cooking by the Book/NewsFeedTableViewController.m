@@ -152,7 +152,21 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     Post *post = [self.postAry objectAtIndex:indexPath.row];
-    cell.userImageView.image = post.user.profileImage;
+    if (post.user.profileImage != nil){
+        cell.userImageView.image = post.user.profileImage;
+
+    }
+    else {
+        cell.userImageView.image = [UIImage imageNamed:@"blankface.png"];
+    }
+    
+    if (post.recipe.image != nil){
+        cell.recipeImageView.image = post.recipe.image;
+    }
+    else{
+        cell.recipeImageView.image = [UIImage imageNamed:@"recipedefault.png"];
+    }
+    
     cell.bodyLabel.text = post.body;
     cell.chefLabel.text = [Helper chefName:post.user.chefLevelName
                                   withName:post.user.userName];
