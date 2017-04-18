@@ -7,7 +7,7 @@
 //
 
 #import "MyProfileViewController.h"
-#import "DetailedPostViewController.h"
+#import "DetailedPostTableViewController.h"
 #import "UIColor+CustomColors.h"
 #import "DataClass.h"
 #import "Helper.h"
@@ -326,7 +326,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"DetailedPostViewController"]){
-        DetailedPostViewController *controller = (DetailedPostViewController *)segue.destinationViewController;
+        DetailedPostTableViewController *controller = (DetailedPostTableViewController *)segue.destinationViewController;
         controller.post = ((Post *)sender);
         controller.postId = ((Recipe *)sender).recipeID;
     }

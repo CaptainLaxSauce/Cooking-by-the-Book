@@ -24,6 +24,7 @@
 @implementation SearchRecipeViewController
 
 {
+   /*
     int screenHeight;
     int screenWidth;
     int statusBarHeight;
@@ -32,16 +33,22 @@
     int tabHeight;
     int scrollHeight;
     HTAutocompleteTextField *ingField1;
-    HTAutocompleteTextField *ingField2;
-    HTAutocompleteTextField *ingField3;
     UITextField *searchTitleField;
+    */
     DataClass *obj;
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadInterface];
+    obj = [DataClass getInstance];
+    
+    self.navigationItem.title = @"Search Recipes";
+    
+    self.recipeAry = [[NSMutableArray alloc]init];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,13 +136,26 @@
 
 -(void)dismissKeyboard
 {
-    [ingField1 resignFirstResponder];
-    [ingField2 resignFirstResponder];
-    [ingField3 resignFirstResponder];
-    [searchTitleField resignFirstResponder];
+    [self.ingredientTextField resignFirstResponder];
+    [self.keywordTextField resignFirstResponder];
 }
 
+- (IBAction)addKeyword:(id)sender{
+    unsigned long index = self.keywordStackView.arrangedSubviews.count - 1;
+    UIView *addView = self.keywordStackView.arrangedSubviews[index];
+    
+    [self.keywordStackView createEntry]
+}
+- (IBAction)addIngredient:(id)sender{
+    
+}
+
+-(UIView*)createEntry:(UIStackView *)stack{
+    
+    
+}
 -(void) loadInterface {
+    /*
     //declare constants
     screenHeight = self.view.frame.size.height;
     screenWidth = self.view.frame.size.width;
@@ -145,10 +165,9 @@
     textHeight = screenHeight/20;
     tabHeight = self.tabBarController.tabBar.frame.size.height;
     scrollHeight = screenHeight-textHeight-tabHeight-OBJECT_BREAK*2-navBarHeight-statusBarHeight;
-    
+
     obj = [DataClass getInstance];
-    
-    self.view.backgroundColor = [UIColor primaryColor];
+
     self.navigationItem.title = @"Search Recipes";
     
     NSMutableArray *recipeAry_ = [[NSMutableArray alloc]init];
@@ -156,6 +175,7 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
+    
 
     ingField1 = [[HTAutocompleteTextField alloc]initWithFrame:CGRectMake(OBJECT_BREAK, statusBarHeight + navBarHeight + OBJECT_BREAK, objectWidth, textHeight)];
     ingField1.autocompleteDataSource = [HTAutocompleteManager sharedManager];
@@ -222,9 +242,14 @@
     searchTitleButton.layer.cornerRadius = CORNER_RADIUS;
     searchTitleButton.clipsToBounds = YES;
     [self.view addSubview:searchTitleButton];
-    
+    */
  }
 
 
 
+- (IBAction)addKeyword:(id)sender {
+}
+
+- (IBAction)addIngredient:(id)sender {
+}
 @end

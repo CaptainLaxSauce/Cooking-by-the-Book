@@ -12,7 +12,7 @@
 #import "Constants.h"
 #import "Helper.h"
 #import "DataClass.h"
-#import "ProfileViewController.h"
+#import "ProfileTableViewController.h"
 
 @interface MyFriendsCollectionViewController ()
 
@@ -33,28 +33,21 @@ UIEdgeInsets insets;
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
+    self.navigationItem.title = @"Friends";
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addFriendTouch:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    
     obj = [DataClass getInstance];
     self.friendAry = [[NSMutableArray alloc]init];
     [self refreshFriends];
     
-    // Do any additional setup after loading the view.
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void) addFriendTouch:(id)sender{
+    [self performSegueWithIdentifier:@"AddFriendsViewController" sender:sender];
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 -(void)refreshFriends{
     [self.friendAry removeAllObjects];
     [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.userId]
@@ -167,12 +160,12 @@ UIEdgeInsets insets;
     
     Friend *frd = [self.friendAry objectAtIndex:indexPath.row];
     id sender = frd;
-    [self performSegueWithIdentifier:@"profileViewController" sender:sender];
+    [self performSegueWithIdentifier:@"ProfileTableViewController" sender:sender];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"profileViewController"]){
-        ProfileViewController *controller = (ProfileViewController *)segue.destinationViewController;
+    if ([segue.identifier isEqualToString:@"ProfileTableViewController"]){
+        ProfileTableViewController *controller = (ProfileTableViewController *)segue.destinationViewController;
         controller.frd = (Friend *)sender;
         
     }

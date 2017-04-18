@@ -1,22 +1,24 @@
 //
-//  NewsFeedTableViewController.m
+//  ProfileTableViewController.m
 //  Cooking by the Book
 //
-//  Created by Jack Smith on 4/2/17.
+//  Created by Jack Smith on 4/11/17.
 //  Copyright © 2017 EthanJack. All rights reserved.
 //
 
-#import "NewsFeedTableViewController.h"
-#import "UINewsFeedTableViewCell.h"
-#import "Helper.h"
+#import "ProfileTableViewController.h"
 #import "DataClass.h"
+#import "Helper.h"
+#import "Constants.h"
+#import "Post.h"
+#import "UINewsFeedTableViewCell.h"
 #import "DetailedPostTableViewController.h"
 
-@interface NewsFeedTableViewController ()
+@interface ProfileTableViewController ()
 
 @end
 
-@implementation NewsFeedTableViewController
+@implementation ProfileTableViewController
 {
     DataClass *obj;
 }
@@ -26,7 +28,7 @@
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
-    self.navigationItem.title = @"News Feed";
+    self.navigationItem.title = [Helper chefName:self.frd.chefLevelName withName:self.frd.username];
     
     obj = [DataClass getInstance];
     
@@ -44,23 +46,19 @@
     
     [self refreshPosts];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 -(void)refreshPosts{
     [self.postAry removeAllObjects];
-    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.userId] withURLEnd:@"getNewsFeed" withCompletionHandler:[self getNewsFeedCompletion]];
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",self.frd.userId] withURLEnd:@"getWallPosts" withCompletionHandler:[self getWallPostsCompletion]];
     
 }
 
--(CompletionWeb) getNewsFeedCompletion {
+-(CompletionWeb) getWallPostsCompletion {
     CompletionWeb userPostCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
         NSDictionary *jsonPostDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
-        NSArray *jsonPostAry = [jsonPostDict objectForKey:@"newsFeedInfo"];
+        NSArray *jsonPostAry = [jsonPostDict objectForKey:@"postInfo"];
+        NSLog(@"postAry = %@",jsonPostAry);
         
         for (int i = 0; i < jsonPostAry.count; i++)
         {
@@ -130,11 +128,11 @@
 
 #pragma mark - Table view data source
 /*
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 1;
-}
-*/
+ - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+ #warning Incomplete implementation, return the number of sections
+ return 1;
+ }
+ */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.postAry.count;
 }
@@ -154,7 +152,7 @@
     Post *post = [self.postAry objectAtIndex:indexPath.row];
     if (post.user.profileImage != nil){
         cell.userImageView.image = post.user.profileImage;
-
+        
     }
     else {
         cell.userImageView.image = [UIImage imageNamed:@"blankface.png"];
@@ -177,7 +175,7 @@
     cell.starRatingView.value = 3; //TODO add user rating value to the posts
     //[cell.likeButton setTitle:[NSString stringWithFormat:@"%@ likes",post.likeCount] forState:UIControlStateNormal];
     //[cell.commentButton setTitle:[NSString stringWithFormat:@"%@ comments",post.commentCount] forState:UIControlStateNormal];
-
+    
     
     return cell;
 }
@@ -185,13 +183,13 @@
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
     Post *post = self.postAry[indexPath.row];
     id sender = post;
-    [self performSegueWithIdentifier:@"DetailedPostTableViewController" sender:sender];
+    [self performSegueWithIdentifier:@"DetailedPostViewController" sender:sender];
     
     
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"DetailedPostTableViewController"]){
+    if([segue.identifier isEqualToString:@"DetailedPostViewController"]){
         DetailedPostTableViewController *controller = (DetailedPostTableViewController *)segue.destinationViewController;
         controller.post = ((Post *)sender);
         controller.postId = ((Recipe *)sender).recipeID;
@@ -200,47 +198,47 @@
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

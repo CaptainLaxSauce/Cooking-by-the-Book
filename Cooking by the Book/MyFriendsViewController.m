@@ -11,7 +11,7 @@
 #import "Friend.h"
 #import "UIFriendBox.h"
 #import "Helper.h"
-#import "ProfileViewController.h"
+#import "ProfileTableViewController.h"
 
 @interface MyFriendsViewController ()
 
@@ -125,15 +125,15 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"ProfileViewController"]){
-        ProfileViewController *controller = (ProfileViewController *)segue.destinationViewController;
+    if ([segue.identifier isEqualToString:@"ProfileTableViewController"]){
+        ProfileTableViewController *controller = (ProfileTableViewController *)segue.destinationViewController;
         controller.frd = ((UIFriendBox *)sender).frd;
         
     }
 }
 
 -(void) friendTouch:(UIGestureRecognizer *)sender {
-    [self performSegueWithIdentifier:@"ProfileViewController" sender:(UIFriendBox *)sender.view];
+    [self performSegueWithIdentifier:@"ProfileTableViewController" sender:(UIFriendBox *)sender.view];
 }
 
 -(void) addFriendsTouch:(id)sender{
