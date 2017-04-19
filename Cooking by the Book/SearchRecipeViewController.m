@@ -129,9 +129,9 @@
 }
 
 - (void)titleSearchTouch:(id)sender {
-    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@&searchString=%@",obj.userId,searchTitleField.text]
-                          withURLEnd:@"getRecipesByTitle"
-               withCompletionHandler:[self getSearchCompletion]];
+    //[Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@&searchString=%@",obj.userId,searchTitleField.text]
+     //                     withURLEnd:@"getRecipesByTitle"
+      //         withCompletionHandler:[self getSearchCompletion]];
 }
 
 -(void)dismissKeyboard
@@ -142,18 +142,46 @@
 
 - (IBAction)addKeyword:(id)sender{
     unsigned long index = self.keywordStackView.arrangedSubviews.count - 1;
-    UIView *addView = self.keywordStackView.arrangedSubviews[index];
+    UIStackView *addView = self.keywordStackView.arrangedSubviews[index];
     
-    [self.keywordStackView createEntry]
+    UIStackView *newView = [self createEntry:self.keywordTextField.text];
+    newView.hidden = true;
+    [self.keywordStackView insertArrangedSubview:newView atIndex:index];
+    
+    
+}
+
+-(UIStackView *)createEntry:(NSString *)labelText{
+    UIStackView *stack = [[UIStackView alloc]init];
+    [stack setAxis:UILayoutConstraintAxisHorizontal];
+    [stack setAlignment:UIStackViewAlignmentFill];
+    [stack setDistribution:UIStackViewDistributionFill];
+    
+    
+    UILabel *label = [[UILabel alloc]init];
+    label.text = labelText;
+    
+    UIButton *xBtn = [[UIButton alloc]init];
+    [xBtn setTitle:@"X" forState:UIControlStateNormal];
+    [xBtn addTarget:self action:@selector(deleteEntry:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [stack addArrangedSubview:label];
+    [stack addArrangedSubview:xBtn];
+    
+    return stack;
+    
+    
+}
+
+-(void)deleteEntry:(id)sender{
+    
+    
 }
 - (IBAction)addIngredient:(id)sender{
     
 }
 
--(UIView*)createEntry:(UIStackView *)stack{
-    
-    
-}
+
 -(void) loadInterface {
     /*
     //declare constants
@@ -246,10 +274,4 @@
  }
 
 
-
-- (IBAction)addKeyword:(id)sender {
-}
-
-- (IBAction)addIngredient:(id)sender {
-}
 @end
