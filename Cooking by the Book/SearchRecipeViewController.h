@@ -13,6 +13,7 @@
 
 @property (nonatomic,strong) NSArray *textFieldAry;
 @property (nonatomic,strong) NSMutableArray *recipeAry; //an array of recipe class objects
+@property (weak, nonatomic) IBOutlet UIScrollView *keywordScrollView;
 @property (weak, nonatomic) IBOutlet UITextField *keywordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *keywordAddButton;
 @property (weak, nonatomic) IBOutlet UIStackView *keywordStackView;
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *keywordDeleteButton;
 @property (weak, nonatomic) IBOutlet HTAutocompleteTextField *ingredientTextField;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *ingredientScrollView;
 @property (weak, nonatomic) IBOutlet UIButton *ingredientAddButton;
 @property (weak, nonatomic) IBOutlet UIStackView *ingredientStackView;
 @property (weak, nonatomic) IBOutlet UILabel *ingredientLabel;

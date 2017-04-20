@@ -16,6 +16,7 @@
 #import "Helper.h"
 #import "Recipe.h"
 #import "Constants.h"
+#import "UIColor+CustomColors.h"
 
 @interface SearchRecipeViewController ()
 
@@ -141,14 +142,26 @@
 }
 
 - (IBAction)addKeyword:(id)sender{
-    unsigned long index = self.keywordStackView.arrangedSubviews.count - 1;
-    UIStackView *addView = self.keywordStackView.arrangedSubviews[index];
+    if ([self.keywordTextField.text isEqualToString:@""])
+        return;
+    
+    unsigned long index;
+    if (self.keywordStackView.arrangedSubviews.count == 0)
+        index = 0;
+    else
+        index = self.keywordStackView.arrangedSubviews.count - 1;
+    
     
     UIStackView *newView = [self createEntry:self.keywordTextField.text];
     newView.hidden = true;
     [self.keywordStackView insertArrangedSubview:newView atIndex:index];
     
+    [UIView animateWithDuration:(0.25) animations:^{
+        newView.hidden = false;
+    }];
     
+    [self.keywordScrollView setContentSize:CGSizeMake(self.keywordScrollView.contentSize.width + newView.frame.size.width + self.keywordStackView.spacing, self.keywordScrollView.frame.size.height)];
+     self.keywordTextField.text = @"";
 }
 
 -(UIStackView *)createEntry:(NSString *)labelText{
@@ -159,11 +172,17 @@
     
     
     UILabel *label = [[UILabel alloc]init];
-    label.text = labelText;
+    label.text = [NSString stringWithFormat:@" %@",labelText];
+    label.textColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor forestGreenColor];
     
     UIButton *xBtn = [[UIButton alloc]init];
     [xBtn setTitle:@"X" forState:UIControlStateNormal];
     [xBtn addTarget:self action:@selector(deleteEntry:) forControlEvents:UIControlEventTouchUpInside];
+    xBtn.backgroundColor = [UIColor forestGreenColor];
+    UIFontDescriptor * fontD = [xBtn.titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
+    [xBtn.titleLabel setFont:[UIFont fontWithDescriptor:fontD size:20]];
+    
     
     [stack addArrangedSubview:label];
     [stack addArrangedSubview:xBtn];
@@ -174,7 +193,12 @@
 }
 
 -(void)deleteEntry:(id)sender{
-    
+    UIView *view = ((UIView*)sender).superview;
+    [UIView animateWithDuration:(0.25) animations:^{
+        view.hidden = true;
+    }completion:^(BOOL finished){
+        [view removeFromSuperview];
+    }];
     
 }
 - (IBAction)addIngredient:(id)sender{
