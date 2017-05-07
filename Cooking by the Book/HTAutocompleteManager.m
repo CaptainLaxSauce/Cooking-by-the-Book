@@ -327,7 +327,6 @@ static HTAutocompleteManager *sharedManager;
 
     else if (textField.autocompleteType == HTAutocompleteTypeIngredient)
     {
-        //DataClass *obj = [DataClass getInstance];
         static dispatch_once_t ingredientOnceToken;
         static NSArray *ingredientAutocompleteArray;
         dispatch_once(&ingredientOnceToken, ^

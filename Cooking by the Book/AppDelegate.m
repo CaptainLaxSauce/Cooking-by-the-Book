@@ -9,41 +9,35 @@
 #import "AppDelegate.h"
 #import "DataClass.h"
 #import "Helper.h"
+#import "CoreIngredient+CoreDataProperties.h"
 
 @interface AppDelegate ()
-
+@property (nonatomic,strong) UIManagedDocument *document;
 @end
 
 @implementation AppDelegate
 
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+//@synthesize managedObjectContext = _managedObjectContext;
+//@synthesize managedObjectModel = _managedObjectModel;
+//@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.s
     
+    [self setupNotifications];
     
-    [[UIApplication sharedApplication] respondsToSelector:(@selector(registerForRemoteNotifications))];
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound) categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    [self setupManagedObjectContext];
     
-    NSPersistentStoreCoordinator *persistentStoreCoordinator = [self persistentStoreCoordinator];
-    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"LastIngredientUpdate"];
-    NSArray *dateAry = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    
+    NSArray *dateAry = [self getDateAryFromCoreData];
+    NSManagedObject *coreDate = [dateAry firstObject];
     NSDate *updateDate = [[NSDate alloc]init];
-    NSLog(@"dateAry count = %lu",(unsigned long)dateAry.count);
-
+    
     //an update date is stored
-    if (dateAry.count > 0){
-        NSManagedObject *date = [dateAry objectAtIndex:0];
-        updateDate = [date valueForKey:@"updateDate"];
+    if (coreDate){
+        updateDate = [coreDate valueForKey:@"updateDate"];
         
     }
-    //no update date is stored
+    //no update date is stored, use default
     else {
         NSString *dateStr = [NSString stringWithFormat:@"2000-01-01"];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
@@ -52,24 +46,36 @@
         
     }
     
-
     NSString *updateStr = [Helper toUTC:updateDate];
     
     NSLog(@"last update date = %@",updateDate);
     NSLog(@"last update string = %@",updateStr);
 
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"lastUpdate=%@",updateStr]
+                          withURLEnd:@"initialize"
+               withCompletionHandler:[self getInitCompletion:coreDate]];
+    
+      return YES;
+}
 
+-(void)setupNotifications{
+    [[UIApplication sharedApplication] respondsToSelector:(@selector(registerForRemoteNotifications))];
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound) categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+}
 
+-(NSArray *)getDateAryFromCoreData{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"LastIngredientUpdate"];
+    fetchRequest.fetchBatchSize = 1;
+    fetchRequest.fetchLimit = 1;
     
-    
-    
-    NSString *post = [NSString stringWithFormat:@"lastUpdate=%@",updateStr];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"initialize"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
-    
-        
+    NSError *error;
+    return [self.context executeFetchRequest:fetchRequest error:&error];
+};
+
+-(CompletionWeb)getInitCompletion:(NSManagedObject*)coreDate{
+    CompletionWeb initComplete = ^(NSData *postData, NSURLResponse *response, NSError *error){
         NSString *ret = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
         NSLog(@"initialize = %@",ret);
         NSDictionary *initDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
@@ -79,58 +85,82 @@
         if (![ingredientAry isKindOfClass:[NSNull class]]){
             NSLog(@"entered if");
             //clear core data for ingredients
-            NSFetchRequest *delRequest = [[NSFetchRequest alloc]initWithEntityName:@"Ingredient"];
-            NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:delRequest];
-            NSError *deleteError = nil;
-            [persistentStoreCoordinator executeRequest:delete withContext:managedObjectContext error:&deleteError];
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreIngredient"];
+            NSError *error;
+            NSArray *delAry = [self.context executeFetchRequest:fetchRequest error:&error];
+            
+            for (CoreIngredient *ing in delAry){
+                [self.context deleteObject:ing];
+            }
             
             //update the update date in core data
-            if (dateAry.count > 0){
-                NSManagedObject *coreDate = [dateAry objectAtIndex:0];
+            if (coreDate){
                 [coreDate setValue:[NSDate date] forKey:@"updateDate"];
             }
             else {
-                NSManagedObject *coreDate = [NSEntityDescription insertNewObjectForEntityForName:@"LastIngredientUpdate" inManagedObjectContext:managedObjectContext];
-                [coreDate setValue:[NSDate date] forKey:@"updateDate"];
+                NSManagedObject *newCoreDate = [NSEntityDescription insertNewObjectForEntityForName:@"LastIngredientUpdate"
+                                                                             inManagedObjectContext:self.context];
+                [newCoreDate setValue:[NSDate date] forKey:@"updateDate"];
+                
             }
-    
+            
             //load ingredients into core data
             for (int i=0;i<ingredientAry.count;i++){
                 NSMutableDictionary *ingredientDict = [ingredientAry objectAtIndex:i];
                 NSString *ingredientID = [ingredientDict objectForKey:@"ingredientID"];
-                NSString *ingredientName = [ingredientDict objectForKey:@"title"];
+                NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
                 //NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
-        
-                NSManagedObject *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"Ingredient" inManagedObjectContext:managedObjectContext];
+                
+                CoreIngredient *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"CoreIngredient"
+                                                                           inManagedObjectContext:self.context];
                 [ingredient setValue:ingredientID forKey:@"ingredientID"];
                 [ingredient setValue:ingredientName forKey:@"ingredientName"];
-            
-                NSError *error = nil;
-                // Save the object to persistent store
-                if (![managedObjectContext save:&error]) {
-                    NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-                }
-        
-                //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@",[ingredientDict objectForKey:@"ingredientID"]];
-        
+                
                 //NSLog(@"init dict name = %@",[ingredientDict objectForKey:@"ingredientName"]);
                 //NSLog(@"core data cnt = %lu",(unsigned long)coreIngredientArray.count);
                 //NSLog(@"ing id i = %@",[ingredientDict objectForKey:@"ingredientID"]);
             }
-
-  
+            
+            
             
         }
-        
         //initialize the data ingredient array whether core data was updated or not
         DataClass *obj = [DataClass getInstance];
         [obj initIngredientAry];
-        
-    }];
+    };
+    return initComplete;
+}
+
+-(void)setupManagedObjectContext{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *documentsDirectory = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] firstObject];
+    NSString *documentName = @"MyCoreData";
+    NSURL *url = [documentsDirectory URLByAppendingPathComponent:documentName];
+    self.document = [[UIManagedDocument alloc] initWithFileURL:url];
     
-    [dataTask resume];
+    BOOL fileExists = [fileManager fileExistsAtPath:[url path]];
     
-    return YES;
+    if (fileExists){
+        [self.document openWithCompletionHandler:^(BOOL success){
+            if (success) [self documentIsReady];
+            if (!success) NSLog(@"couldn't open document at %@",url);
+        }];
+    }
+    else{
+        [self.document saveToURL:url
+           forSaveOperation:UIDocumentSaveForCreating
+          completionHandler:^(BOOL success){
+              if (success) [self documentIsReady];
+              if (!success) NSLog(@"couldn't create document at %@",url);
+          }];
+    }
+    
+}
+
+-(void)documentIsReady{
+    if (self.document.documentState == UIDocumentStateNormal){
+        self.context = self.document.managedObjectContext;
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -157,7 +187,7 @@
 
 - (void)saveContext{
     NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    NSManagedObjectContext *managedObjectContext = self.context;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -165,7 +195,7 @@
         }
     }
 }
-
+/*
 - (NSManagedObjectContext *)managedObjectContext{
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
@@ -208,6 +238,7 @@
     return _persistentStoreCoordinator;
 }
 
+ */
 #pragma mark - Application's Documents directory
 
 // Returns the URL to the application's Documents directory.

@@ -10,7 +10,7 @@
 #import "UIColor+CustomColors.h"
 #import "HTAutocompleteTextField.h"
 #import "HTAutocompleteManager.h"
-#import "FoundRecipesViewController.h"
+#import "FoundRecipesTableViewController.h"
 #import "DataClass.h"
 #import "Ingredient.h"
 #import "Helper.h"
@@ -25,19 +25,7 @@
 @implementation SearchRecipeViewController
 
 {
-   /*
-    int screenHeight;
-    int screenWidth;
-    int statusBarHeight;
-    int navBarHeight;
-    int textHeight;
-    int tabHeight;
-    int scrollHeight;
-    HTAutocompleteTextField *ingField1;
-    UITextField *searchTitleField;
-    */
     DataClass *obj;
-    
 }
 
 - (void)viewDidLoad {
@@ -50,89 +38,11 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"FoundRecipesViewController"]){
-        FoundRecipesViewController *controller = (FoundRecipesViewController *)segue.destinationViewController;
-        controller.recipeAry = self.recipeAry;
-    }
-}
-
--(CompletionWeb) getSearchCompletion {
-    CompletionWeb ingSearchComp = ^(NSData *postData, NSURLResponse *response, NSError *error){
-        NSDictionary *retDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
-        NSArray *recipeJSONAry = [retDict objectForKey:@"recipeInfo"];
-
-        if (recipeJSONAry.count == 0){
-            [Helper postUnsuccessfulAlertAsyncOK:@"No results found" withMessage:@"Please try again" withViewController:self];
-        }
-        else{
-            for (int i = 0; i < recipeJSONAry.count; i++){
-                NSDictionary *recipeDict = recipeJSONAry[i];
-                NSLog(@"curr recipe title = %@",[recipeDict objectForKey:@"recipeTitle"]);
-                //TODO - need to change what is returned from the server to match getRecipe
-                
-                Recipe *recipe = [[Recipe alloc]initWithJSONDictionary:recipeDict];
-                [self.recipeAry addObject:recipe];
-                
-                if (i == recipeJSONAry.count - 1){
-                    dispatch_async(dispatch_get_main_queue(), ^(void){
-                        [self performSegueWithIdentifier:@"FoundRecipesViewController" sender:self];
-                    });
-                }
-            }
-        }
-
-
-    };
     
-    return ingSearchComp;
-}
-
--(NSString *) getFormattedIngJSONString {
-    NSMutableArray *ingIdAry = [[NSMutableArray alloc]init];
-    for (HTAutocompleteTextField *field in self.textFieldAry){
-        if ([field hasText]){
-            NSString *ingId = [Helper ingName2Id:field.text];
-            [ingIdAry addObject:ingId];
-        }
-        
-    }
-    
-    NSMutableArray *dictAry = [[NSMutableArray alloc]init];
-    for (int i = 0; i < ingIdAry.count; i++){
-        NSDictionary *ingredientDict = [[NSDictionary alloc]initWithObjectsAndKeys:ingIdAry[i],@"ingredientID",nil];
-        [dictAry addObject:ingredientDict];
-    }
-    
-    NSDictionary *postDict = [[NSDictionary alloc]initWithObjectsAndKeys:
-                              dictAry, @"ingredients",
-                              nil];
-    
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:postDict options:NSJSONWritingPrettyPrinted error:NULL];
-    NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    jsonStr = [NSString stringWithFormat:@"userID=%@&ingredients=%@",obj.userId, jsonStr];
-    NSLog(@"send JSON = %@",jsonStr);
-    
-    return jsonStr;
-}
-
-- (void)ingredientSearchTouch:(id)sender {
-    [Helper submitHTTPPostWithString:[self getFormattedIngJSONString]
-                          withURLEnd:@"getSearchRecipes"
-               withCompletionHandler:[self getSearchCompletion]];
-}
-
-- (void)titleSearchTouch:(id)sender {
-    //[Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@&searchString=%@",obj.userId,searchTitleField.text]
-     //                     withURLEnd:@"getRecipesByTitle"
-      //         withCompletionHandler:[self getSearchCompletion]];
+    self.ingredientTextField.autocompleteDataSource = [HTAutocompleteManager sharedManager];
+    self.ingredientTextField.autocompleteType = HTAutocompleteTypeIngredient;
+    self.ingredientTextField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    [self.ingredientTextField setKeyboardType:UIKeyboardTypeDefault];
 }
 
 -(void)dismissKeyboard
@@ -146,22 +56,59 @@
         return;
     
     unsigned long index;
-    if (self.keywordStackView.arrangedSubviews.count == 0)
-        index = 0;
-    else
-        index = self.keywordStackView.arrangedSubviews.count - 1;
+    index = self.keywordStackView.arrangedSubviews.count - 1;
     
+    NSArray *words = [self.keywordTextField.text componentsSeparatedByString:@" "];
     
-    UIStackView *newView = [self createEntry:self.keywordTextField.text];
+    for (NSString *word in words){
+        UIStackView *newView = [self createEntry:word];
+        newView.hidden = true;
+        [self.keywordStackView insertArrangedSubview:newView atIndex:index];
+        
+        [UIView animateWithDuration:(0.25) animations:^{
+            newView.hidden = false;
+        }];
+        
+        [self.keywordScrollView setContentSize:CGSizeMake(self.keywordScrollView.contentSize.width + newView.frame.size.width + self.keywordStackView.spacing, self.keywordScrollView.frame.size.height)];
+        self.keywordTextField.text = @"";
+        
+        index++;
+    }
+
+}
+
+- (IBAction)addIngredient:(id)sender{
+    if ([self.ingredientTextField.text isEqualToString:@""])
+        return;
+    
+    unsigned long index;
+    index = self.ingredientStackView.arrangedSubviews.count - 1;
+    
+    [self.ingredientTextField forceCompletion];
+    
+    NSString *ingId = [Helper ingName2Id:self.ingredientTextField.text];
+    
+    if ([ingId  isEqual: @""]){
+        [Helper postUnsuccessfulAlertAsyncOK:@"Ingredient not found on any recipe" withMessage:@"Please select an different ingredient to search" withViewController:self];
+        return;
+    }
+    
+    UIStackView *newView = [self createEntry:self.ingredientTextField.text];
     newView.hidden = true;
-    [self.keywordStackView insertArrangedSubview:newView atIndex:index];
+    [self.ingredientStackView insertArrangedSubview:newView atIndex:index];
     
     [UIView animateWithDuration:(0.25) animations:^{
         newView.hidden = false;
     }];
     
-    [self.keywordScrollView setContentSize:CGSizeMake(self.keywordScrollView.contentSize.width + newView.frame.size.width + self.keywordStackView.spacing, self.keywordScrollView.frame.size.height)];
-     self.keywordTextField.text = @"";
+    [self.ingredientScrollView setContentSize:CGSizeMake(self.ingredientScrollView.contentSize.width + newView.frame.size.width + self.ingredientStackView.spacing, self.ingredientScrollView.frame.size.height)];
+    self.ingredientTextField.text = @"";
+    
+    index++;
+    
+    [self.ingredientTextField forceReady];
+    
+    
 }
 
 -(UIStackView *)createEntry:(NSString *)labelText{
@@ -169,17 +116,17 @@
     [stack setAxis:UILayoutConstraintAxisHorizontal];
     [stack setAlignment:UIStackViewAlignmentFill];
     [stack setDistribution:UIStackViewDistributionFill];
-    
+    [stack setLayoutMarginsRelativeArrangement:true];
     
     UILabel *label = [[UILabel alloc]init];
-    label.text = [NSString stringWithFormat:@" %@",labelText];
+    label.text = [NSString stringWithFormat:@"%@",labelText];
     label.textColor = [UIColor whiteColor];
-    label.backgroundColor = [UIColor forestGreenColor];
+    label.backgroundColor = [UIColor brightGreenColor];
     
     UIButton *xBtn = [[UIButton alloc]init];
     [xBtn setTitle:@"X" forState:UIControlStateNormal];
     [xBtn addTarget:self action:@selector(deleteEntry:) forControlEvents:UIControlEventTouchUpInside];
-    xBtn.backgroundColor = [UIColor forestGreenColor];
+    xBtn.backgroundColor = [UIColor brightGreenColor];
     UIFontDescriptor * fontD = [xBtn.titleLabel.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
     [xBtn.titleLabel setFont:[UIFont fontWithDescriptor:fontD size:20]];
     
@@ -201,10 +148,98 @@
     }];
     
 }
-- (IBAction)addIngredient:(id)sender{
+
+
+- (IBAction)goButtonTouch:(id)sender {
+    NSString *jsonStr = [self getJSONString];
+    NSLog(@"JSON Str = %@",jsonStr);
+    [Helper submitHTTPPostWithString:jsonStr withURLEnd:@"getRecipesByKeywordIngredient" withCompletionHandler:[self getSearchCompletion]];
     
 }
 
+-(NSMutableArray*)getLabelTextsFromStackview:(UIStackView*)sv{
+    NSMutableArray *ary = [[NSMutableArray alloc]init];;
+    for (UIView *view in sv.arrangedSubviews){
+        if ([view isKindOfClass:[UIStackView class]]){
+            for (UIView *view2 in ((UIStackView *)view).arrangedSubviews){
+                if ([view2 isKindOfClass:[UILabel class]]){
+                    UILabel *lbl = (UILabel*)view2;
+                    [ary addObject:lbl.text];
+                }
+            }
+        }
+    }
+    return ary;
+}
+
+-(NSString*)getJSONString{
+    NSMutableArray *keywordAry = [self getLabelTextsFromStackview:self.keywordStackView];
+    NSMutableArray *ingAry = [self getLabelTextsFromStackview:self.ingredientStackView];
+    
+    NSString *keywordsOut = [[NSString alloc]init];
+    for (NSString *keyword in keywordAry){
+        if ([keyword isEqualToString:[keywordAry firstObject]])
+            keywordsOut = keyword;
+        else
+            keywordsOut = [keywordsOut stringByAppendingString:[NSString stringWithFormat:@" %@",keyword]];
+        
+    }
+    
+    NSMutableArray *ingJsonAry = [[NSMutableArray alloc]init];
+    for (NSString *ing in ingAry){
+        NSDictionary *ingDict = [[NSDictionary alloc]initWithObjectsAndKeys:[Helper ingName2Id:ing],@"ingredientID", nil];
+        [ingJsonAry addObject:ingDict];
+    }
+    
+    NSDictionary *infoDict= [[NSDictionary alloc]initWithObjectsAndKeys:
+                             keywordsOut, @"searchString",
+                             ingJsonAry, @"ingredients", nil];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:infoDict options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    jsonStr = [NSString stringWithFormat:@"userID=%@&searchInfo=%@",obj.userId,jsonStr];
+    
+    return jsonStr;
+    
+}
+
+-(CompletionWeb) getSearchCompletion {
+    CompletionWeb ingSearchComp = ^(NSData *postData, NSURLResponse *response, NSError *error){
+        NSDictionary *retDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        NSArray *recipeJSONAry = [retDict objectForKey:@"recipeInfo"];
+        
+        if (recipeJSONAry.count == 0){
+            [Helper postUnsuccessfulAlertAsyncOK:@"No results found" withMessage:@"Please try again" withViewController:self];
+        }
+        else{
+            for (int i = 0; i < recipeJSONAry.count; i++){
+                NSDictionary *recipeDict = recipeJSONAry[i];
+                NSLog(@"curr recipe = %@",recipeDict);
+                //TODO - need to change what is returned from the server to match getRecipe
+                
+                Recipe *recipe = [[Recipe alloc]initWithJSONDictionary:recipeDict];
+                [self.recipeAry addObject:recipe];
+                
+                if (i == recipeJSONAry.count - 1){
+                    dispatch_async(dispatch_get_main_queue(), ^(void){
+                        [self performSegueWithIdentifier:@"FoundRecipesTableViewController" sender:self];
+                    });
+                }
+            }
+        }
+        
+        
+    };
+    
+    return ingSearchComp;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"FoundRecipesTableViewController"]){
+        FoundRecipesTableViewController *controller = (FoundRecipesTableViewController *)segue.destinationViewController;
+        controller.recipeAry = self.recipeAry;
+    }
+}
 
 -(void) loadInterface {
     /*

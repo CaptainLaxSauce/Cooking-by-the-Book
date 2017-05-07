@@ -30,5 +30,7 @@
 
 - (IBAction)addKeyword:(id)sender;
 - (IBAction)addIngredient:(id)sender;
+- (IBAction)goButtonTouch:(id)sender;
+
 
 @end

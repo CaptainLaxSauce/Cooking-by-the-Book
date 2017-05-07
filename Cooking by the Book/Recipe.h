@@ -14,6 +14,7 @@
 @property (nonatomic,strong) NSString *title;
 @property (nonatomic,strong) NSString *status;
 @property (nonatomic,strong) NSString *recipeCreateUser;
+@property (nonatomic,strong) NSString *recipeCreateUserName;
 @property (nonatomic,strong) NSString *recipeID;
 @property (nonatomic,strong) NSString *desc;
 @property (nonatomic,strong) NSArray *tagAry;

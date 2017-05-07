@@ -67,5 +67,7 @@
  * Refresh the autocomplete text manually (useful if you want the text to change while the user isn't editing the text)
  */
 - (void)forceRefreshAutocompleteText;
+- (void)forceCompletion;
+- (void)forceReady;
 
 @end

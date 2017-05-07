@@ -101,6 +101,18 @@ static NSObject<HTAutocompleteDataSource> *DefaultAutocompleteDataSource = nil;
 
 - (BOOL)becomeFirstResponder
 {
+    [self forceReady];
+    
+    return [super becomeFirstResponder];
+}
+
+- (BOOL)resignFirstResponder
+{
+    [self forceCompletion];
+    return [super resignFirstResponder];
+}
+
+-(void)forceReady{
     // This is necessary because the textfield avoids tapping the autocomplete Button
     [self bringSubviewToFront:self.autocompleteButton];
     if (!self.autocompleteDisabled)
@@ -112,26 +124,23 @@ static NSObject<HTAutocompleteDataSource> *DefaultAutocompleteDataSource = nil;
         
         self.autocompleteLabel.hidden = NO;
     }
-    
-    return [super becomeFirstResponder];
 }
 
-- (BOOL)resignFirstResponder
+-(void)forceCompletion
 {
     if (!self.autocompleteDisabled)
     {
         self.autocompleteLabel.hidden = YES;
-
+        
         if ([self commitAutocompleteText]) {
             // Only notify if committing autocomplete actually changed the text.
-        
-
+            
+            
             // This is necessary because committing the autocomplete text changes the text field's text, but for some reason UITextField doesn't post the UITextFieldTextDidChangeNotification notification on its own
             [[NSNotificationCenter defaultCenter] postNotificationName:UITextFieldTextDidChangeNotification
                                                                 object:self];
         }
     }
-    return [super resignFirstResponder];
 }
 
 #pragma mark - Autocomplete Logic

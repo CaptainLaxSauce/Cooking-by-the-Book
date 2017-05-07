@@ -34,6 +34,11 @@
 		04833E761D20A9D600631AA4 /* UICreateIngredientCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04833E751D20A9D600631AA4 /* UICreateIngredientCell.m */; };
 		04ACDF241E9D80540006F72F /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF231E9D80540006F72F /* ProfileTableViewController.m */; };
 		04ACDF281EA0538A0006F72F /* DetailedPostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF271EA0538A0006F72F /* DetailedPostTableViewController.m */; };
+		04ACDF2E1EBF91400006F72F /* DetailedRecipeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF2D1EBF91400006F72F /* DetailedRecipeTableViewController.m */; };
+		04ACDF311EBF986A0006F72F /* UIFoundRecipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF301EBF986A0006F72F /* UIFoundRecipeTableViewCell.m */; };
+		04ACDF341EBF9AAA0006F72F /* FoundRecipesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF331EBF9AAA0006F72F /* FoundRecipesTableViewController.m */; };
+		04ACDF401EBFBB970006F72F /* CoreIngredient+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF3D1EBFBB970006F72F /* CoreIngredient+CoreDataClass.m */; };
+		04ACDF411EBFBB970006F72F /* CoreIngredient+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF3F1EBFBB970006F72F /* CoreIngredient+CoreDataProperties.m */; };
 		04B49E441CC7063500312485 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E431CC7063500312485 /* main.m */; };
 		04B49E471CC7063500312485 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E461CC7063500312485 /* AppDelegate.m */; };
 		04B49E4D1CC7063500312485 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B49E4B1CC7063500312485 /* Main.storyboard */; };
@@ -133,6 +138,16 @@
 		04ACDF231E9D80540006F72F /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewController.m; sourceTree = "<group>"; };
 		04ACDF261EA0538A0006F72F /* DetailedPostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedPostTableViewController.h; sourceTree = "<group>"; };
 		04ACDF271EA0538A0006F72F /* DetailedPostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedPostTableViewController.m; sourceTree = "<group>"; };
+		04ACDF2C1EBF91400006F72F /* DetailedRecipeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedRecipeTableViewController.h; sourceTree = "<group>"; };
+		04ACDF2D1EBF91400006F72F /* DetailedRecipeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedRecipeTableViewController.m; sourceTree = "<group>"; };
+		04ACDF2F1EBF986A0006F72F /* UIFoundRecipeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFoundRecipeTableViewCell.h; sourceTree = "<group>"; };
+		04ACDF301EBF986A0006F72F /* UIFoundRecipeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFoundRecipeTableViewCell.m; sourceTree = "<group>"; };
+		04ACDF321EBF9AAA0006F72F /* FoundRecipesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoundRecipesTableViewController.h; sourceTree = "<group>"; };
+		04ACDF331EBF9AAA0006F72F /* FoundRecipesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoundRecipesTableViewController.m; sourceTree = "<group>"; };
+		04ACDF3C1EBFBB970006F72F /* CoreIngredient+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreIngredient+CoreDataClass.h"; sourceTree = "<group>"; };
+		04ACDF3D1EBFBB970006F72F /* CoreIngredient+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreIngredient+CoreDataClass.m"; sourceTree = "<group>"; };
+		04ACDF3E1EBFBB970006F72F /* CoreIngredient+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreIngredient+CoreDataProperties.h"; sourceTree = "<group>"; };
+		04ACDF3F1EBFBB970006F72F /* CoreIngredient+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreIngredient+CoreDataProperties.m"; sourceTree = "<group>"; };
 		04B49E3F1CC7063500312485 /* Cooking by the Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cooking by the Book.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B49E431CC7063500312485 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04B49E451CC7063500312485 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -248,8 +263,21 @@
 				04F297461E91A6BD00CDC502 /* UINewsFeedTableViewCell.m */,
 				04289C871E9482640027CB9B /* UIFriendCollectionViewCell.h */,
 				04289C881E9482640027CB9B /* UIFriendCollectionViewCell.m */,
+				04ACDF2F1EBF986A0006F72F /* UIFoundRecipeTableViewCell.h */,
+				04ACDF301EBF986A0006F72F /* UIFoundRecipeTableViewCell.m */,
 			);
 			name = "Custom UI Elements";
+			sourceTree = "<group>";
+		};
+		04ACDF3B1EBFBA860006F72F /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				04ACDF3C1EBFBB970006F72F /* CoreIngredient+CoreDataClass.h */,
+				04ACDF3D1EBFBB970006F72F /* CoreIngredient+CoreDataClass.m */,
+				04ACDF3E1EBFBB970006F72F /* CoreIngredient+CoreDataProperties.h */,
+				04ACDF3F1EBFBB970006F72F /* CoreIngredient+CoreDataProperties.m */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 		04B49E361CC7063500312485 = {
@@ -279,6 +307,7 @@
 		04B49E411CC7063500312485 /* Cooking by the Book */ = {
 			isa = PBXGroup;
 			children = (
+				04ACDF3B1EBFBA860006F72F /* Core Data */,
 				04EEC9481DBD2AE90056AF82 /* Cooking by the Book.entitlements */,
 				04B49E431CC7063500312485 /* main.m */,
 				04B49E451CC7063500312485 /* AppDelegate.h */,
@@ -358,6 +387,8 @@
 				04833E721D208B1C00631AA4 /* CreateRecipeViewController.m */,
 				046D1C721D5C2325008B1092 /* DetailedRecipeViewController.h */,
 				046D1C731D5C2325008B1092 /* DetailedRecipeViewController.m */,
+				04ACDF2C1EBF91400006F72F /* DetailedRecipeTableViewController.h */,
+				04ACDF2D1EBF91400006F72F /* DetailedRecipeTableViewController.m */,
 				04CEE7E91E22AC85005D57CE /* CreatePostViewController.h */,
 				04CEE7EA1E22AC85005D57CE /* CreatePostViewController.m */,
 				04CEE7F21E2ADC06005D57CE /* SearchRecipeViewController.h */,
@@ -366,6 +397,8 @@
 				04CEE8201E2C08D1005D57CE /* FoundRecipesViewController.m */,
 				0412FC811E5116BA00763046 /* TabBarViewController.h */,
 				0412FC821E5116BA00763046 /* TabBarViewController.m */,
+				04ACDF321EBF9AAA0006F72F /* FoundRecipesTableViewController.h */,
+				04ACDF331EBF9AAA0006F72F /* FoundRecipesTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -541,6 +574,7 @@
 				04833E731D208B1C00631AA4 /* CreateRecipeViewController.m in Sources */,
 				048096671D2857D500E80F1A /* UIToggleTagButton.m in Sources */,
 				044B398C1CCF135D0051E1CC /* LoginViewController.m in Sources */,
+				04ACDF411EBFBB970006F72F /* CoreIngredient+CoreDataProperties.m in Sources */,
 				0412FC831E5116BA00763046 /* TabBarViewController.m in Sources */,
 				045A81EE1D2069A700A90D8E /* DataClass.m in Sources */,
 				04CEE81E1E2BF255005D57CE /* HTAutocompleteTextField.m in Sources */,
@@ -550,13 +584,17 @@
 				045A82021D207FB300A90D8E /* CookbookViewController.m in Sources */,
 				04CEE7F11E2300D0005D57CE /* UIAchievementBar.m in Sources */,
 				04F297471E91A6BD00CDC502 /* UINewsFeedTableViewCell.m in Sources */,
+				04ACDF311EBF986A0006F72F /* UIFoundRecipeTableViewCell.m in Sources */,
 				04CEE8211E2C08D1005D57CE /* FoundRecipesViewController.m in Sources */,
 				0476861E1E53E9AF00A1051E /* Post.m in Sources */,
 				04ACDF241E9D80540006F72F /* ProfileTableViewController.m in Sources */,
 				04289C891E9482640027CB9B /* UIFriendCollectionViewCell.m in Sources */,
 				047E193F1D2751030011349C /* UICreateStepCell.m in Sources */,
 				04E5ED351D3DBA18004E9474 /* Recipe.m in Sources */,
+				04ACDF401EBFBB970006F72F /* CoreIngredient+CoreDataClass.m in Sources */,
+				04ACDF341EBF9AAA0006F72F /* FoundRecipesTableViewController.m in Sources */,
 				04289C861E9481520027CB9B /* MyFriendsCollectionViewController.m in Sources */,
+				04ACDF2E1EBF91400006F72F /* DetailedRecipeTableViewController.m in Sources */,
 				04E67AE61D32D4AA000371E5 /* UITagBox.m in Sources */,
 				046D1C741D5C2325008B1092 /* DetailedRecipeViewController.m in Sources */,
 				04F297411E6C73EA00CDC502 /* UIPostTableViewCell.m in Sources */,

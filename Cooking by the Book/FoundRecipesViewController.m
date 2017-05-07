@@ -28,6 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadInterface];
+    NSLog(@"found recipy array = %@",self.recipeAry);
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

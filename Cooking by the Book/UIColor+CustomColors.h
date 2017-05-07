@@ -17,6 +17,7 @@
 +(UIColor*)customGrayColor;
 +(UIColor*)transparentGrayColor;
 +(UIColor*)forestGreenColor;
++(UIColor*)brightGreenColor;
 +(UIColor*)starColor;
 +(UIColor*)lineColor;
 +(UIColor*)tagQuickColor;

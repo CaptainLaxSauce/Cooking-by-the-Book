@@ -93,8 +93,9 @@ static DataClass *instance = nil;
 
 -(void)initIngredientAry{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSManagedObjectContext *context = appDelegate.managedObjectContext;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Ingredient"];
+    NSManagedObjectContext *context = appDelegate.context;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"CoreIngredient"];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"ingredientName" ascending:YES]];
     NSMutableArray *coreIngAry = [[context executeFetchRequest:fetchRequest error:nil]mutableCopy];
     NSMutableArray *dataIngAry = [[NSMutableArray alloc]init];
     
