@@ -97,9 +97,9 @@
     }
     
     self.navigationItem.title = [NSString stringWithFormat:@"%@",self.recipe.title];
-    NSString *post = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,self.recipeID];
+    NSString *post = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.authData.userId,self.recipeID];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getRecipe"];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"getRecipe" withAuth:YES];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
         NSString *ret_ = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
@@ -200,7 +200,7 @@
                         [recipeImageView setImage:self.recipe.image];
                     }
                 };
-                [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",self.recipe.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:addImageCompletion];
+                [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",self.recipe.imageName] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:addImageCompletion];
 
             }
         });

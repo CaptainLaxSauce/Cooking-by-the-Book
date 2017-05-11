@@ -21,14 +21,22 @@ static DataClass *instance = nil;
         if (instance == nil)
         {
             instance = [DataClass new];
+            instance.authData = [[AuthData alloc]init];
         }
     }
     return instance;
 }
+/*
+-(AuthData*)authData:(AuthData *)authData{
+    if (!_authData) _authData = [[AuthData alloc]init];
+    return _authData;
+}
+*/
 
 -(void)initProfile:(NSDictionary *)jsonProfileDict{
     self.profileDict = jsonProfileDict;
 }
+
 
 -(void)initCookbookAry:(NSArray *)jsonCookbookAry_{
     NSMutableArray *cookbookAry_ = [[NSMutableArray alloc]init];

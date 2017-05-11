@@ -153,7 +153,7 @@
 - (IBAction)goButtonTouch:(id)sender {
     NSString *jsonStr = [self getJSONString];
     NSLog(@"JSON Str = %@",jsonStr);
-    [Helper submitHTTPPostWithString:jsonStr withURLEnd:@"getRecipesByKeywordIngredient" withCompletionHandler:[self getSearchCompletion]];
+    [Helper submitHTTPPostWithString:jsonStr withURLEnd:@"getRecipesByKeywordIngredient" withAuth:YES withCompletionHandler:[self getSearchCompletion]];
     
 }
 
@@ -197,7 +197,7 @@
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:infoDict options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    jsonStr = [NSString stringWithFormat:@"userID=%@&searchInfo=%@",obj.userId,jsonStr];
+    jsonStr = [NSString stringWithFormat:@"userID=%@&searchInfo=%@",obj.authData.userId,jsonStr];
     
     return jsonStr;
     

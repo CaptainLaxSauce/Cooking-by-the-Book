@@ -50,7 +50,7 @@
 
 -(void)refreshPosts{
     [self.postAry removeAllObjects];
-    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",self.frd.userId] withURLEnd:@"getWallPosts" withCompletionHandler:[self getWallPostsCompletion]];
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",self.frd.userId] withURLEnd:@"getWallPosts" withAuth:YES withCompletionHandler:[self getWallPostsCompletion]];
     
 }
 
@@ -65,8 +65,8 @@
             NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
             Post *post = [[Post alloc]initWithNewsFeedJSONDict:postDict];
             
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",post.creatorID] withURLEnd:@"getProfile" withCompletionHandler:[self getUserCompletion:post]];
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"recipeID=%@",post.recipe.recipeID] withURLEnd:@"getImageThumbnail" withCompletionHandler:[self getRecipeImageCompletion:post.recipe]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",post.creatorID] withURLEnd:@"getProfile" withAuth:YES withCompletionHandler:[self getUserCompletion:post]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"recipeID=%@",post.recipe.recipeID] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:[self getRecipeImageCompletion:post.recipe]];
             
             [self.postAry addObject:post];
         }
@@ -86,7 +86,7 @@
         post.user = user;
         
         if(![user.imageName isEqual:@""]){
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",user.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:[self getPosterImageCompletion:user]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",user.imageName] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:[self getPosterImageCompletion:user]];
         }
     };
     

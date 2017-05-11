@@ -72,8 +72,8 @@ HCSStarRatingView *starView;
 
 -(void)submitPostWeb{
     NSDictionary *postDict = [[NSDictionary alloc]initWithObjectsAndKeys:
-                              obj.userId, @"creatorID",
-                              obj.userId, @"wallUserID",
+                              obj.authData.userId, @"creatorID",
+                              obj.authData.userId, @"wallUserID",
                               titleField.text, @"postTitle",
                               self.recipeID, @"recipeID",
                               descField.text, @"postBody",
@@ -85,7 +85,7 @@ HCSStarRatingView *starView;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:postDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
     jsonStr = [NSString stringWithFormat:@"post=%@",jsonStr];
-    [Helper submitHTTPPostWithString:jsonStr withURLEnd:@"addPost" withCompletionHandler:self.postCompletion];
+    [Helper submitHTTPPostWithString:jsonStr withURLEnd:@"addPost" withAuth:YES withCompletionHandler:self.postCompletion];
 }
 
 -(void)configureRatingCompletion{
@@ -113,9 +113,9 @@ HCSStarRatingView *starView;
 }
 
 -(void)submitRatingWeb{
-    NSString *sendStr = [NSString stringWithFormat:@"userID=%@&recipeID=%@&rating=%.01f",obj.userId,self.recipeID,starView.value];
+    NSString *sendStr = [NSString stringWithFormat:@"userID=%@&recipeID=%@&rating=%.01f",obj.authData.userId,self.recipeID,starView.value];
     NSLog(@"sendStr for rating = %@",sendStr);
-    [Helper submitHTTPPostWithString:sendStr withURLEnd:@"addRating" withCompletionHandler:self.ratingCompletion];
+    [Helper submitHTTPPostWithString:sendStr withURLEnd:@"addRating" withAuth:YES withCompletionHandler:self.ratingCompletion];
 }
 
 - (void) submitPostTouch:(id)sender {

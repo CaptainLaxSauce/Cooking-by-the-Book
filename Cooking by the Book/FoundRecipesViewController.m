@@ -82,7 +82,7 @@
                 }
 
         };
-        [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",recipe.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:addImageCompletion];
+        [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",recipe.imageName] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:addImageCompletion];
        
     }
     else if (recipe.image){

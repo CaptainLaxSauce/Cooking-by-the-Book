@@ -66,8 +66,9 @@
 }
 
 -(void)getFriendsWeb {
-    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.userId]
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.authData.userId]
                           withURLEnd:@"getAllFriends"
+                            withAuth:YES
                withCompletionHandler:[self getFriendsCompletion]];
 }
 
@@ -105,7 +106,7 @@
             UIFriendBox *frdBox = [[UIFriendBox alloc]initWithFrame:currFrame withFriend:(Friend *)self.friendAry[i]];
             [frdBox addGestureRecognizer:friendTap];
             if (![((Friend*)self.friendAry[i]).imageName  isEqual: @""]){
-                [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",((Friend*)self.friendAry[i]).imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:[self getAddImageCompletion:frdBox]];
+                [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",((Friend*)self.friendAry[i]).imageName] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:[self getAddImageCompletion:frdBox]];
             }
             
             

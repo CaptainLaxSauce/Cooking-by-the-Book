@@ -38,7 +38,7 @@
 
 -(void)refreshPosts{
     [self.postAry removeAllObjects];
-    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.userId] withURLEnd:@"getUserPosts" withCompletionHandler:[self getUserPostsCompletion]];
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.authData.userId] withURLEnd:@"getUserPosts" withAuth:YES withCompletionHandler:[self getUserPostsCompletion]];
     
 }
 
@@ -52,8 +52,8 @@
             NSDictionary *postDict = [jsonPostAry objectAtIndex:i];
             Post *post = [[Post alloc]initWithJSONDict:postDict];
 
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",post.creatorID] withURLEnd:@"getProfile" withCompletionHandler:[self getUserCompletion:post]];
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"recipeID=%@",post.recipe.recipeID] withURLEnd:@"getImageThumbnail" withCompletionHandler:[self getRecipeImageCompletion:post.recipe]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",post.creatorID] withURLEnd:@"getProfile" withAuth:YES withCompletionHandler:[self getUserCompletion:post]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"recipeID=%@",post.recipe.recipeID] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:[self getRecipeImageCompletion:post.recipe]];
             
             [self.postAry addObject:post];
         }
@@ -73,7 +73,7 @@
         post.user = user;
 
         if(![user.imageName isEqual:@""]){
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",user.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:[self getPosterImageCompletion:user]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",user.imageName] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:[self getPosterImageCompletion:user]];
         }
     };
     
@@ -156,7 +156,7 @@
     imageSelectView.contentMode = UIViewContentModeScaleAspectFit;
     
     [picker dismissViewControllerAnimated:YES completion:^(void){
-        [Helper submitImage:obj.userId withURLEnd:@"addImageToProfile" withImage:imageSelectView.image];
+        [Helper submitImage:obj.authData.userId withURLEnd:@"addImageToProfile" withImage:imageSelectView.image];
     } ];
 }
 

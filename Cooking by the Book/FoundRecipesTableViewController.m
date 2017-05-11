@@ -42,10 +42,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return self.tableView.frame.size.height / 6;
+    return self.tableView.frame.size.height / 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"dequeue cell");
     NSString *cellIdentifier = @"RecipeCell";
     UIFoundRecipeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -57,48 +58,64 @@
     
     cell.recipeTitleLabel.text = recipe.title;
     cell.recipeDescriptionLabel.text = recipe.desc;
-    cell.imageView.image = [UIImage imageNamed:@"recipedefault.png"];
+    cell.recipeImageView.image = [UIImage imageNamed:@"recipedefault.png"];
     cell.starRatingView.value = [recipe.rating doubleValue];
     
-    if ([recipe.recipeCreateUserName isEqual:@""]){
-        cell.recipeChefLabel.text = @"By Unknown Chef";
-        CompletionWeb getProfileCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
-            NSDictionary *userDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
-            recipe.recipeCreateUserName = [userDict objectForKey:@"userName"];
-            cell.recipeChefLabel.text = recipe.recipeCreateUserName;
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                [self.tableView reloadData];
-            });
-        };
-        
-        [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",recipe.recipeCreateUser] withURLEnd:@"getProfile" withCompletionHandler:getProfileCompletion];
-    }
-    else{
+    if (recipe.recipeCreateUserName){
         cell.recipeChefLabel.text = recipe.recipeCreateUserName;
     }
-    
-    //retrieve image from server if it hasn't been already
-    if (![recipe.imageName  isEqual: @""] && recipe.image == nil){
-        
-        CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
-            UIImage *retImage = [UIImage imageWithData:postData];
-            NSLog(@"in completion handler for addImage");
-            if (retImage != nil){
-                NSLog(@"adding image with imagename = %@ with title %@ with indexPath %ld",recipe.imageName, recipe.title, (long)indexPath.row);
-                recipe.image = retImage;
-                cell.imageView.image = recipe.image;
+    else{
+        cell.recipeChefLabel.text = @"By Unknown Chef";
+        CompletionWeb getProfileCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+            if (postData){
+                NSDictionary *userDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+                NSString *chefName = [userDict objectForKey:@"userName"];
+                if (chefName){
+                    recipe.recipeCreateUserName = chefName;
+                }
+                else {
+                    recipe.recipeCreateUserName = @"Unknown Chef";
+                }
+                
                 dispatch_async(dispatch_get_main_queue(), ^(void){
+                    cell.recipeChefLabel.text = [NSString stringWithFormat:@"By %@",recipe.recipeCreateUserName];
+                    NSLog(@"chef label RELOAD");
                     [self.tableView reloadData];
                 });
             }
             
         };
         
-        [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",recipe.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:addImageCompletion];
+        [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",recipe.recipeCreateUser] withURLEnd:@"getProfile" withAuth:YES withCompletionHandler:getProfileCompletion];
+    }
+    
+    //retrieve image from server if it hasn't been already
+    if (recipe.imageName && !recipe.image){
+        
+        CompletionWeb addImageCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error){
+            NSLog(@"in completion handler for addImage");
+            if (postData){
+                NSLog(@"postData exists");
+                UIImage *retImage = [UIImage imageWithData:postData];
+                if (retImage){
+                    NSLog(@"adding image with imagename = %@ with title %@ with indexPath %ld",recipe.imageName, recipe.title, (long)indexPath.row);
+                    recipe.image = retImage;
+                    dispatch_async(dispatch_get_main_queue(), ^(void){
+                        cell.recipeImageView.image = recipe.image;
+                        NSLog(@"image RELOAD");
+                        [self.tableView reloadData];
+                    });
+                }
+            }
+
+            
+        };
+        
+        [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",recipe.imageName] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:addImageCompletion];
         
     }
     else if (recipe.image){
-        cell.imageView.image = recipe.image;
+        cell.recipeImageView.image = recipe.image;
     }
     
     return cell;

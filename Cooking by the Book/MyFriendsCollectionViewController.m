@@ -50,8 +50,9 @@ UIEdgeInsets insets;
 
 -(void)refreshFriends{
     [self.friendAry removeAllObjects];
-    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.userId]
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",obj.authData.userId]
                           withURLEnd:@"getAllFriends"
+                            withAuth:YES
                withCompletionHandler:[self getFriendsCompletion]];
 }
 
@@ -75,6 +76,7 @@ UIEdgeInsets insets;
                 NSLog(@"image is named %@",frd.imageName);
                 [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",frd.imageName]
                                       withURLEnd:@"getImageThumbnail"
+                                        withAuth:YES
                            withCompletionHandler:[self getAddImageCompletion:frd]];
             }
             

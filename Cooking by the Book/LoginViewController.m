@@ -30,18 +30,30 @@
 
 -(CompletionWeb) getLoginCompletion {
     CompletionWeb loginCompletion = ^(NSData *postData, NSURLResponse *response, NSError *error) {
-        NSString *userId = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        NSString *jsonStr = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+        NSLog(@"json login string = %@",jsonStr);
+        
+        NSDictionary *retDict = [NSJSONSerialization JSONObjectWithData:postData options:kNilOptions error:&error];
+        NSLog(@"login retdict = %@",retDict);
+        NSString *userId = [retDict objectForKey:@"userID"];
         
         [Helper stopActivityViewAsync:activityView withViewController:self];
         
         if ([userId intValue] > 0) {
             
-            obj.userId = userId;
-            NSLog(@"Success! userID = %@",obj.userId);
+            obj.authData.userId = userId;
+            obj.authData.authToken = [retDict objectForKey:@"access_token"];
+            obj.authData.tokenType = [retDict objectForKey:@"token_type"];
+            obj.authData.expireInstant = [Helper UTCstring2LocalNSDate:[retDict objectForKey:@"expire_instant"]];
+                                          
+            NSLog(@"Success! userID = %@",obj.authData.userId);
+            NSLog(@"Success! authToken = %@",obj.authData.authToken);
+            NSLog(@"Success! tokenType = %@",obj.authData.tokenType);
+            NSLog(@"Success! expireInstant = %@",obj.authData.expireInstant);
             
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getCookbook" withCompletionHandler:[self getCookbookCompletion]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getCookbook" withAuth:YES withCompletionHandler:[self getCookbookCompletion]];
             
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getProfile" withCompletionHandler:[self getProfileCompletion]];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@",userId] withURLEnd:@"getProfile" withAuth:YES withCompletionHandler:[self getProfileCompletion]];
             
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [self performSegueWithIdentifier:@"TabBarViewController" sender:self];
@@ -84,7 +96,7 @@
     activityView = [Helper startActivityView:self];
     
     NSString *loginCreds = [NSString stringWithFormat:@"email=%@&password=%@",self.emailTextField.text,self.passwordTextField.text];
-    [Helper submitHTTPPostWithString:loginCreds withURLEnd:@"login" withCompletionHandler:[self getLoginCompletion]];
+    [Helper submitHTTPPostWithString:loginCreds withURLEnd:@"login" withAuth:NO withCompletionHandler:[self getLoginCompletion]];
 
 }
     

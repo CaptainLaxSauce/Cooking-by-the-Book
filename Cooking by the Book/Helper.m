@@ -9,18 +9,20 @@
 #import "Helper.h"
 #import "DataClass.h"
 #import "Ingredient.h"
+#import "DataClass.h"
+
 
 @implementation Helper
 
-+(void)submitHTTPPostWithString:(NSString *)sendString withURLEnd:(NSString *)urlEnd withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion{
++(void)submitHTTPPostWithString:(NSString *)sendString withURLEnd:(NSString *)urlEnd withAuth:(BOOL)auth withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion{
     NSData *postData = [sendString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:urlEnd];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:urlEnd withAuth:auth];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:completion];
     [dataTask resume];
 }
 
-+(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd{
++(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd withAuth:(BOOL)auth{
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)postData.length];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]init];
     [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://75.135.74.26:8080/%@.php",urlEnd]]];
@@ -28,6 +30,14 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:postData];
     [request setHTTPMethod:@"POST"];
+    
+    //Authorization
+    if (auth){
+        DataClass *obj = [DataClass getInstance];
+        NSString *authValue = [NSString stringWithFormat:@"%@ %@",obj.authData.tokenType,obj.authData.authToken];
+        [request addValue:authValue forHTTPHeaderField:@"Authorization"];
+    }
+
 
     return request;
 }
@@ -56,6 +66,9 @@
     [request setHTTPShouldHandleCookies:NO];
     [request setTimeoutInterval:30];
     [request setHTTPMethod:@"POST"];
+    DataClass *obj = [DataClass getInstance];
+    NSString *authValue = [NSString stringWithFormat:@"%@ %@",obj.authData.tokenType,obj.authData.authToken];
+    [request addValue:authValue forHTTPHeaderField:@"Authorization"];
     
     // set Content-Type in HTTP header
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
@@ -122,19 +135,7 @@
 }
 
 +(NSString *)fromUTC:(NSString *)currDate{
-    NSString *dateFormat = @"yyyyMMddHHmmss";
-    NSTimeZone *inputTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
-    NSDateFormatter *inputDateFormatter = [[NSDateFormatter alloc] init];
-    [inputDateFormatter setTimeZone:inputTimeZone];
-    [inputDateFormatter setDateFormat:dateFormat];
-    NSDate *date = [inputDateFormatter dateFromString:currDate];
-    
-    NSTimeZone *outputTimeZone = [NSTimeZone localTimeZone];
-    NSDateFormatter *outputDateFormatter = [[NSDateFormatter alloc] init];
-    [outputDateFormatter setTimeZone:outputTimeZone];
-    [outputDateFormatter setDateFormat:dateFormat];
-    NSString *outputString = [outputDateFormatter stringFromDate:date];
-    NSDate *convertedDate = [outputDateFormatter dateFromString:outputString];
+    NSDate *convertedDate = [Helper UTCstring2LocalNSDate:currDate];
     
     NSDate *todayDate = [NSDate date];
     NSLog(@"today date = %@",todayDate);
@@ -168,6 +169,24 @@
     }
     
     
+}
+
++(NSDate*)UTCstring2LocalNSDate:(NSString*)stringDate{
+    NSString *dateFormat = @"yyyyMMddHHmmss";
+    NSTimeZone *inputTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+    NSDateFormatter *inputDateFormatter = [[NSDateFormatter alloc] init];
+    [inputDateFormatter setTimeZone:inputTimeZone];
+    [inputDateFormatter setDateFormat:dateFormat];
+    NSDate *date = [inputDateFormatter dateFromString:stringDate];
+    
+    NSTimeZone *outputTimeZone = [NSTimeZone localTimeZone];
+    NSDateFormatter *outputDateFormatter = [[NSDateFormatter alloc] init];
+    [outputDateFormatter setTimeZone:outputTimeZone];
+    [outputDateFormatter setDateFormat:dateFormat];
+    NSString *outputString = [outputDateFormatter stringFromDate:date];
+    NSDate *convertedDate = [outputDateFormatter dateFromString:outputString];
+    
+    return convertedDate;
 }
 
 +(NSString *)ingName2Id:(NSString *)name {

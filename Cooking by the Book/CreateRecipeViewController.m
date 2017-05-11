@@ -105,14 +105,14 @@ DataClass *obj;
     
     obj = [DataClass getInstance];
     
-    NSLog(@"userID in create recipe = %@",obj.userId);
+    NSLog(@"userID in create recipe = %@",obj.authData.userId);
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:recipeDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    jsonStr = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,jsonStr];
+    jsonStr = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.authData.userId,jsonStr];
     NSLog(@"jsonStr = %@",jsonStr);
     NSData *postData = [jsonStr dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"createRecipe"];
+    NSMutableURLRequest *request = [Helper setupPost:postData withURLEnd:@"createRecipe" withAuth:YES];
     NSURLSession *session = [NSURLSession sharedSession];
 
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *postData, NSURLResponse *response, NSError *error) {
@@ -139,9 +139,9 @@ DataClass *obj;
             
             [obj addRecipe:newRecipe];
             
-            NSString *post2 = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,recipeID];
+            NSString *post2 = [NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.authData.userId,recipeID];
             NSData *postData2 = [post2 dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-            NSMutableURLRequest *request2 = [Helper setupPost:postData2 withURLEnd:@"addCookbookRecipe"];
+            NSMutableURLRequest *request2 = [Helper setupPost:postData2 withURLEnd:@"addCookbookRecipe" withAuth:YES];
             NSURLSession *session2 = [NSURLSession sharedSession];
             NSURLSessionDataTask *dataTask2 = [session2 dataTaskWithRequest:request2 completionHandler:^(NSData *postData2, NSURLResponse *response2, NSError *error2) {
                 
@@ -389,7 +389,7 @@ DataClass *obj;
     int navBarHeight = self.navigationController.navigationBar.frame.size.height;
     int stepperWidth = 94;
     int tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-    int scrollHeight = screenHeight-statusBarHeight-navBarHeight-textHeight-OBJECT_BREAK*2-tabBarHeight;
+    int scrollHeight = screenHeight-statusBarHeight-navBarHeight-tabBarHeight;
     int labelWidth = (screenWidth-OBJECT_BREAK*2)/10;
     int tagWidth = (screenWidth-OBJECT_BREAK*3)/2;
     
@@ -398,8 +398,7 @@ DataClass *obj;
     portionsHeight = OBJECT_BREAK*2+textHeight+titleHeight+timeHeight;
     ingredientHeight = textHeight*3+OBJECT_BREAK*4;
     imageViewHeight = screenWidth+textHeight;
-    
-    self.view.backgroundColor = [UIColor primaryColor];
+
     self.navigationItem.title = @"Create Recipe";
     
     //add non-viewable objects
@@ -409,7 +408,6 @@ DataClass *obj;
     
     //add scroll view
     UIScrollView *recipeScrollView_ = [[UIScrollView alloc]initWithFrame:CGRectMake(0, statusBarHeight+navBarHeight, screenWidth, scrollHeight)];
-    recipeScrollView_.backgroundColor = [UIColor customGrayColor];
     recipeScrollView_.contentSize = CGSizeMake(screenWidth, titleHeight+timeHeight+portionsHeight+ingredientHeight*2+imageViewHeight);
     recipeScrollView_.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.automaticallyAdjustsScrollViewInsets = NO;

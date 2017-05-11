@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AuthData.h"
 #import "Recipe.h"
 #import "UIPost.h"
 
@@ -17,8 +18,7 @@
 @property (nonatomic,retain) NSDictionary *profileDict;
 @property (nonatomic,retain) NSMutableArray *cookbookAry;
 @property (nonatomic,retain) NSMutableArray *ingredientAry;
-@property (nonatomic,retain) NSString *userId;
-@property (nonatomic,retain) UIPost *currDetailedPost;
+@property (nonatomic,retain) AuthData *authData;
 
 
 +(DataClass*)getInstance;

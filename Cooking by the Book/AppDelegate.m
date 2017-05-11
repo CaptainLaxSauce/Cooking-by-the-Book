@@ -53,6 +53,7 @@
 
     [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"lastUpdate=%@",updateStr]
                           withURLEnd:@"initialize"
+                            withAuth:NO
                withCompletionHandler:[self getInitCompletion:coreDate]];
     
       return YES;
@@ -111,7 +112,8 @@
                 NSString *ingredientName = [ingredientDict objectForKey:@"ingredientName"];
                 //NSString *ingredientName = [NSString stringWithFormat:@"%@",[ingredientDict objectForKey:@"ingredientName"]];
                 
-                CoreIngredient *ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"CoreIngredient"
+                CoreIngredient *ingredient = [[CoreIngredient alloc]init];
+                ingredient = [NSEntityDescription insertNewObjectForEntityForName:@"CoreIngredient"
                                                                            inManagedObjectContext:self.context];
                 [ingredient setValue:ingredientID forKey:@"ingredientID"];
                 [ingredient setValue:ingredientName forKey:@"ingredientName"];

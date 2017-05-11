@@ -63,7 +63,7 @@
 /*
 -(id)initWithIdWeb:(NSString *)recipeId{
     //obj = [DataClass getInstance];
-    //[Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.userId,recipeId] withURLEnd:@"getRecipe" withCompletionHandler:[self get]
+    //[Helper submitHTTPPostWithString:[NSString stringWithFormat:@"userID=%@&recipeID=%@",obj.authData.userId,recipeId] withURLEnd:@"getRecipe" withCompletionHandler:[self get]
     return self;
 }
 

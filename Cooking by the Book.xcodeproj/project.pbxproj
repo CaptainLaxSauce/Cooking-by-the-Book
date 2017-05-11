@@ -39,6 +39,7 @@
 		04ACDF341EBF9AAA0006F72F /* FoundRecipesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF331EBF9AAA0006F72F /* FoundRecipesTableViewController.m */; };
 		04ACDF401EBFBB970006F72F /* CoreIngredient+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF3D1EBFBB970006F72F /* CoreIngredient+CoreDataClass.m */; };
 		04ACDF411EBFBB970006F72F /* CoreIngredient+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF3F1EBFBB970006F72F /* CoreIngredient+CoreDataProperties.m */; };
+		04ACDF441EC3FB310006F72F /* AuthData.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACDF431EC3FB310006F72F /* AuthData.m */; };
 		04B49E441CC7063500312485 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E431CC7063500312485 /* main.m */; };
 		04B49E471CC7063500312485 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B49E461CC7063500312485 /* AppDelegate.m */; };
 		04B49E4D1CC7063500312485 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B49E4B1CC7063500312485 /* Main.storyboard */; };
@@ -148,6 +149,8 @@
 		04ACDF3D1EBFBB970006F72F /* CoreIngredient+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreIngredient+CoreDataClass.m"; sourceTree = "<group>"; };
 		04ACDF3E1EBFBB970006F72F /* CoreIngredient+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreIngredient+CoreDataProperties.h"; sourceTree = "<group>"; };
 		04ACDF3F1EBFBB970006F72F /* CoreIngredient+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreIngredient+CoreDataProperties.m"; sourceTree = "<group>"; };
+		04ACDF421EC3FB310006F72F /* AuthData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthData.h; sourceTree = "<group>"; };
+		04ACDF431EC3FB310006F72F /* AuthData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthData.m; sourceTree = "<group>"; };
 		04B49E3F1CC7063500312485 /* Cooking by the Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cooking by the Book.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B49E431CC7063500312485 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04B49E451CC7063500312485 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -418,6 +421,8 @@
 				0476861D1E53E9AF00A1051E /* Post.m */,
 				04F297421E70E61700CDC502 /* User.h */,
 				04F297431E70E61700CDC502 /* User.m */,
+				04ACDF421EC3FB310006F72F /* AuthData.h */,
+				04ACDF431EC3FB310006F72F /* AuthData.m */,
 			);
 			name = "Data Elements";
 			sourceTree = "<group>";
@@ -564,6 +569,7 @@
 				04B49E771CC70A5A00312485 /* TabBarControllerDelegate.m in Sources */,
 				0412FC6E1E4F8D0200763046 /* MyFriendsViewController.m in Sources */,
 				0412FC7D1E4FBF9D00763046 /* Constants.m in Sources */,
+				04ACDF441EC3FB310006F72F /* AuthData.m in Sources */,
 				045A81FB1D20767800A90D8E /* UICookbookRecipeCell.m in Sources */,
 				04F297441E70E61700CDC502 /* User.m in Sources */,
 				047813691D1A4F2F00D9F569 /* SignupViewController.m in Sources */,

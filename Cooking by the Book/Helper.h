@@ -13,13 +13,15 @@
 @interface Helper : NSObject
 
 //Web service functions
-+(void)submitHTTPPostWithString:(NSString *)postString withURLEnd:(NSString *)urlEnd withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion;
++(void)submitHTTPPostWithString:(NSString *)postString withURLEnd:(NSString *)urlEnd withAuth:(BOOL)auth withCompletionHandler:(void(^)(NSData *postData, NSURLResponse *response, NSError *error))completion;
+
 +(void)submitImage:(NSString *)objectID withURLEnd:(NSString *)urlEnd withImage:(UIImage *)image;
-+(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd;
++(NSMutableURLRequest *)setupPost:(NSData *)postData withURLEnd:(NSString *)urlEnd withAuth:(BOOL)auth;
 
 //Conversion functions
 +(NSString *)toUTC:(NSDate *)date;
 +(NSString *)fromUTC:(NSDate *)date;
++(NSDate *)UTCstring2LocalNSDate:(NSString*)stringDate;
 +(NSString *)ingName2Id:(NSString*)name;
 +(NSString *)chefName:(NSString*)chefLevel withName:(NSString*)name;
 

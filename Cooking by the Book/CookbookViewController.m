@@ -34,7 +34,7 @@
 
 -(void)deleteRecipe:(NSIndexPath *) indexPath{
     Recipe *recipe = [self getRecipeSelectedAtIndexPath:indexPath];
-    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"recipeID=%@", recipe.recipeID] withURLEnd:@"deleteRecipe" withCompletionHandler:[self getDeleteCompletionWeb:recipe]];
+    [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"recipeID=%@", recipe.recipeID] withURLEnd:@"deleteRecipe" withAuth:YES withCompletionHandler:[self getDeleteCompletionWeb:recipe]];
 }
 
 -(CompletionWeb)getDeleteCompletionWeb:(Recipe *)recipe {
@@ -108,6 +108,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"dequeue cookbook cell");
     NSString *SimpleIdentifier = @"SimpleIdentifier";
     UITableViewCell *cell = [self.recipeTableView dequeueReusableCellWithIdentifier:SimpleIdentifier];
     
@@ -135,7 +136,7 @@
         
             };
             
-            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",recipe.imageName] withURLEnd:@"getImageThumbnail" withCompletionHandler:addImageCompletion];
+            [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"imageName=%@",recipe.imageName] withURLEnd:@"getImageThumbnail" withAuth:YES withCompletionHandler:addImageCompletion];
         }
         else if (recipe.image){
             cell.imageView.image = recipe.image;

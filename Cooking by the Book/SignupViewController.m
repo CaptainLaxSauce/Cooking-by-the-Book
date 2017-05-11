@@ -29,6 +29,7 @@
     
     [Helper submitHTTPPostWithString:[NSString stringWithFormat:@"name=%@&email=%@&password=%@",self.nameTextField.text,self.emailTextField.text,self.passwordTextField2.text]
                           withURLEnd:@"signup"
+                            withAuth:NO
                withCompletionHandler:[self getSignupCompletion]];
     
 }
@@ -39,7 +40,7 @@
         
         if ([ret_ intValue] > 0) {
             DataClass *obj = [DataClass getInstance];
-            obj.userId = ret_;
+            obj.authData.userId = ret_;
             //transition to home screen
             
         }
